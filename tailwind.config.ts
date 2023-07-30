@@ -10,6 +10,7 @@ export default {
       placeholder: {
         100: "#667085",
       },
+      white: "#FFFFFF",
     },
     extend: {
       fontFamily: {
