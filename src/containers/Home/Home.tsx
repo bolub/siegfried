@@ -1,6 +1,8 @@
 import React from "react";
 import { Navbar } from "@/containers/Home/Navbar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { routes } from "@/routes";
 
 export const HomePage = () => {
   return (
@@ -19,8 +21,8 @@ export const HomePage = () => {
               startups.
             </p>
 
-            <Button size="lg" className="mt-14">
-              Get Started
+            <Button asChild size="lg" className="mt-14">
+              <Link href={routes.login()}>Get Started</Link>
             </Button>
           </div>
         </header>
