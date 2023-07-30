@@ -30,11 +30,6 @@ declare module "next-auth" {
   // }
 }
 
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({
