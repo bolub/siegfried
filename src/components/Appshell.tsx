@@ -4,6 +4,14 @@ import clsx from "clsx";
 import { routes } from "@/routes";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems = [
   {
@@ -22,6 +30,11 @@ interface AppshellProps {
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
   const router = useRouter();
+  const { data } = useSession();
+
+  const handleLogout = () => {
+    void signOut();
+  };
 
   return (
     <>
@@ -49,6 +62,21 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
             );
           })}
         </ul>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar>
+              <AvatarImage src={data?.user.image ?? ""} />
+
+              <AvatarFallback>{data?.user.name}</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </nav>
 
       <div className="py-10">{children}</div>
