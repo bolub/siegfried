@@ -1,35 +1,30 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-import { api } from "@/utils/api";
+import { LoginPage } from "@/containers/Login/Login";
+import { routes } from "@/routes";
+import { getServerAuthSession } from "@/server/auth";
+import { type GetServerSidePropsContext } from "next";
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getServerAuthSession(ctx);
+  const userId = session?.user?.id;
+
+  if (userId) {
+    return {
+      redirect: {
+        destination: routes.dashboard(),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default function Login() {
   return (
     <>
-      <AuthShowcase />
+      <LoginPage />
     </>
-  );
-}
-
-function AuthShowcase() {
-  const { data: sessionData } = useSession();
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined,
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-md bg-black px-6 py-3 font-medium text-white ring-offset-2 focus:outline-none focus:ring-2 focus:ring-black"
-        onClick={
-          sessionData ? () => void signOut() : () => void signIn("google")
-        }
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
   );
 }
