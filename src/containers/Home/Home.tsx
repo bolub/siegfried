@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar } from "@/containers/Home/Navbar";
+import { Button } from "@/components/ui/button";
 
 export const HomePage = () => {
   return (
@@ -18,9 +19,9 @@ export const HomePage = () => {
               startups.
             </p>
 
-            <button className="mt-14 rounded-lg bg-primary-100 px-[18px] py-[10px] text-base font-medium text-white">
+            <Button size="lg" className="mt-14">
               Get Started
-            </button>
+            </Button>
           </div>
         </header>
       </main>
