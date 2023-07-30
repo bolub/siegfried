@@ -11,9 +11,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className={`${dm_sans.variable} ${space_mono.variable} font-sans`}>
+      <div className={`${dm_sans.variable} ${space_mono.variable} font-sans`}>
         <Component {...pageProps} />
-      </main>
+      </div>
     </SessionProvider>
   );
 };
