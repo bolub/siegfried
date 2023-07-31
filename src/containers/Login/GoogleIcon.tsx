@@ -14,7 +14,7 @@ export const GoogleIcon: FC<ComponentProps<"svg">> = (props) => {
       {...otherSvgProps}
       className={cn(className)}
     >
-      <g clip-path="url(#clip0_26_96)">
+      <g clipPath="url(#clip0_26_96)">
         <path
           d="M23.7663 12.2765C23.7663 11.4608 23.7001 10.6406 23.559 9.83813H12.2402V14.4591H18.722C18.453 15.9495 17.5888 17.2679 16.3233 18.1056V21.104H20.1903C22.4611 19.014 23.7663 15.9274 23.7663 12.2765Z"
           fill="#4285F4"

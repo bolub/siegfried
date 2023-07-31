@@ -30,7 +30,7 @@ interface AppshellProps {
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
   const router = useRouter();
-  const { data } = useSession();
+  // const { data } = useSession();
 
   const handleLogout = () => {
     void signOut();
@@ -65,11 +65,11 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
 
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Avatar>
+            {/* <Avatar>
               <AvatarImage src={data?.user.image ?? ""} />
 
               <AvatarFallback>{data?.user.name}</AvatarFallback>
-            </Avatar>
+            </Avatar> */}
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">

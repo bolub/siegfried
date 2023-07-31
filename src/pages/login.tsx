@@ -9,6 +9,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   if (userId) {
     return {
+      props: {},
       redirect: {
         destination: routes.dashboard(),
         permanent: false,
