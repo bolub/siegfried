@@ -8,6 +8,7 @@ import {
 import GoogleProvider from "next-auth/providers/google";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import { routes } from "@/routes";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -47,13 +48,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: routes.login(),
+  },
 };
 
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
 export const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
