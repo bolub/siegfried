@@ -11,7 +11,7 @@ export const LoginPage = () => {
 
   return (
     <div className="flex h-screen w-full">
-      <div className="m-auto flex w-full max-w-[360px] flex-col justify-center text-center">
+      <div className="container m-auto flex w-full max-w-[360px] flex-col justify-center text-center">
         <Logo className="mx-auto" />
 
         <h1 className="mt-14 text-center text-[28px] font-bold">Welcome</h1>
