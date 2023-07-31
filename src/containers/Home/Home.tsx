@@ -9,7 +9,7 @@ export const HomePage = () => {
     <>
       <Navbar />
 
-      <main className="mt-32">
+      <main className="mt-16 md:mt-32">
         <header className="container mx-auto w-full">
           <div className="max-w-xl">
             <h1 className="font-mono text-[56px] font-bold leading-[60px]">
