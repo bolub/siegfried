@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { routes } from "@/routes";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -30,10 +29,6 @@ interface AppshellProps {
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
   const router = useRouter();
-
-  const handleLogout = () => {
-    void signOut();
-  };
 
   return (
     <>
