@@ -6,17 +6,21 @@ import { type GetServerSidePropsContext } from "next";
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(ctx);
   const userId = session?.user?.id;
-  if (!userId) {
-    return {
-      props: {},
-      redirect: {
-        destination: routes.login(),
-        permanent: false,
-      },
-    };
-  }
+
+  // if (!userId) {
+  //   return {
+  //     props: {},
+  //     redirect: {
+  //       destination: routes.login(),
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
   return {
-    props: {},
+    props: {
+      userId,
+    },
   };
 };
 
