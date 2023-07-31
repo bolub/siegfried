@@ -29,7 +29,7 @@ interface AppshellProps {
 }
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
-  // const router = useRouter();
+  const router = useRouter();
   // const { data } = useSession();
 
   // const handleLogout = () => {
@@ -41,7 +41,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
       <nav className="container mx-auto flex h-[94px] w-full items-center">
         <Logo />
 
-        {/* <ul className="mx-auto flex space-x-4">
+        <ul className="mx-auto flex space-x-4">
           {navItems.map((item) => {
             const isActive = router.pathname === item.href;
             return (
@@ -61,7 +61,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
               </li>
             );
           })}
-        </ul> */}
+        </ul>
 
         {/* <DropdownMenu>
           <DropdownMenuTrigger>
