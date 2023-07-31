@@ -29,19 +29,19 @@ interface AppshellProps {
 }
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
-  const router = useRouter();
-  const { data } = useSession();
+  // const router = useRouter();
+  // const { data } = useSession();
 
-  const handleLogout = () => {
-    void signOut();
-  };
+  // const handleLogout = () => {
+  //   void signOut();
+  // };
 
   return (
     <>
       <nav className="container mx-auto flex h-[94px] w-full items-center">
         <Logo />
 
-        <ul className="mx-auto flex space-x-4">
+        {/* <ul className="mx-auto flex space-x-4">
           {navItems.map((item) => {
             const isActive = router.pathname === item.href;
             return (
@@ -61,9 +61,9 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
               </li>
             );
           })}
-        </ul>
+        </ul> */}
 
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage src={data?.user.image ?? ""} />
@@ -76,7 +76,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </nav>
 
       <div className="py-10">{children}</div>

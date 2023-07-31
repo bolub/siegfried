@@ -23,13 +23,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 };
 
 export default function Dashboard() {
-  const session = useSession();
-  console.log(session);
   return (
     <>
-      {/* <Appshell> */}
-      <p>Hello from dashboard</p>
-      {/* </Appshell> */}
+      <Appshell>
+        <p>Hello from dashboard</p>
+      </Appshell>
     </>
   );
 }
