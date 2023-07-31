@@ -9,9 +9,8 @@ export const getServerSideProps = async ({
   res,
 }: GetServerSidePropsContext) => {
   const session = await getServerSession(req, res, authOptions);
-  const userId = session?.user?.id;
 
-  if (!userId) {
+  if (session?.user && session.user.id) {
     return {
       redirect: {
         destination: routes.dashboard(),
