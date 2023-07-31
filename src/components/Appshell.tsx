@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { routes } from "@/routes";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -30,11 +30,10 @@ interface AppshellProps {
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
   const router = useRouter();
-  const { data } = useSession();
 
-  // const handleLogout = () => {
-  //   void signOut();
-  // };
+  const handleLogout = () => {
+    void signOut();
+  };
 
   return (
     <>
@@ -66,9 +65,14 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src={data?.user.image ?? ""} />
+              <AvatarImage
+              //  src={data?.user.image ?? ""}
+              />
 
-              <AvatarFallback>{data?.user.name}</AvatarFallback>
+              <AvatarFallback>
+                Bolu Test
+                {/* {data?.user.name} */}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
