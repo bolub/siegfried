@@ -30,7 +30,9 @@ interface AppshellProps {
 
 export const Appshell: FC<AppshellProps> = ({ children }) => {
   const router = useRouter();
-  // const { data } = useSession();
+  const { data } = useSession();
+
+  console.log(data);
 
   const handleLogout = () => {
     void signOut();
