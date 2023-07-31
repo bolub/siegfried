@@ -1,7 +1,7 @@
 import { Appshell } from "@/components/Appshell";
-import { routes } from "@/routes";
-import { getServerAuthSession } from "@/server/auth";
-import { type GetServerSidePropsContext } from "next";
+// import { routes } from "@/routes";
+// import { getServerAuthSession } from "@/server/auth";
+// import { type GetServerSidePropsContext } from "next";
 
 // export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 //   const session = await getServerAuthSession(ctx);
