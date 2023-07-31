@@ -1,29 +1,26 @@
 import { Appshell } from "@/components/Appshell";
 import { useSession } from "next-auth/react";
-// import { routes } from "@/routes";
-// import { authOptions } from "@/server/auth";
-// import { type GetServerSidePropsContext } from "next";
-// import { getServerSession } from "next-auth";
+import { type GetServerSidePropsContext } from "next";
+import { getServerAuthSession } from "@/server/auth";
 
-// export const getServerSideProps = async ({
-//   req,
-//   res,
-// }: GetServerSidePropsContext) => {
-//   const session = await getServerSession(req, res, authOptions);
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getServerAuthSession(ctx);
+  const userId = session?.user?.id;
 
-//   if (session?.user && session.user.id) {
-//     return {
-//       redirect: {
-//         destination: routes.dashboard(),
-//         permanent: false,
-//       },
-//     };
-//   } else {
-//     return {
-//       props: {},
-//     };
-//   }
-// };
+  if (!userId) {
+    return {
+      props: {},
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default function Dashboard() {
   const session = useSession();
