@@ -26,8 +26,10 @@ export default function Dashboard() {
   const session = useSession();
   console.log(session);
   return (
-    <Appshell>
+    <>
+      {/* <Appshell> */}
       <p>Hello from dashboard</p>
-    </Appshell>
+      {/* </Appshell> */}
+    </>
   );
 }
