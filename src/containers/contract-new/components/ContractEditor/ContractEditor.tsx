@@ -1,26 +1,32 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from "react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import { type ContractFormControlType } from "@/containers/contract-new/NewContract";
 import { TipTapEditor } from "./TipTapEditor";
+import { Controller } from "react-hook-form";
 
 export const ContractEditor = ({
-  register,
+  control,
 }: {
-  register: ContractFormRegisterType;
+  control: ContractFormControlType;
 }) => {
   return (
     <div className="container mx-auto my-10">
-      <div className="ml-16 w-full max-w-[748px] border bg-white p-8">
-        <TipTapEditor />
-
-        {/* <textarea
-          className="w-full rounded-none text-base focus-visible:outline-none"
-          autoFocus
-          {...register("contractContent", {
-            required: true,
-          })}
-        ></textarea> */}
-      </div>
+      <Controller
+        name="contractContent"
+        control={control}
+        render={({ field, fieldState }) => (
+          <TipTapEditor
+            description={field.value}
+            onChange={field.onChange}
+            error={fieldState?.error}
+          />
+        )}
+        rules={{
+          required: {
+            value: true,
+            message: "Please add contract content",
+          },
+        }}
+      />
     </div>
   );
 };
