@@ -1,4 +1,4 @@
-import { LoginPage } from "@/containers/login/Login";
+import { LoginPage } from "@/containers/login-page/Login";
 import { routes } from "@/routes";
 import { getServerAuthSession } from "@/server/auth";
 import { type GetServerSidePropsContext } from "next";
