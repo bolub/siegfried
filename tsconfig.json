@@ -24,7 +24,10 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@/containers/*": [
+        "./src/containers/*"
+      ],
     }
   },
   "include": [
