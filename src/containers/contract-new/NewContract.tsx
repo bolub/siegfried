@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 
 import React from "react";
 import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
@@ -23,7 +24,9 @@ export type ContractFormRegisterType = UseFormRegister<ContractFormData>;
 export const NewContractPage = () => {
   const { handleSubmit, register } = useForm<ContractFormData>();
 
-  const onSubmit: SubmitHandler<ContractFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ContractFormData> = (data) => {
+    console.log(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
