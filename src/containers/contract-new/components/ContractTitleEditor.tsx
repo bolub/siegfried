@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
+import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -12,7 +14,11 @@ const TopBarContainer = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const ContractTitleEditor = () => {
+export const ContractTitleEditor = ({
+  register,
+}: {
+  register: ContractFormRegisterType;
+}) => {
   return (
     <TopBarContainer>
       <div className="flex items-center">
@@ -22,9 +28,14 @@ export const ContractTitleEditor = () => {
 
         <div className="flex items-center">
           <FileTextIcon className="mr-2 h-6 w-6 stroke-2" />
-          <h1 className="font-mono text-base font-bold">
-            Boluwatife Abiola - Frontend Developer Contract
-          </h1>
+          <input
+            placeholder="New Contract"
+            className="rounded-none font-mono text-base font-bold focus-visible:outline-none"
+            {...register("contractName", {
+              required: true,
+              value: "Untitled Contract",
+            })}
+          />
         </div>
       </div>
     </TopBarContainer>
