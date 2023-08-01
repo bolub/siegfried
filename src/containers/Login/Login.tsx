@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import React from "react";
-import { GoogleIcon } from "@/containers/Login/GoogleIcon";
+import { GoogleIcon } from "@/containers/login/GoogleIcon";
 
 export const LoginPage = () => {
   const handleSignIn = () => {
