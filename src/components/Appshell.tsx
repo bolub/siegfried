@@ -79,7 +79,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
         </DropdownMenu>
       </nav>
 
-      <div className="py-10">{children}</div>
+      <div className="container mx-auto w-full">{children}</div>
     </>
   );
 };
