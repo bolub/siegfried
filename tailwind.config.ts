@@ -62,6 +62,9 @@ export default {
       height: {
         "22": "88px",
       },
+      margin: {
+        "22": "88px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
