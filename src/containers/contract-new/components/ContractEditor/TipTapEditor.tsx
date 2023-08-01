@@ -11,7 +11,10 @@ import {
   ItalicIcon,
   List,
   StrikethroughIcon,
+  Code2Icon,
 } from "lucide-react";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { lowlight } from "lowlight/lib/core";
 import { cn } from "@/lib/utils";
 
 export const TipTapEditor = () => {
@@ -23,15 +26,15 @@ export const TipTapEditor = () => {
       }),
       BulletList,
       ListItem,
-      // CodeBlockLowlight.configure({
-      //   lowlight,
-      //   defaultLanguage: "js",
-      // }),
+      CodeBlockLowlight.configure({
+        lowlight,
+        defaultLanguage: "js",
+      }),
     ],
     content: "<p>Hello World! 🌎️</p>",
     editorProps: {
       attributes: {
-        class: "w-full rounded-none text-base focus-visible:outline-none",
+        class: "w-full rounded-none text-base focus-visible:outline-none prose",
       },
     },
   });
@@ -113,6 +116,17 @@ export const TipTapEditor = () => {
               })}
             >
               <List className="h-4 w-4 text-lg" />
+            </button>
+
+            <button
+              aria-label="codeBlock"
+              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+              className={cn("rounded-md p-3", {
+                "text-dark bg-gray-100": editor.isActive("codeBlock"),
+                "text-white": !editor.isActive("codeBlock"),
+              })}
+            >
+              <Code2Icon className="h-4 w-4 text-lg" />
             </button>
 
             {/* 
