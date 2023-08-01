@@ -1,11 +1,14 @@
 import React from "react";
-import { TopBar } from "@/containers/contract-new/components/TopBar";
+import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
+import { ContractEditor } from "@/containers/contract-new/components/ContractEditor";
+import { ContractSigners } from "@/containers/contract-new/components/ContractSigners";
 
 export const NewContractPage = () => {
   return (
     <div>
-      <TopBar />
-      hi
+      <ContractTitleEditor />
+      <ContractEditor />
+      <ContractSigners />
     </div>
   );
 };
