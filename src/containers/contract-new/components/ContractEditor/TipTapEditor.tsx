@@ -40,7 +40,7 @@ export const TipTapEditor = () => {
     <>
       {editor && (
         <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <div className="flex gap-2 rounded-lg bg-gray-600 px-1 py-2">
+          <div className="flex gap-2 rounded-lg bg-gray-900 px-1 py-2">
             <button
               aria-label="Bold"
               onClick={() => editor.chain().focus().toggleBold().run()}
