@@ -1,5 +1,8 @@
 export const routes = {
   login: () => "/login",
   dashboard: () => "/dashboard",
-  contracts: () => "/contracts",
+  contracts: {
+    list: () => "/contracts",
+    new: () => "/contracts/new",
+  },
 };
