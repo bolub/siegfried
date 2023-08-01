@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from "react";
 import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { TipTapEditor } from "./TipTapEditor";
 
 export const ContractEditor = ({
