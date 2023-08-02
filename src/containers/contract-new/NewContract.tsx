@@ -11,6 +11,7 @@ import {
   type Control,
 } from "react-hook-form";
 import { z } from "zod";
+import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
 
 const formDataSchema = z.object({
   contractName: z.string(),
@@ -23,6 +24,11 @@ export type ContractFormRegisterType = UseFormRegister<ContractFormData>;
 export type ContractFormControlType = Control<ContractFormData>;
 
 export const NewContractPage = () => {
+  useLeavePageConfirm({
+    message:
+      "Are you sure you want to leave this page? you still have unsaved changes",
+  });
+
   const { handleSubmit, register, control } = useForm<ContractFormData>();
 
   const onSubmit: SubmitHandler<ContractFormData> = (data) => {
