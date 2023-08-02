@@ -7,7 +7,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "email:dev": "cd react-email && npm run e:dev"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
@@ -40,6 +41,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
     "react-use": "^17.4.0",
+    "resend": "^0.17.2",
     "superjson": "1.12.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
