@@ -46,7 +46,7 @@ export const TipTapEditor = ({
     ],
     editorProps: {
       attributes: {
-        class: "w-full rounded-none text-base focus-visible:outline-none",
+        class: "w-full rounded-none text-base focus-visible:outline-none prose",
       },
     },
     content: description,
@@ -63,6 +63,7 @@ export const TipTapEditor = ({
             <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
               <div className="flex gap-2 rounded-lg bg-gray-900 px-1 py-2">
                 <button
+                  type="button"
                   aria-label="Bold"
                   onClick={() => editor.chain().focus().toggleBold().run()}
                   className={cn("rounded-md p-3", {
@@ -74,6 +75,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="Italic"
                   onClick={() => editor.chain().focus().toggleItalic().run()}
                   className={cn("rounded-md p-3", {
@@ -85,6 +87,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="Strike"
                   onClick={() => editor.chain().focus().toggleStrike().run()}
                   className={cn("rounded-md p-3", {
@@ -96,6 +99,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="H1"
                   onClick={() =>
                     editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -111,6 +115,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="H2"
                   onClick={() =>
                     editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -126,6 +131,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="BulletList"
                   onClick={() =>
                     editor.chain().focus().toggleBulletList().run()
@@ -139,6 +145,7 @@ export const TipTapEditor = ({
                 </button>
 
                 <button
+                  type="button"
                   aria-label="codeBlock"
                   onClick={() => editor.chain().focus().toggleCodeBlock().run()}
                   className={cn("rounded-md p-3", {
@@ -152,7 +159,9 @@ export const TipTapEditor = ({
             </BubbleMenu>
           )}
 
-          <EditorContent editor={editor} placeholder="Enter Contract Content" />
+          <div>
+            <EditorContent editor={editor} />
+          </div>
         </div>
 
         {error && <p className="mt-5 text-sm text-red-500">{error.message}</p>}
