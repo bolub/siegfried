@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
 import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import Link from "next/link";
+import { routes } from "@/routes";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -22,8 +24,16 @@ export const ContractTitleEditor = ({
   return (
     <TopBarContainer>
       <div className="flex items-center">
-        <Button size="icon" variant="secondary" className="mr-5 rounded-full">
-          <ArrowLeftIcon className="h-5 w-5 stroke-2" />
+        <Button
+          type="button"
+          size="icon"
+          variant="secondary"
+          className="mr-5 rounded-full"
+          asChild
+        >
+          <Link href={routes.contracts.list()}>
+            <ArrowLeftIcon className="h-5 w-5 stroke-2" />
+          </Link>
         </Button>
 
         <div className="flex items-center">
