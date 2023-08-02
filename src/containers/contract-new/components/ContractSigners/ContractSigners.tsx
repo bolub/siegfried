@@ -1,9 +1,8 @@
 import { PlusIcon, Users2Icon } from "lucide-react";
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import { SignerInputs } from "./SignerInputs";
+import { useState } from "react";
 
 export const ContractSignersFooter = () => {
   return (
@@ -23,8 +22,8 @@ export const ContractSignersInner = ({
 }: {
   register: ContractFormRegisterType;
 }) => {
-  const [indexes, setIndexes] = React.useState<number[]>([0]);
-  const [counter, setCounter] = React.useState(0);
+  const [indexes, setIndexes] = useState<number[]>([0]);
+  const [counter, setCounter] = useState(0);
 
   const addNewSigner = () => {
     if (indexes.length === 2) return;
@@ -35,54 +34,20 @@ export const ContractSignersInner = ({
 
   return (
     <div className="">
-      {indexes.map((field, index) => {
-        const fieldName = `signers[${index + 1}]`;
-        const regName = `signers.signer${index}.name` as `signers.${string}`;
-        const regEmail = `signers.signer${index}.email` as `signers.${string}`;
-
+      {indexes.map((index) => {
         return (
-          <div key={fieldName} className="py-7 first:border-b">
-            <div className="grid w-full gap-2">
-              <Label htmlFor="name">Signer Name</Label>
-              <Input
-                type="text"
-                id={regName}
-                placeholder="Enter signer name"
-                {...register(regName, {
-                  required: true,
-                })}
-              />
-            </div>
-
-            <div className="mt-6 grid w-full gap-2">
-              <Label htmlFor="email">Signer Email</Label>
-              <Input
-                type="email"
-                id={regEmail}
-                placeholder="Enter signer email"
-                {...register(regEmail, {
-                  required: true,
-                })}
-              />
-            </div>
-
-            {indexes.length > 1 && (
-              <Button
-                type="button"
-                onClick={() => {
-                  setIndexes((prevIndexes) => [
-                    ...prevIndexes.filter((item) => item !== index),
-                  ]);
-                  setCounter((prevCounter) => prevCounter - 1);
-                }}
-                className="mt-4 bg-red-100 text-sm text-red-500"
-                variant="secondary"
-                size="sm"
-              >
-                Remove
-              </Button>
-            )}
-          </div>
+          <SignerInputs
+            key={`signers[${index + 1}]`}
+            index={index}
+            register={register}
+            isMultipleSignersAdded={indexes.length > 1}
+            onRemove={() => {
+              setIndexes((prevIndexes) => [
+                ...prevIndexes.filter((item) => item !== index),
+              ]);
+              setCounter((prevCounter) => prevCounter - 1);
+            }}
+          />
         );
       })}
 
