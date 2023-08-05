@@ -28,6 +28,9 @@
       "@/containers/*": [
         "./src/containers/*"
       ],
+      "@/emails/*": [
+        "./emails/*"
+      ]
     }
   },
   "include": [
