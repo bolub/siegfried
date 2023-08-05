@@ -1,11 +1,18 @@
 import { Logo } from "@/components/Logo";
+import { Button } from "@/components/ui/button";
+import { routes } from "@/routes";
 import { type Contract } from "@prisma/client";
+import Link from "next/link";
 import React from "react";
 
 const NoContractDataAvailable = () => {
   return (
-    <div className="flex items-center justify-center">
-      <p className="font-mono text-lg">Contract data not available</p>
+    <div className="flex h-screen flex-col items-center justify-center border">
+      <p className="font-mono text-lg font-bold">Contract data not available</p>
+
+      <Link href={routes.home()}>
+        <Button className="mt-6">Go to homepage</Button>
+      </Link>
     </div>
   );
 };
