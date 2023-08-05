@@ -10,9 +10,12 @@ import { type ContractFormData } from "@/containers/contract-new/components/Cont
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { useRouter } from "next/router";
+import { routes } from "@/routes";
 
 export const NewContractPage = () => {
   const { toast } = useToast();
+  const router = useRouter();
 
   useLeavePageConfirm({
     message:
@@ -21,12 +24,13 @@ export const NewContractPage = () => {
 
   const { mutate: createContract, isLoading: createContractLoading } =
     api.contract.create.useMutation({
-      onSuccess(data) {
-        console.log(data);
+      onSuccess() {
         toast({
           title: "Success",
           description: "Contract sent successfully",
         });
+
+        void router.push(routes.contracts.all());
       },
       onError() {
         toast({
