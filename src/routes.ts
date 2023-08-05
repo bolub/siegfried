@@ -2,7 +2,8 @@ export const routes = {
   login: () => "/login",
   dashboard: () => "/dashboard",
   contracts: {
-    list: () => "/contracts",
+    all: () => "/contracts",
     new: () => "/contracts/new",
+    view: (id: string) => `/contracts/${id}`,
   },
 };
