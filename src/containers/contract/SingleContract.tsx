@@ -2,7 +2,6 @@ import { Logo } from "@/components/Logo";
 import SignatureCanvas from "react-signature-canvas";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/routes";
-import { type Contract } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 import { type SingleContractType } from "@/pages/contracts/[id]";
