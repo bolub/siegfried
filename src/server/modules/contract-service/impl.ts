@@ -8,6 +8,7 @@ import { type ContractServiceType } from "@/server/modules/contract-service/inte
 import { transporter } from "@/server/modules/email-service/impl";
 import { type Contract as PrismaContract } from "@prisma/client";
 import { render } from "@react-email/render";
+import { TokenService } from "../token-service/impl";
 
 const sendContractEmailsToSigners = ({
   contract,
@@ -20,6 +21,10 @@ const sendContractEmailsToSigners = ({
     name?: string | null;
   };
 }) => {
+  const token = TokenService.generateToken({
+    contractId: contract.id,
+  });
+
   contract.recipients.forEach(async (signer) => {
     await transporter.sendMail({
       from: env.CONTACT_EMAIL,
@@ -31,7 +36,7 @@ const sendContractEmailsToSigners = ({
           contractName: contract.name,
           contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
             contract.id
-          )}`,
+          )}?token=${token}`,
           user: {
             name: user.name ?? "",
           },

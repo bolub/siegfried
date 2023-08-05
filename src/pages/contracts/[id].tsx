@@ -7,6 +7,7 @@ import {
 } from "next";
 import { prisma } from "@/server/db";
 import { type ContractRecipient, type Contract } from "@prisma/client";
+import { TokenService } from "@/server/modules/token-service/impl";
 
 export type SingleContractType = Contract & {
   recipients: ContractRecipient[];
@@ -15,7 +16,19 @@ export type SingleContractType = Contract & {
 export const getServerSideProps: GetServerSideProps<{
   contract?: SingleContractType | null;
 }> = async (ctx: GetServerSidePropsContext) => {
-  const { id } = ctx.query as { id: string };
+  const { id, token } = ctx.query as { id: string; token: string };
+
+  try {
+    TokenService.verifyToken(token) as {
+      contractId: string;
+    };
+  } catch (error) {
+    return {
+      props: {
+        contract: null,
+      },
+    };
+  }
 
   const contract = await prisma.contract.findUnique({
     where: {
