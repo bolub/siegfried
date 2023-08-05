@@ -4,24 +4,9 @@ import React from "react";
 import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contract-new/components/ContractEditor/ContractEditor";
 import { ContractSigners } from "@/containers/contract-new/components/ContractSigners/ContractSigners";
-import {
-  useForm,
-  type SubmitHandler,
-  type UseFormRegister,
-  type Control,
-} from "react-hook-form";
-import { z } from "zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
-
-const formDataSchema = z.object({
-  contractName: z.string(),
-  contractContent: z.string(),
-  signers: z.any(),
-});
-
-export type ContractFormData = z.infer<typeof formDataSchema>;
-export type ContractFormRegisterType = UseFormRegister<ContractFormData>;
-export type ContractFormControlType = Control<ContractFormData>;
+import { type ContractFormData } from "./components/ContractSigners/interface";
 
 export const NewContractPage = () => {
   useLeavePageConfirm({
