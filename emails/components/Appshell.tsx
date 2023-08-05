@@ -38,10 +38,10 @@ export const Appshell = ({ children }: { children: ReactNode }) => {
             rel="stylesheet"
           />
         </Head>
-        <Preview>Log in with this magic link</Preview>
-        <Body className="bg-background-100 font-sans">
-          <Section>
-            <Container className="my-auto w-full max-w-[532px] bg-white px-10 pb-16 pt-2">
+        <Preview>You have a new contract to sign</Preview>
+        <Body className="bg-background-100 h-screen font-sans">
+          <Section className="h-full">
+            <Container className="m-auto w-full max-w-[532px] bg-white px-10 pb-16 pt-2">
               <EmailLogo />
 
               <div className="mt-4">{children}</div>

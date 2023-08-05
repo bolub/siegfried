@@ -5,16 +5,23 @@ import { Button, Text } from "@react-email/components";
 const Contract = ({
   contractName = "Frontend Contract Agreement",
   contractUrl = "https://example.com",
+  user = {
+    name: "Chilaka Chinedu",
+  },
 }: {
+  user: {
+    name: string;
+  };
   contractName: string;
   contractUrl: string;
 }) => {
   return (
     <Appshell>
-      <Text className="text-base font-bold">Hello</Text>
+      <Text className="text-xl font-bold">Hello,</Text>
 
       <Text className="mt-5 text-base">
-        Chilaka Chinedu has sent you a <b>{contractName}</b> to review and sign
+        {user.name} has sent you a{" "}
+        <span className="font-bold">{contractName}</span> to review and sign
       </Text>
 
       <Button
