@@ -1,6 +1,7 @@
 import { type Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
-export default {
+const tailwindConfig = {
   content: ["./src/**/*.{html,js}"],
 
   theme: {
@@ -11,10 +12,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["DM Sans"],
-        mono: ["Space Mono"],
+        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+        mono: ["Space Mono", ...defaultTheme.fontFamily.sans],
       },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
+
+export default tailwindConfig;
