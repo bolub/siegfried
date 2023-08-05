@@ -1,6 +1,7 @@
 import { Logo } from "@/components/Logo";
-import { type Contract } from "@prisma/client";
+import SignatureCanvas from "react-signature-canvas";
 import React from "react";
+import { type SingleContractType } from "@/pages/contracts/[id]";
 
 const NoContractDataAvailable = () => {
   return (
@@ -13,9 +14,11 @@ const NoContractDataAvailable = () => {
 export const SingleContractPage = ({
   contract,
 }: {
-  contract?: Contract | null;
+  contract?: SingleContractType | null;
 }) => {
   if (!contract) return <NoContractDataAvailable />;
+
+  console.log(contract.recipients);
 
   return (
     <>
@@ -31,6 +34,15 @@ export const SingleContractPage = ({
         <div
           dangerouslySetInnerHTML={{
             __html: contract.content,
+          }}
+        />
+
+        <SignatureCanvas
+          penColor="green"
+          canvasProps={{
+            width: 500,
+            height: 200,
+            className: "border mx-auto mt-10 bg-white",
           }}
         />
       </main>
