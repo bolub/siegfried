@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
 import Link from "next/link";
 import { routes } from "@/routes";
 

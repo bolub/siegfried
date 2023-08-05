@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { type ContractFormRegisterType } from "../../NewContract";
+import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
 
 export const SignerInputs = ({
   index,
@@ -16,31 +16,31 @@ export const SignerInputs = ({
   register: ContractFormRegisterType;
   isMultipleSignersAdded: boolean;
 }) => {
-  const regName = `signers.signer${index}.name` as `signers.${string}`;
-  const regEmail = `signers.signer${index}.email` as `signers.${string}`;
+  const signerNameLabel = `signers.${index}.name` as const;
+  const signerEmailLabel = `signers.${index}.email` as const;
 
   return (
     <>
       <div className="py-7 first:border-b">
         <div className="grid w-full gap-2">
-          <Label htmlFor="name">Signer Name</Label>
+          <Label htmlFor={signerNameLabel}>Signer Name</Label>
           <Input
             type="text"
-            id={regName}
+            id={signerNameLabel}
             placeholder="Enter signer name"
-            {...register(regName, {
+            {...register(signerNameLabel, {
               required: true,
             })}
           />
         </div>
 
         <div className="mt-6 grid w-full gap-2">
-          <Label htmlFor="email">Signer Email</Label>
+          <Label htmlFor={signerEmailLabel}>Signer Email</Label>
           <Input
             type="email"
-            id={regEmail}
+            id={signerEmailLabel}
             placeholder="Enter signer email"
-            {...register(regEmail, {
+            {...register(signerEmailLabel, {
               required: true,
             })}
           />

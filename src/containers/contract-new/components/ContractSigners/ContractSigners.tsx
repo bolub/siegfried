@@ -1,16 +1,25 @@
 import { PlusIcon, Users2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
 import { SignerInputs } from "./SignerInputs";
 import { useState } from "react";
 
-export const ContractSignersFooter = () => {
+export const ContractSignersFooter = ({
+  createContractLoading,
+}: {
+  createContractLoading: boolean;
+}) => {
   return (
     <div className="mb-22 mt-auto w-full border-t p-6">
-      <Button variant="secondary" className="w-full" size="lg">
+      <Button type="button" variant="secondary" className="w-full" size="lg">
         Preview
       </Button>
-      <Button type="submit" className="mt-3 w-full" size="lg">
+      <Button
+        type="submit"
+        className="mt-3 w-full"
+        size="lg"
+        isLoading={createContractLoading}
+      >
         Send Contract
       </Button>
     </div>
@@ -66,8 +75,10 @@ export const ContractSignersInner = ({
 
 export const ContractSigners = ({
   register,
+  createContractLoading,
 }: {
   register: ContractFormRegisterType;
+  createContractLoading: boolean;
 }) => {
   return (
     <div className="fixed right-0 top-0 mt-22 h-full w-full max-w-[424px] bg-white">
@@ -81,7 +92,7 @@ export const ContractSigners = ({
           <ContractSignersInner register={register} />
         </div>
 
-        <ContractSignersFooter />
+        <ContractSignersFooter createContractLoading={createContractLoading} />
       </div>
     </div>
   );

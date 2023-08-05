@@ -1,4 +1,4 @@
-import { transporter } from "@/server/modules/nodemailer/impl";
+import { transporter } from "@/server/modules/email-service/impl";
 import { render } from "@react-email/render";
 import { type Example } from "@/server/modules/example/interface";
 import Contract from "@/emails/contract";
