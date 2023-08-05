@@ -7,6 +7,7 @@ import { dm_sans, space_mono } from "theme/fonts";
 import NextProgress from "next-progress";
 import { useRouter } from "next/router";
 import { routes } from "@/routes";
+import { Toaster } from "@/components/ui/toaster";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -21,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       )}
 
       <div className={`${dm_sans.variable} ${space_mono.variable} font-sans`}>
+        <Toaster />
         <Component {...pageProps} />
       </div>
     </SessionProvider>
