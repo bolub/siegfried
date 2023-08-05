@@ -28,6 +28,7 @@ const sendContractEmailsToSigners = ({
       html: render(
         Contract({
           contractName: contract.contractName,
+          // contract id needs to be part of this url
           contractUrl: "https://boluabiola.com",
           user: {
             name: user.name ?? "",
