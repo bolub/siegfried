@@ -19,9 +19,17 @@ export const getServerSideProps: GetServerSideProps<{
   const { id, token } = ctx.query as { id: string; token: string };
 
   try {
-    TokenService.verifyToken(token) as {
+    const { contractId } = TokenService.verifyToken(token) as {
       contractId: string;
     };
+
+    if (contractId !== id) {
+      return {
+        props: {
+          contract: null,
+        },
+      };
+    }
   } catch (error) {
     return {
       props: {
