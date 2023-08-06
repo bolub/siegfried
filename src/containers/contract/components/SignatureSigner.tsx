@@ -12,7 +12,7 @@ export const SignatureSigner = ({
   signature: string;
   setSignature: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const sigPad = useRef(null);
+  const sigPad = useRef<SignatureCanvas>(null);
 
   const clear = () => {
     if (sigPad.current) {
