@@ -4,7 +4,7 @@ export const routes = {
   dashboard: () => "/dashboard" as const,
   contracts: {
     all: () => "/contracts" as const,
-    new: () => "/contracts/new as const",
+    new: () => "/contracts/new" as const,
     view: (id: string) => `/contracts/${id}` as const,
   },
 };
