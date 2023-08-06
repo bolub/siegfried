@@ -1,21 +1,25 @@
 import { Logo } from "@/components/Logo";
-import SignatureCanvas from "react-signature-canvas";
-import { Button } from "@/components/ui/button";
-import { routes } from "@/routes";
-import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { type SingleContractType } from "@/pages/contracts/[id]";
+import { useRouter } from "next/router";
+import { NoContractDataAvailable } from "./components/NoContractAvailable";
+import { type ContractRecipient } from "@prisma/client";
+import { formatDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { SignatureSigner } from "./components/SignatureSigner";
 
-const NoContractDataAvailable = () => {
-  return (
-    <div className="flex h-screen flex-col items-center justify-center border">
-      <p className="font-mono text-lg font-bold">Contract data not available</p>
+const ContractUser = ({
+  userId,
+  recipients,
+}: {
+  userId: string;
+  recipients: ContractRecipient[];
+}) => {
+  if (!recipients) return;
 
-      <Link href={routes.home()}>
-        <Button className="mt-6">Go to homepage</Button>
-      </Link>
-    </div>
-  );
+  return recipients.filter((recipient) => {
+    return recipient.id === userId;
+  })[0];
 };
 
 export const SingleContractPage = ({
@@ -23,9 +27,15 @@ export const SingleContractPage = ({
 }: {
   contract?: SingleContractType | null;
 }) => {
+  const { query } = useRouter();
+  const [signature, setSignature] = useState("");
+
   if (!contract) return <NoContractDataAvailable />;
 
-  console.log(contract.recipients);
+  const user = ContractUser({
+    userId: query.user as string,
+    recipients: contract.recipients,
+  });
 
   return (
     <>
@@ -37,21 +47,29 @@ export const SingleContractPage = ({
         </div>
       </header>
 
-      <main className="prose mx-auto mb-32 mt-16 w-full max-w-[800px]">
-        <div
+      <main className=" mx-auto mb-32 mt-16 w-full max-w-[800px]">
+        <section
+          id="content"
+          className="prose"
           dangerouslySetInnerHTML={{
             __html: contract.content,
           }}
         />
 
-        <SignatureCanvas
-          penColor="green"
-          canvasProps={{
-            width: 500,
-            height: 200,
-            className: "border mx-auto mt-10 bg-white",
-          }}
-        />
+        <section id="signature" className="mt-10 border-t pt-12">
+          <SignatureSigner signature={signature} setSignature={setSignature} />
+
+          <div className="mt-12 text-center">
+            <p className="font-mono text-base font-bold">{user?.name}</p>
+            <p className="mt-1 text-base">{formatDate(new Date())}</p>
+          </div>
+        </section>
+
+        <section id="submit" className="mt-10 flex border-t">
+          <Button disabled={!signature} className="mx-auto mt-10">
+            Finish and Submit
+          </Button>
+        </section>
       </main>
     </>
   );
