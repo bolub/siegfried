@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { type ContractSigners } from "@/containers/contract-new/components/ContractSigners/interface";
 import Contract from "@/emails/contract";
 import { env } from "@/env.mjs";
 import { routes } from "@/routes";
 import { prisma } from "@/server/db";
 import { type ContractServiceType } from "@/server/modules/contract-service/interface";
 import { transporter } from "@/server/modules/email-service/impl";
-import { type Contract as PrismaContract } from "@prisma/client";
+import {
+  type Contract as PrismaContract,
+  type ContractRecipient,
+} from "@prisma/client";
 import { render } from "@react-email/render";
 import { TokenService } from "../token-service/impl";
 
@@ -15,7 +17,7 @@ const sendContractEmailsToSigners = ({
   user,
 }: {
   contract: PrismaContract & {
-    recipients: ContractSigners;
+    recipients: ContractRecipient[];
   };
   user: {
     name?: string | null;
@@ -36,7 +38,7 @@ const sendContractEmailsToSigners = ({
           contractName: contract.name,
           contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
             contract.id
-          )}?token=${token}`,
+          )}?token=${token}&user=${signer.id}`,
           user: {
             name: user.name ?? "",
           },
