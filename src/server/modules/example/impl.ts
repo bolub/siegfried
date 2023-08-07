@@ -1,9 +1,9 @@
 import { transporter } from "@/server/modules/email-service/impl";
 import { render } from "@react-email/render";
-import { type Example } from "@/server/modules/example/interface";
+import { type ExampleTypes } from "@/server/modules/example/interface";
 import Contract from "@/emails/contract";
 
-const testEmailSending: Example["testEmailSending"] = async () => {
+const testEmailSending: ExampleTypes["testEmailSending"] = async () => {
   return await transporter
     .sendMail({
       from: "abiol5202@gmail.com",
@@ -28,4 +28,4 @@ const testEmailSending: Example["testEmailSending"] = async () => {
     });
 };
 
-export { testEmailSending };
+export const Example = { testEmailSending };
