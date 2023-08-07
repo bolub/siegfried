@@ -23,6 +23,9 @@ export const env = createEnv({
     RESEND_API_KEY: NonEmptySting,
     CONTACT_EMAIL: NonEmptySting,
     JWT_SECRET: NonEmptySting,
+    SUPABASE_URL: NonEmptySting,
+    SUPABASE_KEY: NonEmptySting,
+    SUPABASE_CONTRACTS_BUCKET: NonEmptySting,
   },
 
   client: {
@@ -39,6 +42,9 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     CONTACT_EMAIL: process.env.CONTACT_EMAIL,
     JWT_SECRET: process.env.JWT_SECRET,
+    SUPABASE_KEY: process.env.SUPABASE_KEY,
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_CONTRACTS_BUCKET: process.env.SUPABASE_CONTRACTS_BUCKET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
