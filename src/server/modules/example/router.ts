@@ -4,7 +4,10 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { testEmailSending } from "@/server/modules/example/impl";
+import { PdfService } from "@/server/modules/pdf-service/impl";
+import { transporter } from "@/server/modules/email-service/impl";
+import { render } from "@react-email/render";
+import Contract from "@/emails/contract";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -20,7 +23,35 @@ export const exampleRouter = createTRPCRouter({
   }),
 
   testEmailSending: publicProcedure.mutation(async () => {
-    const resp = await testEmailSending();
+    return await transporter
+      .sendMail({
+        from: "abiol5202@gmail.com",
+        to: "biolaseyi19@gmail.com",
+        subject: "Contract email test",
+        html: render(
+          Contract({
+            contractName: "Bolu Frontend Contract",
+            contractUrl: "https://boluabiola.com",
+            user: {
+              name: "Bolu Abiola",
+            },
+          })
+        ),
+      })
+      .then(() => {
+        return "email sent successfully";
+      })
+      .catch((e) => {
+        console.log(e);
+        return "Something happened";
+      });
+  }),
+
+  testGeneratePdf: publicProcedure.mutation(async () => {
+    const resp = await PdfService.generatePdf({
+      dynamicHTML:
+        "<h1>Installation</h1><p>Playwright Test was created specifically to accommodate the needs of end-to-end testing. Playwright supports all modern rendering engines including Chromium, WebKit, and Firefox. Test on Windows, Linux, and macOS, locally or on CI, headless or headed with native mobile emulation of Google Chrome for Android and Mobile Safari.</p><p><strong>You will learn</strong></p><ul><li><p>How to install Playwright</p></li><li><p>What's Installed</p></li><li><p>How to run the example test</p></li><li><p>How to open the HTML test report</p></li></ul>",
+    });
     return resp;
   }),
 });
