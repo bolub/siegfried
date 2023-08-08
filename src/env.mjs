@@ -26,6 +26,10 @@ export const env = createEnv({
     SUPABASE_URL: NonEmptySting,
     SUPABASE_KEY: NonEmptySting,
     SUPABASE_CONTRACTS_BUCKET: NonEmptySting,
+    EMAIL_HOST: NonEmptySting,
+    EMAIL_PORT: NonEmptySting.transform((v) => parseInt(v)),
+    EMAIL_USER_NAME: NonEmptySting,
+    EMAIL_USER_PASSWORD: NonEmptySting,
   },
 
   client: {
@@ -45,6 +49,10 @@ export const env = createEnv({
     SUPABASE_KEY: process.env.SUPABASE_KEY,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_CONTRACTS_BUCKET: process.env.SUPABASE_CONTRACTS_BUCKET,
+    EMAIL_HOST: process.env.EMAIL_HOST,
+    EMAIL_PORT: process.env.EMAIL_PORT,
+    EMAIL_USER_NAME: process.env.EMAIL_USER_NAME,
+    EMAIL_USER_PASSWORD: process.env.EMAIL_USER_PASSWORD,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
