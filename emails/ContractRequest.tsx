@@ -2,7 +2,7 @@ import React from "react";
 import { Appshell } from "./components/Appshell";
 import { Button, Text } from "@react-email/components";
 
-const Contract = ({
+export const ContractRequest = ({
   contractName = "Frontend Contract Agreement",
   contractUrl = "https://example.com",
   user = {
@@ -34,4 +34,4 @@ const Contract = ({
   );
 };
 
-export default Contract;
+export default ContractRequest;

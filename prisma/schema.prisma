@@ -45,6 +45,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    contracts     Contract[]
 }
 
 model VerificationToken {
@@ -75,10 +76,27 @@ model ContractRecipient {
     contract           Contract @relation(fields: [contractId], references: [id])
 }
 
+enum ContractStatus {
+    PENDING
+    SIGNED
+}
+
 model Contract {
     id                 String    @id @default(cuid())
+    name               String
     content            String
     createdAt          DateTime @default(now())
     updatedAt          DateTime @updatedAt
     recipients         ContractRecipient[]
+    status             ContractStatus
+    userId             String
+    user               User @relation(fields: [userId], references: [id])
+}
+
+model ContractDocument {
+    id                 String    @id @default(cuid())
+    storageId          String
+    contractId         String
+    createdAt          DateTime      @default(now())
+    userId             String
 }

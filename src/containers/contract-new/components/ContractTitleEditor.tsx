@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/NewContract";
+import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
 import Link from "next/link";
 import { routes } from "@/routes";
 
@@ -23,7 +22,7 @@ export const ContractTitleEditor = ({
 }) => {
   return (
     <TopBarContainer>
-      <div className="flex items-center">
+      <div className="flex w-full items-center">
         <Button
           type="button"
           size="icon"
@@ -31,16 +30,16 @@ export const ContractTitleEditor = ({
           className="mr-5 rounded-full"
           asChild
         >
-          <Link href={routes.contracts.list()}>
+          <Link href={routes.contracts.all()}>
             <ArrowLeftIcon className="h-5 w-5 stroke-2" />
           </Link>
         </Button>
 
-        <div className="flex items-center">
+        <div className="ml-2 flex w-full items-center">
           <FileTextIcon className="mr-2 h-6 w-6 stroke-2" />
           <input
             placeholder="New Contract"
-            className="rounded-none font-mono text-base font-bold focus-visible:outline-none"
+            className="w-full max-w-2xl rounded-none font-mono text-base font-bold focus-visible:outline-none"
             {...register("contractName", {
               required: true,
               value: "Untitled Contract",

@@ -1,8 +1,11 @@
 export const routes = {
-  login: () => "/login",
-  dashboard: () => "/dashboard",
+  home: () => "/" as const,
+  login: () => "/login" as const,
+  dashboard: () => "/dashboard" as const,
   contracts: {
-    list: () => "/contracts",
-    new: () => "/contracts/new",
+    all: () => "/contracts" as const,
+    new: () => "/contracts/new" as const,
+    view: (id: string) => `/contracts/${id}` as const,
+    signed: (name: string) => `/contracts/signed?name=${name}` as const,
   },
 };

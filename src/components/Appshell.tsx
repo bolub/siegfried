@@ -20,7 +20,7 @@ const navItems = [
   },
   {
     label: "Contracts",
-    href: routes.contracts.list(),
+    href: routes.contracts.all(),
   },
 ];
 
