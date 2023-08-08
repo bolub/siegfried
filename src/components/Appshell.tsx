@@ -38,48 +38,53 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
 
   return (
     <>
-      <nav className="container mx-auto flex h-[94px] w-full items-center">
-        <Logo />
+      <nav className="flex h-[94px] w-full items-center border-b bg-white">
+        <div className="container mx-auto flex items-center">
+          <Logo />
 
-        <ul className="mx-auto flex space-x-4">
-          {navItems.map((item) => {
-            const isActive = router.pathname === item.href;
-            return (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  className={clsx(
-                    "flex h-7 items-center justify-center rounded-lg px-3 py-[20px] text-[13px]",
-                    {
-                      "bg-[rgba(0,0,0,.08)] font-bold": isActive,
-                      "font-medium": !isActive,
-                    }
-                  )}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+          <ul className="mx-auto flex space-x-4">
+            {navItems.map((item) => {
+              const isActive = router.pathname === item.href;
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className={clsx(
+                      "flex h-7 items-center justify-center rounded-lg px-3 py-[20px] text-sm",
+                      {
+                        "bg-[rgba(0,0,0,.08)] font-bold": isActive,
+                        "font-medium": !isActive,
+                      }
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src={data?.user.image ?? ""} />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src={data?.user.image ?? ""} />
 
-              <AvatarFallback>{data?.user.name}</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <AvatarFallback>{data?.user.name}</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="cursor-pointer"
+              >
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </nav>
 
-      <div className="container mx-auto mt-12 w-full">{children}</div>
+      <div className="container mx-auto mt-16 w-full">{children}</div>
     </>
   );
 };
