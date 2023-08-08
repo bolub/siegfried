@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps<{
     },
     include: {
       recipients: true,
+      user: true,
     },
   });
 
