@@ -1,5 +1,5 @@
 export interface PdfServiceType {
-  generatePdf: (args: { html: string }) => Promise<{
+  generatePdf: (args: { html: string; name?: string }) => Promise<{
     pdfFilePath: string;
   }>;
 }

@@ -3,7 +3,10 @@ import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
 import fs from "fs";
 import path from "path";
 
-export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
+export const generatePdf: PdfServiceType["generatePdf"] = async ({
+  html,
+  name,
+}) => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
@@ -16,7 +19,11 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
 
   await browser.close();
 
-  const pdfFilePath = path.join(process.cwd(), "public", "generated-pdf.pdf");
+  const pdfFilePath = path.join(
+    process.cwd(),
+    "public",
+    `${name ?? "generated-pdf"}.pdf`
+  );
   fs.writeFileSync(pdfFilePath, pdfBuffer);
 
   return {
