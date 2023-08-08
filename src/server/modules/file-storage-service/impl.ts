@@ -33,7 +33,16 @@ const temporalUrl: FileStorageTypes["temporalUrl"] = async ({
   return { url: data.signedUrl };
 };
 
+const download: FileStorageTypes["download"] = async ({ bucket, path }) => {
+  const { data, error } = await supabase.storage.from(bucket).download(path);
+  if (error || data === undefined) {
+    throw new Error(`Unable to download blob ${path} from Supabase.`);
+  }
+  return { blob: data };
+};
+
 export const FileStorageService: FileStorageTypes = {
   upload,
   temporalUrl,
+  download,
 };

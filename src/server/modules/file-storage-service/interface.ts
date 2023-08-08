@@ -10,4 +10,5 @@ export interface FileStorageTypes {
     path: string;
     expiresIn?: number;
   }) => Promise<{ url: string }>;
+  download: (args: { bucket: string; path: string }) => Promise<{ blob: Blob }>;
 }
