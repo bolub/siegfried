@@ -24,14 +24,16 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   handlePost(req, res, async () => {
-    let { filePath, pdfName } = req.body;
+    let { filePath, pdfName, userId } = req.body;
 
     const fileData = fs.readFileSync(filePath);
+
+    const path = `${userId}/${pdfName}_${Date.now()}`;
 
     try {
       const resp = await FileStorageService.upload({
         bucket: env.SUPABASE_CONTRACTS_BUCKET,
-        path: pdfName,
+        path,
         file: fileData,
         opts: {
           contentType: "application/pdf",
