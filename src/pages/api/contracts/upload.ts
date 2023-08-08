@@ -18,7 +18,7 @@ export const config = {
 interface Data {
   message?: string;
   id?: string;
-  data: any;
+  data: string;
 }
 
 export default function handler(
@@ -33,16 +33,20 @@ export default function handler(
     try {
       const resp = await FileStorageService.upload({
         bucket: env.SUPABASE_CONTRACTS_BUCKET,
-        path: "user_contract",
+        path: "user_contract_test",
         file: fileData,
         opts: {
           contentType: "application/pdf",
         },
       });
 
-      return res.status(200).json({ message: "ok", data: { path: resp.path } });
+      return res.status(200).json({ message: "ok", data: resp.path });
     } catch (error) {
-      return res.status(500).json({ message: "ok", data: error });
+      console.log(error);
+
+      return res
+        .status(500)
+        .json({ message: "ok", data: JSON.stringify(error) });
     }
   });
 }
