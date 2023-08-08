@@ -17,7 +17,7 @@ export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
         <Button size="lg" asChild>
           <Link href={routes.contracts.new()}>
             <PlusIcon className="mr-2" />
-            Create contracts
+            Create contract
           </Link>
         </Button>
       </div>
