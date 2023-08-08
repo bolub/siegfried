@@ -10,12 +10,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -51,6 +45,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    contracts     Contract[]
 }
 
 model VerificationToken {
@@ -59,4 +54,49 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+enum SignatureType {
+    STRING
+    CANVAS
+}
+
+model Signature {
+    id                 String    @id @default(cuid())
+    content            String
+    contractUserId     String
+    type               SignatureType
+}
+
+model ContractRecipient {
+    id                 String    @id @default(cuid())
+    name               String
+    email              String
+    contractId         String
+    contract           Contract @relation(fields: [contractId], references: [id])
+}
+
+enum ContractStatus {
+    PENDING
+    SIGNED
+}
+
+model Contract {
+    id                 String    @id @default(cuid())
+    name               String
+    content            String
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+    recipients         ContractRecipient[]
+    status             ContractStatus
+    userId             String
+    user               User @relation(fields: [userId], references: [id])
+}
+
+model ContractDocument {
+    id                 String    @id @default(cuid())
+    storageId          String
+    contractId         String
+    createdAt          DateTime      @default(now())
+    userId             String
 }

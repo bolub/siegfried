@@ -20,7 +20,7 @@ const navItems = [
   },
   {
     label: "Contracts",
-    href: routes.contracts(),
+    href: routes.contracts.all(),
   },
 ];
 
@@ -79,7 +79,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
         </DropdownMenu>
       </nav>
 
-      <div className="py-10">{children}</div>
+      <div className="container mx-auto mt-12 w-full">{children}</div>
     </>
   );
 };

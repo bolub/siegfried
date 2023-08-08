@@ -59,6 +59,12 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      height: {
+        "22": "88px",
+      },
+      margin: {
+        "22": "88px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -80,5 +86,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

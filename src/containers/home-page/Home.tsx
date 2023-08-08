@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar } from "@/containers/Home/Navbar";
+import { Navbar } from "@/containers/home-page/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { routes } from "@/routes";
