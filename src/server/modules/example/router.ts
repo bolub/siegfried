@@ -7,7 +7,7 @@ import {
 import { PdfService } from "@/server/modules/pdf-service/impl";
 import { transporter } from "@/server/modules/email-service/impl";
 import { render } from "@react-email/render";
-import Contract from "@/emails/contract";
+import ContractRequest from "@/emails/ContractRequest";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -29,7 +29,7 @@ export const exampleRouter = createTRPCRouter({
         to: "biolaseyi19@gmail.com",
         subject: "Contract email test",
         html: render(
-          Contract({
+          ContractRequest({
             contractName: "Bolu Frontend Contract",
             contractUrl: "https://boluabiola.com",
             user: {
