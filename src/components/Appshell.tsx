@@ -50,7 +50,7 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
                   <Link
                     href={item.href}
                     className={clsx(
-                      "flex h-7 items-center justify-center rounded-lg px-3 py-[20px] text-[13px]",
+                      "flex h-7 items-center justify-center rounded-lg px-3 py-[20px] text-sm",
                       {
                         "bg-[rgba(0,0,0,.08)] font-bold": isActive,
                         "font-medium": !isActive,
