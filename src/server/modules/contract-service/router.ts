@@ -23,4 +23,21 @@ export const contractServiceRouter = createTRPCRouter({
         },
       });
     }),
+  sign: publicProcedure
+    .input(
+      z.object({
+        contractContent: z.string(),
+        contractId: z.string(),
+        recipientId: z.string(),
+        userId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await ContractService.signContract({
+        contractContent: input.contractContent,
+        contractId: input.contractId,
+        recipientId: input.recipientId,
+        userId: input.userId,
+      });
+    }),
 });
