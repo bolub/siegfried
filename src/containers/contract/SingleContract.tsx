@@ -2,20 +2,21 @@ import { Logo } from "@/components/Logo";
 import React, { useState } from "react";
 import { type SingleContractType } from "@/pages/contracts/[id]";
 import { useRouter } from "next/router";
-import { NoContractDataAvailable } from "./components/NoContractAvailable";
+import { NoContractDataAvailable } from "@/containers/contract/components/NoContractAvailable";
 import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { SignatureSigner } from "./components/SignatureSigner";
+import { SignatureSigner } from "@/containers/contract/components/SignatureSigner";
 import { ContractUser } from "./utils";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
+import { routes } from "@/routes";
 
 export const SingleContractPage = ({
   contract,
 }: {
   contract?: SingleContractType | null;
 }) => {
-  const toast = useToast();
+  const { toast } = useToast();
   const router = useRouter();
   const query = router.query as {
     user: string;
@@ -35,6 +36,20 @@ export const SingleContractPage = ({
     api.contract.sign.useMutation({
       onSuccess() {
         setHideForContractSigning(false);
+
+        router.push(routes.contracts.signed(contract.name));
+
+        toast({
+          title: "Success",
+          description: "Contract signed successfully",
+        });
+      },
+      onError() {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please try again.",
+        });
       },
     });
 
@@ -67,7 +82,7 @@ export const SingleContractPage = ({
 
           <section
             id="content"
-            className="prose"
+            className="prose mx-auto"
             dangerouslySetInnerHTML={{
               __html: contract.content,
             }}
