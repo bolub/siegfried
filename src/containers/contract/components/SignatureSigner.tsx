@@ -8,11 +8,11 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 export const SignatureSigner = ({
   signature,
   setSignature,
-  hideForPdfGeneration,
+  hideForContractSigning,
 }: {
   signature: string;
   setSignature: React.Dispatch<React.SetStateAction<string>>;
-  hideForPdfGeneration: boolean;
+  hideForContractSigning: boolean;
 }) => {
   const sigPad = useRef<SignatureCanvas>(null);
 
@@ -63,7 +63,7 @@ export const SignatureSigner = ({
             <Image src={signature} alt="Signature" width={200} height={200} />
           </div>
 
-          {!hideForPdfGeneration && (
+          {!hideForContractSigning && (
             <div className="mt-6 flex justify-center space-x-2">
               <Button size="sm" variant="outline" onClick={resign}>
                 <ReloadIcon className="mr-2 h-4 w-4" />
