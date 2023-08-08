@@ -1,4 +1,4 @@
-import Contract from "@/emails/contract";
+import ContractRequest from "@/emails/ContractRequest";
 import { env } from "@/env.mjs";
 import { routes } from "@/routes";
 import { prisma } from "@/server/db";
@@ -12,6 +12,7 @@ import { render } from "@react-email/render";
 import { TokenService } from "@/server/modules/token-service/impl";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
+import ContractSigned from "@/emails/ContractSigned";
 
 export const getContract = async ({ contractId }: { contractId: string }) => {
   const contract = await prisma.contract.findUnique({
@@ -61,7 +62,7 @@ export const sendContractEmailsToSigners = ({
       to: signer.email,
       subject: `Request to sign ${contract.name} from ${user.name}`,
       html: render(
-        Contract({
+        ContractRequest({
           contractName: contract.name,
           contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
             contract.id
@@ -101,26 +102,30 @@ export const sendContractSignedEmail = async ({
 
   await Promise.all([
     // send to user
-    transporter.sendMail({
-      from: env.CONTACT_EMAIL,
-      to: contract.user.email || "",
-      subject: `${recipient?.name} has signed the contract`,
-      text: "Contract signed successfully",
-      attachments: [
-        {
-          filename: storageId,
-          content: Buffer.from(fileToArrayBuffer),
-          contentType: "application/pdf",
-        },
-      ],
-    }),
+    // transporter.sendMail({
+    //   from: env.CONTACT_EMAIL,
+    //   to: contract.user.email || "",
+    //   subject: `${recipient?.name} has signed the contract`,
+    //   text: "Contract signed successfully",
+    //   attachments: [
+    //     {
+    //       filename: storageId,
+    //       content: Buffer.from(fileToArrayBuffer),
+    //       contentType: "application/pdf",
+    //     },
+    //   ],
+    // }),
 
     // send to recipient
     transporter.sendMail({
       from: env.CONTACT_EMAIL,
       to: recipient?.email,
       subject: `${contract.name} signed successfully`,
-      text: "Contract signed successfully",
+      html: render(
+        ContractSigned({
+          contractName: contract.name,
+        })
+      ),
       attachments: [
         {
           filename: storageId,
