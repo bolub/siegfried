@@ -10,7 +10,14 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div
+      className="flex h-screen w-full"
+      style={{
+        backgroundImage: 'url("/lines.svg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="container m-auto flex w-full max-w-[360px] flex-col justify-center text-center">
         <Logo className="mx-auto" />
 
