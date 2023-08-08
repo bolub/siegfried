@@ -8,11 +8,13 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 export const SignatureSigner = ({
   signature,
   setSignature,
+  hideForContractSigning,
 }: {
   signature: string;
   setSignature: React.Dispatch<React.SetStateAction<string>>;
+  hideForContractSigning: boolean;
 }) => {
-  const sigPad = useRef(null);
+  const sigPad = useRef<SignatureCanvas>(null);
 
   const clear = () => {
     if (sigPad.current) {
@@ -57,16 +59,18 @@ export const SignatureSigner = ({
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-center border bg-white p-4">
+          <div className="flex items-center justify-center">
             <Image src={signature} alt="Signature" width={200} height={200} />
           </div>
 
-          <div className="mt-6 flex justify-center space-x-2">
-            <Button size="sm" variant="outline" onClick={resign}>
-              <ReloadIcon className="mr-2 h-4 w-4" />
-              Try again
-            </Button>
-          </div>
+          {!hideForContractSigning && (
+            <div className="mt-6 flex justify-center space-x-2">
+              <Button size="sm" variant="outline" onClick={resign}>
+                <ReloadIcon className="mr-2 h-4 w-4" />
+                Try again
+              </Button>
+            </div>
+          )}
         </>
       )}
     </div>

@@ -10,6 +10,14 @@ export interface ContractServiceType {
     };
     user: {
       name?: string | null;
+      id?: string;
     };
   }) => Promise<Contract | null>;
+
+  signContract: (args: {
+    contractContent: string;
+    contractId: string;
+    recipientId: string;
+    userId: string;
+  }) => Promise<void>;
 }

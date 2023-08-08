@@ -9,7 +9,6 @@ export const useLeavePageConfirm = ({
   isConfirm?: boolean;
   message?: string;
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   useBeforeUnload(isConfirm, message);
 
   useEffect(() => {

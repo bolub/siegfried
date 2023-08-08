@@ -44,8 +44,17 @@ export const getServerSideProps: GetServerSideProps<{
     },
     include: {
       recipients: true,
+      user: true,
     },
   });
+
+  if (contract?.status === "SIGNED") {
+    return {
+      props: {
+        contract: null,
+      },
+    };
+  }
 
   return {
     props: {

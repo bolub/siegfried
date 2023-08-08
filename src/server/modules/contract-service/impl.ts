@@ -1,55 +1,19 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import Contract from "@/emails/contract";
 import { env } from "@/env.mjs";
-import { routes } from "@/routes";
 import { prisma } from "@/server/db";
 import { type ContractServiceType } from "@/server/modules/contract-service/interface";
-import { transporter } from "@/server/modules/email-service/impl";
+import { PdfService } from "@/server/modules/pdf-service/impl";
 import {
-  type Contract as PrismaContract,
-  type ContractRecipient,
-} from "@prisma/client";
-import { render } from "@react-email/render";
-import { TokenService } from "../token-service/impl";
-
-const sendContractEmailsToSigners = ({
-  contract,
-  user,
-}: {
-  contract: PrismaContract & {
-    recipients: ContractRecipient[];
-  };
-  user: {
-    name?: string | null;
-  };
-}) => {
-  const token = TokenService.generateToken({
-    contractId: contract.id,
-  });
-
-  contract.recipients.forEach(async (signer) => {
-    await transporter.sendMail({
-      from: env.CONTACT_EMAIL,
-      to: signer.email,
-      subject: `Request to sign ${contract.name} from ${user.name}`,
-      html: render(
-        Contract({
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          contractName: contract.name,
-          contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
-            contract.id
-          )}?token=${token}&user=${signer.id}`,
-          user: {
-            name: user.name ?? "",
-          },
-        })
-      ),
-    });
-  });
-};
+  getContract,
+  sendContractEmailsToSigners,
+  sendContractSignedEmail,
+} from "@/server/modules/contract-service/utils";
 
 export const create: ContractServiceType["create"] = async (args) => {
-  const { contract } = args;
+  const { contract, user } = args;
+
+  if (!user.id) {
+    throw new Error("User does not exist");
+  }
 
   const newContract = await prisma.contract.create({
     data: {
@@ -61,6 +25,7 @@ export const create: ContractServiceType["create"] = async (args) => {
           data: [...contract.signers],
         },
       },
+      userId: user.id,
     },
     include: {
       recipients: true,
@@ -80,6 +45,78 @@ export const create: ContractServiceType["create"] = async (args) => {
   return newContract;
 };
 
+export const signContract: ContractServiceType["signContract"] = async ({
+  contractContent,
+  contractId,
+  recipientId,
+  userId,
+}) => {
+  const contract = await getContract({
+    contractId,
+  });
+
+  const pdfName = `${contract.name} signed`;
+
+  const generatedPdfFilePath = await PdfService.generatePdf({
+    html: contractContent,
+    name: pdfName,
+  });
+
+  if (!generatedPdfFilePath) {
+    console.error(
+      "Contract pdf could not be generated, please try again later"
+    );
+
+    return;
+  }
+
+  // send pdf over to supabase to be saved
+  const response = await fetch(`${env.NEXTAUTH_URL}/api/contracts/upload`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      filePath: generatedPdfFilePath.pdfFilePath,
+      pdfName,
+      userId,
+    }),
+  });
+
+  const { data: supabaseFilePath } = (await response.json()) as {
+    data: string;
+  };
+
+  await Promise.all([
+    // save pdf data to db
+    prisma.contractDocument.create({
+      data: {
+        storageId: supabaseFilePath,
+        contractId,
+        userId,
+      },
+    }),
+
+    // set signed status to SIGNED
+    prisma.contract.update({
+      where: {
+        id: contractId,
+      },
+      data: {
+        status: "SIGNED",
+      },
+    }),
+
+    // send emails
+    sendContractSignedEmail({
+      contract,
+      recipientId,
+      storageId: supabaseFilePath,
+    }),
+  ]);
+};
+
 export const ContractService: ContractServiceType = {
   create,
+  signContract,
 };

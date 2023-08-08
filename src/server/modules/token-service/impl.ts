@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { env } from "@/env.mjs";
 import { type TokenServiceType } from "./interface";
 import jwt from "jsonwebtoken";

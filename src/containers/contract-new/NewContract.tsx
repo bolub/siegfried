@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-
 import React from "react";
 import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contract-new/components/ContractEditor/ContractEditor";
@@ -17,30 +15,34 @@ export const NewContractPage = () => {
   const { toast } = useToast();
   const router = useRouter();
 
+  const {
+    mutate: createContract,
+    isLoading: createContractLoading,
+    isSuccess: hideConfirmationWhenContractIsCreatedSuccessfully,
+  } = api.contract.create.useMutation({
+    onSuccess() {
+      toast({
+        title: "Success",
+        description: "Contract sent successfully",
+      });
+
+      void router.push(routes.contracts.all());
+    },
+    onError() {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    },
+  });
+
   useLeavePageConfirm({
     message:
       "Are you sure you want to leave this page? you still have unsaved changes",
+    isConfirm: !hideConfirmationWhenContractIsCreatedSuccessfully,
   });
-
-  const { mutate: createContract, isLoading: createContractLoading } =
-    api.contract.create.useMutation({
-      onSuccess() {
-        toast({
-          title: "Success",
-          description: "Contract sent successfully",
-        });
-
-        void router.push(routes.contracts.all());
-      },
-      onError() {
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        });
-      },
-    });
 
   const onSubmit: SubmitHandler<ContractFormData> = (data) => {
     createContract(data);
