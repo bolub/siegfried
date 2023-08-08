@@ -49,8 +49,7 @@ export const exampleRouter = createTRPCRouter({
 
   testGeneratePdf: publicProcedure.mutation(async () => {
     const resp = await PdfService.generatePdf({
-      dynamicHTML:
-        "<h1>Installation</h1><p>Playwright Test was created specifically to accommodate the needs of end-to-end testing. Playwright supports all modern rendering engines including Chromium, WebKit, and Firefox. Test on Windows, Linux, and macOS, locally or on CI, headless or headed with native mobile emulation of Google Chrome for Android and Mobile Safari.</p><p><strong>You will learn</strong></p><ul><li><p>How to install Playwright</p></li><li><p>What's Installed</p></li><li><p>How to run the example test</p></li><li><p>How to open the HTML test report</p></li></ul>",
+      html: "<h1>Installation</h1><p>Playwright Test was created specifically to accommodate the needs of end-to-end testing. Playwright supports all modern rendering engines including Chromium, WebKit, and Firefox. Test on Windows, Linux, and macOS, locally or on CI, headless or headed with native mobile emulation of Google Chrome for Android and Mobile Safari.</p><p><strong>You will learn</strong></p><ul><li><p>How to install Playwright</p></li><li><p>What's Installed</p></li><li><p>How to run the example test</p></li><li><p>How to open the HTML test report</p></li></ul>",
     });
     return resp;
   }),
