@@ -18,7 +18,7 @@ export const config = {
 interface Data {
   message?: string;
   id?: string;
-  data?: any;
+  data: any;
 }
 
 export default function handler(
@@ -40,7 +40,7 @@ export default function handler(
         },
       });
 
-      return res.status(200).json({ message: "ok", data: { ...resp } });
+      return res.status(200).json({ message: "ok", data: { path: resp.path } });
     } catch (error) {
       return res.status(500).json({ message: "ok", data: error });
     }
