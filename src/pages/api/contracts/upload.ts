@@ -1,9 +1,9 @@
-import { handlePost, handlePostWithSession } from "@/lib/http";
+import { handlePost } from "@/lib/http";
 
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { env } from "@/env.mjs";
 import fs from "fs";
-import { NextApiRequest, NextApiResponse } from "next";
+import { type NextApiRequest, type NextApiResponse } from "next";
 
 export const config = {
   api: {
