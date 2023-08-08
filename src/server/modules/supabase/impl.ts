@@ -1,7 +1,5 @@
-/* eslint-disable */
-
 import { env } from "@/env.mjs";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { type SupabaseClient, createClient } from "@supabase/supabase-js";
 
 export const supabase =
   // @ts-ignore

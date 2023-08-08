@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-
 import React from "react";
 import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contract-new/components/ContractEditor/ContractEditor";

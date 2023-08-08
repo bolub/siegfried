@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import Contract from "@/emails/contract";
 import { env } from "@/env.mjs";
 import { routes } from "@/routes";
@@ -37,7 +36,6 @@ const sendContractEmailsToSigners = ({
       subject: `Request to sign ${contract.name} from ${user.name}`,
       html: render(
         Contract({
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           contractName: contract.name,
           contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
             contract.id

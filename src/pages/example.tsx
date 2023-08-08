@@ -51,7 +51,6 @@ export default function Example() {
           </Button>
 
           <Button
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={async () => {
               await sendPdfToUrlTest();
             }}

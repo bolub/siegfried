@@ -47,7 +47,6 @@ export function handlePostWithSession(
   res: NextApiResponse,
   handler: (session: Session) => void
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   handlePost(req, res, async () => {
     const session = await getSession({ req });
 
