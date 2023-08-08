@@ -51,43 +51,6 @@ const sendContractEmailsToSigners = ({
   });
 };
 
-export const create: ContractServiceType["create"] = async (args) => {
-  const { contract } = args;
-
-  if (!args.user.id) {
-    throw new Error("User does not exist");
-  }
-
-  const newContract = await prisma.contract.create({
-    data: {
-      name: contract.contractName,
-      content: contract.contractContent,
-      status: "PENDING",
-      recipients: {
-        createMany: {
-          data: [...contract.signers],
-        },
-      },
-      userId: args.user.id,
-    },
-    include: {
-      recipients: true,
-    },
-  });
-
-  if (!contract) {
-    console.error("Contract not created successfully");
-    return null;
-  }
-
-  sendContractEmailsToSigners({
-    contract: newContract,
-    user: args.user,
-  });
-
-  return newContract;
-};
-
 const sendContractSignedEmail = async ({
   contractId,
   recipientId,
@@ -164,6 +127,43 @@ const sendContractSignedEmail = async ({
   ]);
 };
 
+export const create: ContractServiceType["create"] = async (args) => {
+  const { contract, user } = args;
+
+  if (!user.id) {
+    throw new Error("User does not exist");
+  }
+
+  const newContract = await prisma.contract.create({
+    data: {
+      name: contract.contractName,
+      content: contract.contractContent,
+      status: "PENDING",
+      recipients: {
+        createMany: {
+          data: [...contract.signers],
+        },
+      },
+      userId: user.id,
+    },
+    include: {
+      recipients: true,
+    },
+  });
+
+  if (!contract) {
+    console.error("Contract not created successfully");
+    return null;
+  }
+
+  sendContractEmailsToSigners({
+    contract: newContract,
+    user: args.user,
+  });
+
+  return newContract;
+};
+
 export const signContract: ContractServiceType["signContract"] = async ({
   contractContent,
   contractId,
@@ -184,33 +184,35 @@ export const signContract: ContractServiceType["signContract"] = async ({
   }
 
   // send pdf over to supabase to be saved
-  const response = await fetch("/api/contracts/upload", {
+  const response = await fetch("http://localhost:3000/api/contracts/upload", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ filePath: generatedPdfFilePath }),
+    body: JSON.stringify({ filePath: generatedPdfFilePath.pdfFilePath }),
   });
 
-  const data = (await response.json()) as {
-    path: string;
+  const { data: supabaseFilePath } = (await response.json()) as {
+    data: string;
   };
 
-  // save pdf data to db
-  await prisma.contractDocument.create({
-    data: {
-      storageId: data.path,
-      contractId,
-      userId,
-    },
-  });
+  await Promise.all([
+    // save pdf data to db
+    prisma.contractDocument.create({
+      data: {
+        storageId: supabaseFilePath,
+        contractId,
+        userId,
+      },
+    }),
 
-  // send email
-  await sendContractSignedEmail({
-    contractId,
-    recipientId,
-    storageId: data.path,
-  });
+    // send emails
+    sendContractSignedEmail({
+      contractId,
+      recipientId,
+      storageId: supabaseFilePath,
+    }),
+  ]);
 };
 
 export const ContractService: ContractServiceType = {
