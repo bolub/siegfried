@@ -48,6 +48,14 @@ export const getServerSideProps: GetServerSideProps<{
     },
   });
 
+  if (contract?.status === "SIGNED") {
+    return {
+      props: {
+        contract: null,
+      },
+    };
+  }
+
   return {
     props: {
       contract,
