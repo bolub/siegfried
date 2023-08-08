@@ -19,6 +19,7 @@ export const contractServiceRouter = createTRPCRouter({
         },
         user: {
           name: ctx.session?.user.name,
+          id: ctx.session?.user.id,
         },
       });
     }),
