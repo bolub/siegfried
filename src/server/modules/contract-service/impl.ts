@@ -79,6 +79,7 @@ export const signContract: ContractServiceType["signContract"] = async ({
     body: JSON.stringify({
       filePath: generatedPdfFilePath.pdfFilePath,
       pdfName,
+      userId,
     }),
   });
 
