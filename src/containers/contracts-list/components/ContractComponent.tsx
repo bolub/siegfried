@@ -8,9 +8,8 @@ export const ContractComponent = ({ contract }: { contract: Contract }) => {
   return (
     <div className="border-[rgba(0, 0, 0, 0.08)] w-full rounded-lg border bg-white">
       {/* top */}
-      <div className="border-[rgba(0, 0, 0, 0.08)] flex items-center space-x-[20px] border-b px-8 py-6">
-        {/* icon */}
-        <div className="border-[rgba(0, 0, 0, 0.08)] flex h-[50px] w-[50px] items-center justify-center rounded-lg border-[1.5px] bg-white">
+      <div className="mt-6 flex items-center space-x-[20px] px-8">
+        <div className="border-[rgba(0, 0, 0, 0.08)] flex h-[50px] w-[50px] items-center justify-center rounded-lg border-[1.5px] bg-[#f9fafb]">
           <PencilLine className="h-6 w-6" />
         </div>
 
@@ -20,7 +19,7 @@ export const ContractComponent = ({ contract }: { contract: Contract }) => {
       </div>
 
       {/* bottom */}
-      <div className="flex flex-col space-y-[22px] px-8 pb-9 pt-8">
+      <div className="mt-8 flex flex-col space-y-[22px] px-8 pb-9">
         <div className="flex w-full items-center justify-between">
           <span className="font-medium text-[#667085]">Created on</span>
           <p>{formatDate(contract.createdAt)}</p>
