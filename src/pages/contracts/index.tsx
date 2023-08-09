@@ -15,14 +15,14 @@ export const getServerSideProps: GetServerSideProps<{
   const session = await getServerAuthSession(ctx);
   const userId = session?.user?.id;
 
-  if (!userId) {
-    return {
-      redirect: {
-        destination: routes.login(),
-        permanent: false,
-      },
-    };
-  }
+  // if (!userId) {
+  //   return {
+  //     redirect: {
+  //       destination: routes.login(),
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   const contracts = await prisma.contract.findMany({
     where: {
