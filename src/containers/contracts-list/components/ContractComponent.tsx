@@ -20,8 +20,10 @@ export const ContractComponent = ({ contract }: { contract: Contract }) => {
 
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild className="font-mono text-base font-bold">
-              <h3 className="truncate">{contract.name}</h3>
+            <TooltipTrigger asChild>
+              <h3 className="truncate text-lg font-semibold">
+                {contract.name}
+              </h3>
             </TooltipTrigger>
             <TooltipContent>{contract.name}</TooltipContent>
           </Tooltip>

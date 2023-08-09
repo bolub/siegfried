@@ -12,7 +12,7 @@ export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
     <Appshell>
       {/* header */}
       <div className="flex w-full items-center justify-between">
-        <h1 className="text-3xl font-bold">Contracts</h1>
+        <h1 className="font-mono text-3xl font-bold">Contracts</h1>
 
         <Button size="lg" asChild>
           <Link href={routes.contracts.new()}>
