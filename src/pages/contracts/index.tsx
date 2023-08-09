@@ -11,50 +11,37 @@ import {
 
 export const getServerSideProps: GetServerSideProps<{
   contracts: Contract[];
-  error?: any;
 }> = async (ctx: GetServerSidePropsContext) => {
-  try {
-    const session = await getServerAuthSession(ctx);
-    const userId = session?.user?.id;
+  const session = await getServerAuthSession(ctx);
+  const userId = session?.user?.id;
 
-    if (!userId) {
-      return {
-        redirect: {
-          destination: routes.login(),
-          permanent: false,
-        },
-      };
-    }
-
-    const contracts = await prisma.contract.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        recipients: true,
-      },
-    });
-
+  if (!userId) {
     return {
-      props: {
-        contracts,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        contracts: [],
-        error,
+      redirect: {
+        destination: routes.login(),
+        permanent: false,
       },
     };
   }
+
+  const contracts = await prisma.contract.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      recipients: true,
+    },
+  });
+
+  return {
+    props: {
+      contracts,
+    },
+  };
 };
 
 export default function Contracts({
   contracts,
-  error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(error);
-
   return <ContractsPage contracts={contracts} />;
 }
