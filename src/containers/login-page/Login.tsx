@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import React from "react";
 import { GoogleIcon } from "@/containers/login-page/GoogleIcon";
+import Link from "next/link";
+import { routes } from "@/routes";
 
 export const LoginPage = () => {
   const handleSignIn = () => {
@@ -19,7 +21,9 @@ export const LoginPage = () => {
       }}
     >
       <div className="container m-auto flex w-full max-w-[360px] flex-col justify-center text-center">
-        <Logo className="mx-auto" />
+        <Link href={routes.home()}>
+          <Logo className="mx-auto" />
+        </Link>
 
         <h1 className="mt-14 text-center text-[28px] font-bold">Welcome</h1>
         <p className="mx-auto mt-11 max-w-[308px] text-center text-base">

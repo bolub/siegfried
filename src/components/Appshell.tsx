@@ -40,7 +40,9 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
     <>
       <nav className="flex h-[94px] w-full items-center border-b bg-white">
         <div className="container mx-auto flex items-center">
-          <Logo />
+          <Link href={routes.dashboard()}>
+            <Logo />
+          </Link>
 
           <ul className="mx-auto flex space-x-4">
             {navItems.map((item) => {
@@ -78,6 +80,9 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
                 className="cursor-pointer"
               >
                 Logout
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href={routes.home()}>Back to home</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
