@@ -4,22 +4,32 @@ import { getServerAuthSession } from "@/server/auth";
 import { type GetServerSidePropsContext } from "next";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getServerAuthSession(ctx);
-  const userId = session?.user?.id;
+  try {
+    const session = await getServerAuthSession(ctx);
+    const userId = session?.user?.id;
 
-  if (userId) {
+    if (userId) {
+      return {
+        props: {},
+        redirect: {
+          destination: routes.dashboard(),
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {},
-      redirect: {
-        destination: routes.dashboard(),
-        permanent: false,
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      props: {
+        error,
       },
     };
   }
-
-  return {
-    props: {},
-  };
 };
 
 export default function Login() {
