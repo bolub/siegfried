@@ -21,11 +21,6 @@ const config = {
   experimental: {
     swcPlugins: [["next-superjson-plugin", {}]],
   },
-  modularizeImports: {
-    "lucide-react": {
-      transform: "lucide-react/{{member}}",
-    },
-  },
 };
 
 export default config;
