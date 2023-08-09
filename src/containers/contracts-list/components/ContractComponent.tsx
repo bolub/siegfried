@@ -2,7 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { type Contract } from "@prisma/client";
 import { PencilLine } from "lucide-react";
-import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const ContractComponent = ({ contract }: { contract: Contract }) => {
   return (
@@ -13,18 +18,18 @@ export const ContractComponent = ({ contract }: { contract: Contract }) => {
           <PencilLine className="h-6 w-6" />
         </div>
 
-        <h3 className="truncate font-mono text-base font-bold">
-          {contract.name}
-        </h3>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild className="font-mono text-base font-bold">
+              <h3 className="truncate">{contract.name}</h3>
+            </TooltipTrigger>
+            <TooltipContent>{contract.name}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {/* bottom */}
-      <div className="mt-8 flex flex-col space-y-[22px] px-8 pb-9">
-        <div className="flex w-full items-center justify-between">
-          <span className="font-medium text-[#667085]">Created on</span>
-          <p>{formatDate(contract.createdAt)}</p>
-        </div>
-
+      <div className="mt-8 flex flex-col space-y-[20px] px-8 pb-9 text-sm">
         <div className="flex w-full items-center justify-between">
           <span className="font-medium text-[#667085]">Status</span>
           <Badge
@@ -33,6 +38,11 @@ export const ContractComponent = ({ contract }: { contract: Contract }) => {
           >
             {contract.status}
           </Badge>
+        </div>
+
+        <div className="flex w-full items-center justify-between">
+          <span className="font-medium text-[#667085]">Created on</span>
+          <p className="font-medium">{formatDate(contract.createdAt)}</p>
         </div>
       </div>
     </div>
