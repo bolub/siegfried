@@ -22,9 +22,8 @@ export const HomePage = () => {
             Create and sign documents easily
           </h1>
           <p className="mt-10 text-lg">
-            Powerful, self-serve product and growth analytics to help you
-            convert, engage, and retain more users. Trusted by over 4,000
-            startups.
+            Easily craft customized contracts and seamlessly dispatch them to
+            recipients for swift and secure electronic signatures.
           </p>
 
           <Button asChild size="lg" className="mt-14">

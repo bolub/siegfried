@@ -24,7 +24,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 export default function Dashboard() {
   return (
     <>
-      <Appshell>
+      <Appshell title="Dashboard">
         <p>Hello from dashboard</p>
       </Appshell>
     </>
