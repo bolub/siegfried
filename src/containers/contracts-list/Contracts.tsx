@@ -9,7 +9,7 @@ import { ContractComponent } from "./components/ContractComponent";
 
 export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
   return (
-    <Appshell>
+    <Appshell title="Contracts">
       {/* header */}
       <div className="flex w-full items-center justify-between">
         <h1 className="font-mono text-3xl font-bold">Contracts</h1>

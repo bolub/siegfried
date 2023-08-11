@@ -30,7 +30,7 @@ export default function Example() {
 
   return (
     <>
-      <Appshell>
+      <Appshell title="Example">
         <div className="flex flex-col gap-4">
           <Button
             onClick={() => {
