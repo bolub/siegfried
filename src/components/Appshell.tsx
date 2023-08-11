@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NextSeo } from "next-seo";
 
 const navItems = [
   {
@@ -26,9 +27,15 @@ const navItems = [
 
 interface AppshellProps {
   children: ReactNode;
+  title: string;
+  description?: string;
 }
 
-export const Appshell: FC<AppshellProps> = ({ children }) => {
+export const Appshell: FC<AppshellProps> = ({
+  children,
+  title,
+  description,
+}) => {
   const router = useRouter();
   const { data } = useSession();
 
@@ -38,6 +45,8 @@ export const Appshell: FC<AppshellProps> = ({ children }) => {
 
   return (
     <>
+      <NextSeo title={title} description={description} />
+
       <nav className="flex h-[94px] w-full items-center border-b bg-white">
         <div className="container mx-auto flex items-center">
           <Link href={routes.dashboard()}>
