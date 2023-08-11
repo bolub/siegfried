@@ -39,6 +39,7 @@ export const exampleRouter = createTRPCRouter({
         ),
       })
       .then(() => {
+        console.log("seent");
         return "email sent successfully";
       })
       .catch((e) => {
