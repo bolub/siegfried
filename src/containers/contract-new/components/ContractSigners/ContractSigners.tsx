@@ -60,7 +60,7 @@ export const ContractSignersInner = ({
         );
       })}
 
-      {indexes.length < 2 && (
+      {indexes.length < 1 && (
         <button
           onClick={addNewSigner}
           className="mt-5 flex items-center gap-[6px] text-sm font-bold text-[#667085]"
@@ -86,7 +86,7 @@ export const ContractSigners = ({
         <div className="h-[80vh] overflow-y-auto p-8">
           <div className="flex items-center">
             <Users2Icon className="mr-2 h-5 w-5" />
-            <h2 className="text-sm font-bold">Signers (Max of 2)</h2>
+            <h2 className="text-sm font-bold">Signers (Max of 1)</h2>
           </div>
 
           <ContractSignersInner register={register} />

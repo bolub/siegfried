@@ -21,7 +21,8 @@ export const SignerInputs = ({
 
   return (
     <>
-      <div className="py-7 first:border-b">
+      {/* first:border-b */}
+      <div className="py-7">
         <div className="grid w-full gap-2">
           <Label htmlFor={signerNameLabel}>Signer Name</Label>
           <Input
