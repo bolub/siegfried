@@ -15,7 +15,7 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
   await page.setContent(html, { waitUntil: "networkidle" });
   await page.addStyleTag({ path: cssPath });
 
-  const pdfBuffer = await page.pdf({ format: "A4" });
+  const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
 
   await browser.close();
 
