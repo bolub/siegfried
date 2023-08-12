@@ -8,8 +8,7 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
   name,
 }) => {
   const browser = await chromium.launch({
-    executablePath:
-      "/vercel/.cache/ms-playwright/chromium-1076/chrome-linux/chrome",
+    executablePath: "/usr/lib/playwright",
   });
   const page = await browser.newPage();
 
