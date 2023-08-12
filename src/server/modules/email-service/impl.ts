@@ -27,7 +27,7 @@ const send: EmailServiceTypes["send"] = async ({
     console.log("running resend");
     await resend.emails
       .send({
-        from: env.CONTACT_EMAIL,
+        from: "Bolu <abiol5202@gmail.com>",
         to,
         subject,
         react: content,
