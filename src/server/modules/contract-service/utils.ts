@@ -2,13 +2,12 @@ import ContractRequest from "@/emails/ContractRequest";
 import { env } from "@/env.mjs";
 import { routes } from "@/routes";
 import { prisma } from "@/server/db";
-import { transporter } from "@/server/modules/email-service/impl";
+import { EmailService } from "@/server/modules/email-service/impl";
 import {
   type Contract as PrismaContract,
   type ContractRecipient,
   type User,
 } from "@prisma/client";
-import { render } from "@react-email/render";
 import { TokenService } from "@/server/modules/token-service/impl";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
@@ -57,21 +56,18 @@ export const sendContractEmailsToSigners = ({
   });
 
   contract.recipients.forEach(async (signer) => {
-    await transporter.sendMail({
-      from: env.CONTACT_EMAIL,
+    await EmailService.send({
       to: signer.email,
       subject: `Request to sign ${contract.name} from ${user.name}`,
-      html: render(
-        ContractRequest({
-          contractName: contract.name,
-          contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
-            contract.id
-          )}?token=${token}&user=${signer.id}`,
-          user: {
-            name: user.name ?? "",
-          },
-        })
-      ),
+      content: ContractRequest({
+        contractName: contract.name,
+        contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
+          contract.id
+        )}?token=${token}&user=${signer.id}`,
+        user: {
+          name: user.name ?? "",
+        },
+      }),
     });
   });
 };
@@ -117,20 +113,16 @@ export const sendContractSignedEmail = async ({
     // }),
 
     // send to recipient
-    transporter.sendMail({
-      from: env.CONTACT_EMAIL,
-      to: recipient?.email,
+    EmailService.send({
+      to: recipient?.email || "",
       subject: `${contract.name} signed successfully`,
-      html: render(
-        ContractSigned({
-          contractName: contract.name,
-        })
-      ),
+      content: ContractSigned({
+        contractName: contract.name,
+      }),
       attachments: [
         {
           filename: storageId,
           content: Buffer.from(fileToArrayBuffer),
-          contentType: "application/pdf",
         },
       ],
     }),

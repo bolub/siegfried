@@ -6,7 +6,7 @@ const NonEmptySting = z.string().min(1);
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
-    NODE_ENV: z.enum(["development", "test", "production"]),
+    NODE_ENV: z.enum(["development", "test", "production", "preview"]),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? NonEmptySting
