@@ -5,8 +5,7 @@ import {
   protectedProcedure,
 } from "@/server/api/trpc";
 import { PdfService } from "@/server/modules/pdf-service/impl";
-import { transporter } from "@/server/modules/email-service/impl";
-import { render } from "@react-email/render";
+import { EmailService } from "@/server/modules/email-service/impl";
 import ContractRequest from "@/emails/ContractRequest";
 
 export const exampleRouter = createTRPCRouter({
@@ -23,29 +22,17 @@ export const exampleRouter = createTRPCRouter({
   }),
 
   testEmailSending: publicProcedure.mutation(async () => {
-    return await transporter
-      .sendMail({
-        from: "abiol5202@gmail.com",
-        to: "biolaseyi19@gmail.com",
-        subject: "Contract email test",
-        html: render(
-          ContractRequest({
-            contractName: "Bolu Frontend Contract",
-            contractUrl: "https://boluabiola.com",
-            user: {
-              name: "Bolu Abiola",
-            },
-          })
-        ),
-      })
-      .then(() => {
-        console.log("seent");
-        return "email sent successfully";
-      })
-      .catch((e) => {
-        console.log(e);
-        return "Something happened";
-      });
+    return await EmailService.send({
+      to: "biolaseyi19@gmail.com",
+      subject: "Contract email test",
+      content: ContractRequest({
+        contractName: "Bolu Frontend Contract",
+        contractUrl: "https://boluabiola.com",
+        user: {
+          name: "Bolu Abiola",
+        },
+      }),
+    });
   }),
 
   testGeneratePdf: publicProcedure.mutation(async () => {
