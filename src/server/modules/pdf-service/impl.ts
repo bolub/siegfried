@@ -1,7 +1,7 @@
-import { chromium } from "playwright";
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
 import fs from "fs";
 import path from "path";
+import { chromium } from "playwright-chromium";
 
 export const generatePdf: PdfServiceType["generatePdf"] = async ({
   html,
