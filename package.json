@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npm i playwright-chromium && next build",
+    "build": "npx playwright install --with-deps && next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
