@@ -15,6 +15,8 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
+console.log(env.NODE_ENV);
+
 const send: EmailServiceTypes["send"] = async ({
   to,
   subject,
@@ -22,6 +24,7 @@ const send: EmailServiceTypes["send"] = async ({
   attachments,
 }) => {
   if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
+    console.log("running resend");
     await resend.emails
       .send({
         from: env.CONTACT_EMAIL,
@@ -39,6 +42,7 @@ const send: EmailServiceTypes["send"] = async ({
         return "Something happened";
       });
   } else {
+    console.log("running transporter");
     await transporter
       .sendMail({
         from: env.CONTACT_EMAIL,
