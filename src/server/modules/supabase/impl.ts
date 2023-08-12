@@ -6,7 +6,11 @@ export const supabase =
   (global.supabase as SupabaseClient) ||
   (env.SUPABASE_URL &&
     env.SUPABASE_KEY &&
-    createClient(env.SUPABASE_URL, env.SUPABASE_KEY));
+    createClient(env.SUPABASE_URL, env.SUPABASE_KEY, {
+      auth: {
+        persistSession: true,
+      },
+    }));
 
 // do we still need this?
 if (env.NODE_ENV !== "production") {
