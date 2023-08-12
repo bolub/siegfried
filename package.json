@@ -5,12 +5,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && npx playwright install",
     "lint": "next lint",
     "start": "next start",
     "email-dev": "email dev -p 3001",
-    "prisma-studio": "npx prisma studio",
-    "prevercel-build": "npx playwright install"
+    "prisma-studio": "npx prisma studio"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
