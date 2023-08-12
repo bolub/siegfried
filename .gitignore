@@ -43,3 +43,6 @@ yarn-error.log*
 
 # react email
 .react-email
+/test-results/
+/playwright-report/
+/playwright/.cache/
