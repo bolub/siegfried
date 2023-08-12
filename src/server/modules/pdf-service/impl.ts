@@ -1,32 +1,23 @@
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
-import fs from "fs";
 import path from "path";
-import { chromium } from "playwright-chromium";
+import puppeteer from "puppeteer";
 
 export const generatePdf: PdfServiceType["generatePdf"] = async ({
   html,
   name,
 }) => {
-  const browser = await chromium.launch({
-    executablePath: "/usr/lib/playwright",
-  });
-  const page = await browser.newPage();
-
-  const cssPath = path.join(process.cwd(), "src", "styles", "build.css");
-
-  await page.setContent(html, { waitUntil: "networkidle" });
-  await page.addStyleTag({ path: cssPath });
-
-  const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
-
-  await browser.close();
-
   const pdfFilePath = path.join(
     process.cwd(),
     "public",
     `${name ?? "generated-pdf"}.pdf`
   );
-  fs.writeFileSync(pdfFilePath, pdfBuffer);
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(html);
+  await page.pdf({ path: pdfFilePath, format: "A4" });
+
+  await browser.close();
 
   return {
     pdfFilePath,
