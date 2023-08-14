@@ -1,35 +1,22 @@
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
-import fs from "fs";
-import path from "path";
-import { chromium } from "playwright-chromium";
+import { Doppio } from "../doppio-adapter/impl";
 
-export const generatePdf: PdfServiceType["generatePdf"] = async ({
-  html,
-  name,
-}) => {
-  const browser = await chromium.launch({
-    executablePath: "/ms-playwright/chromium-1076",
-  });
-  const page = await browser.newPage();
+export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
+  // @ts-ignore
+  const encodedHTML = new Buffer.from(html, "utf8").toString("base64");
 
-  const cssPath = path.join(process.cwd(), "src", "styles", "build.css");
+  if (!encodedHTML) {
+    throw new Error("Small issue with your html");
+  }
 
-  await page.setContent(html, { waitUntil: "networkidle" });
-  await page.addStyleTag({ path: cssPath });
+  const { pdfData } = await Doppio.generatePdf({ encodedHTML });
 
-  const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
-
-  await browser.close();
-
-  const pdfFilePath = path.join(
-    process.cwd(),
-    "public",
-    `${name ?? "generated-pdf"}.pdf`
-  );
-  fs.writeFileSync(pdfFilePath, pdfBuffer);
+  if (!pdfData) {
+    throw new Error("Pdf could not be generated, please try again later");
+  }
 
   return {
-    pdfFilePath,
+    url: pdfData,
   };
 };
 

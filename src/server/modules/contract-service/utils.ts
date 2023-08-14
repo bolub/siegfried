@@ -40,7 +40,7 @@ export const getContract = async ({ contractId }: { contractId: string }) => {
   return contract;
 };
 
-export const sendContractEmailsToSigners = ({
+export const sendNewContractEmailsToSigners = ({
   contract,
   user,
 }: {
@@ -123,6 +123,7 @@ export const sendContractSignedEmail = async ({
         {
           filename: storageId,
           content: Buffer.from(fileToArrayBuffer),
+          contentType: "application/pdf",
         },
       ],
     }),
