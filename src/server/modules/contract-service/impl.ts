@@ -107,6 +107,9 @@ export const signContract: ContractServiceType["signContract"] = async ({
     ]);
   } catch (error) {
     console.log("Something happened with upload");
+    console.log(error);
+
+    throw new Error("Couldn't proceed with upload, sorry");
   }
 };
 
