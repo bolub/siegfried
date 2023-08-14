@@ -58,51 +58,56 @@ export const signContract: ContractServiceType["signContract"] = async ({
 
   const pdfName = `${contract.name} signed`;
 
+  // Generate signed pdf
   const { url: generatedPdfUrl } = await PdfService.generatePdf({
     html: contractContent,
   });
 
-  // send pdf over to supabase to be saved
-  const response = await axios.post(
-    `${env.NEXTAUTH_URL}/api/contracts/upload`,
-    {
-      filePath: generatedPdfUrl,
-      pdfName,
-      userId,
-    }
-  );
-
-  const { data: supabaseFilePath } = response.data as {
-    data: string;
-  };
-
-  await Promise.all([
-    // save pdf data to db
-    prisma.contractDocument.create({
-      data: {
-        storageId: supabaseFilePath,
-        contractId,
+  // Send pdf over to supabase to be saved
+  try {
+    const response = await axios.post(
+      `${env.NEXTAUTH_URL}/api/contracts/upload`,
+      {
+        filePath: generatedPdfUrl,
+        pdfName,
         userId,
-      },
-    }),
+      }
+    );
 
-    // set signed status to SIGNED
-    prisma.contract.update({
-      where: {
-        id: contractId,
-      },
-      data: {
-        status: "SIGNED",
-      },
-    }),
+    const { data: supabaseFilePath } = response.data as {
+      data: string;
+    };
 
-    // send emails
-    sendContractSignedEmail({
-      contract,
-      recipientId,
-      storageId: supabaseFilePath,
-    }),
-  ]);
+    await Promise.all([
+      // save pdf data to db
+      prisma.contractDocument.create({
+        data: {
+          storageId: supabaseFilePath,
+          contractId,
+          userId,
+        },
+      }),
+
+      // set signed status to SIGNED
+      prisma.contract.update({
+        where: {
+          id: contractId,
+        },
+        data: {
+          status: "SIGNED",
+        },
+      }),
+
+      // send emails
+      sendContractSignedEmail({
+        contract,
+        recipientId,
+        storageId: supabaseFilePath,
+      }),
+    ]);
+  } catch (error) {
+    console.log("Something happened with upload");
+  }
 };
 
 export const ContractService: ContractServiceType = {

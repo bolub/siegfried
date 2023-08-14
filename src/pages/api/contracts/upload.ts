@@ -52,7 +52,7 @@ export default function handler(
 
       return res
         .status(500)
-        .json({ message: "ok", data: JSON.stringify(error) });
+        .json({ message: "Something happened", data: JSON.stringify(error) });
     }
   });
 }

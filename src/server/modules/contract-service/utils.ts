@@ -123,7 +123,7 @@ export const sendContractSignedEmail = async ({
         {
           filename: storageId,
           content: Buffer.from(fileToArrayBuffer),
-          contentType: "application/pdf",
+          // contentType: "application/pdf",
         },
       ],
     }),
