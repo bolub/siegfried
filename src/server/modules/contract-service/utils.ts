@@ -116,6 +116,7 @@ export const sendContractSignedEmail = async ({
   });
 
   const fileToArrayBuffer = await file.blob.arrayBuffer();
+  const attachmentBuffer = Buffer.from(fileToArrayBuffer);
 
   await Promise.all([
     // send to user
@@ -142,8 +143,8 @@ export const sendContractSignedEmail = async ({
       }),
       attachments: [
         {
-          filename: storageId,
-          content: Buffer.from(fileToArrayBuffer),
+          filename: storageId + ".pdf",
+          content: attachmentBuffer,
         },
       ],
     }),
