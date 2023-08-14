@@ -38,7 +38,7 @@ export const create: ContractServiceType["create"] = async (args) => {
     return null;
   }
 
-  sendNewContractEmailsToSigners({
+  await sendNewContractEmailsToSigners({
     contract: newContract,
     user: args.user,
   });

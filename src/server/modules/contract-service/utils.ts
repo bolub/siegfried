@@ -40,7 +40,7 @@ export const getContract = async ({ contractId }: { contractId: string }) => {
   return contract;
 };
 
-export const sendNewContractEmailsToSigners = ({
+export const sendNewContractEmailsToSigners = async ({
   contract,
   user,
 }: {
