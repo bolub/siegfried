@@ -62,14 +62,6 @@ export const signContract: ContractServiceType["signContract"] = async ({
     html: contractContent,
   });
 
-  if (!generatedPdfUrl) {
-    console.error(
-      "Contract pdf could not be generated, please try again later"
-    );
-
-    return;
-  }
-
   // send pdf over to supabase to be saved
   const response = await axios.post(
     `${env.NEXTAUTH_URL}/api/contracts/upload`,
