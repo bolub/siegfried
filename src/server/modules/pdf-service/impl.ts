@@ -12,7 +12,7 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
   const { pdfData } = await Doppio.generatePdf({ encodedHTML });
 
   if (!pdfData) {
-    throw new Error("Couldn't generate pdf, sorry");
+    throw new Error("Pdf could not be generated, please try again later");
   }
 
   return {
