@@ -37,7 +37,6 @@ const send: EmailServiceTypes["send"] = async ({
       .catch((e) => {
         console.log(e);
         throw new Error("Couldn't send email");
-        return "Something happened";
       });
   } else {
     await transporter
@@ -55,7 +54,6 @@ const send: EmailServiceTypes["send"] = async ({
       .catch((e) => {
         console.log(e);
         throw new Error("Couldn't send email");
-        return "Something happened";
       });
   }
 };
