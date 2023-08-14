@@ -65,14 +65,11 @@ export const signContract: ContractServiceType["signContract"] = async ({
 
   // Send pdf over to supabase to be saved
   try {
-    const response = await axios.post(
-      `${env.NEXTAUTH_URL}/api/contracts/upload`,
-      {
-        filePath: generatedPdfUrl,
-        pdfName,
-        userId,
-      }
-    );
+    const response = await axios.post(`${env.APP_URL}/api/contracts/upload`, {
+      filePath: generatedPdfUrl,
+      pdfName,
+      userId,
+    });
 
     const { data: supabaseFilePath } = response.data as {
       data: string;
