@@ -82,7 +82,7 @@ export const SingleContractPage = ({
 
           <section
             id="content"
-            className="prose mx-auto"
+            className="prose mx-auto break-all"
             dangerouslySetInnerHTML={{
               __html: contract.content,
             }}
