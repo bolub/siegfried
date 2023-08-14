@@ -61,7 +61,7 @@ export const sendNewContractEmailsToSigners = ({
       subject: `Request to sign ${contract.name} from ${user.name}`,
       content: ContractRequest({
         contractName: contract.name,
-        contractUrl: `${env.NEXTAUTH_URL}${routes.contracts.view(
+        contractUrl: `${env.APP_URL}${routes.contracts.view(
           contract.id
         )}?token=${token}&user=${signer.id}`,
         user: {

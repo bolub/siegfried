@@ -32,6 +32,7 @@ export const env = createEnv({
     EMAIL_USER_PASSWORD: NonEmptySting,
     DOPPIO_AUTH_TOKEN: NonEmptySting,
     DOPPIO_URL: NonEmptySting,
+    APP_URL: NonEmptySting,
   },
 
   client: {
@@ -57,6 +58,7 @@ export const env = createEnv({
     EMAIL_USER_PASSWORD: process.env.EMAIL_USER_PASSWORD,
     DOPPIO_AUTH_TOKEN: process.env.DOPPIO_AUTH_TOKEN,
     DOPPIO_URL: process.env.DOPPIO_URL,
+    APP_URL: process.env.APP_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
