@@ -1,15 +1,13 @@
 import { env } from "@/env.mjs";
-import { type DoppioTypes } from "@/server/modules/doppio-adapter/interface";
+import {
+  type DoppioTypes,
+  DoppioSchema,
+} from "@/server/modules/doppio-adapter/interface";
 import axios from "axios";
 
 export const generatePdf: DoppioTypes["generatePdf"] = async ({
   encodedHTML,
 }) => {
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${env.DOPPIO_AUTH_TOKEN}`,
-  };
-
   try {
     const response = await axios.post(
       env.DOPPIO_URL,
@@ -23,12 +21,15 @@ export const generatePdf: DoppioTypes["generatePdf"] = async ({
       },
 
       {
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.DOPPIO_AUTH_TOKEN}`,
+        },
       }
     );
 
     return {
-      pdfData: response.data.documentUrl,
+      pdfData: DoppioSchema.parse(response.data).documentUrl,
     };
   } catch (error) {
     console.log(error);
