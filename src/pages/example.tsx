@@ -10,7 +10,7 @@ export default function Example() {
     api.example.testGeneratePdf.useMutation();
 
   const sendPdfToUrlTest = async () => {
-    const { pdfFilePath } = await testGeneratePdfAsync();
+    const { url: pdfFilePath } = await testGeneratePdfAsync();
 
     // upload pdf to supabase
     try {
