@@ -75,33 +75,60 @@ export const signContract: ContractServiceType["signContract"] = async ({
       data: string;
     };
 
-    await Promise.all([
-      // save pdf data to db
-      prisma.contractDocument.create({
-        data: {
-          storageId: supabaseFilePath,
-          contractId,
-          userId,
-        },
-      }),
+    await prisma.$transaction(async (tx) => {
+      try {
+        // save pdf data to db
+        await tx.contractDocument.create({
+          data: {
+            storageId: supabaseFilePath,
+            contractId,
+            userId,
+          },
+        });
 
-      // set signed status to SIGNED
-      prisma.contract.update({
-        where: {
-          id: contractId,
-        },
-        data: {
-          status: "SIGNED",
-        },
-      }),
+        // set signed status to SIGNED
+        await tx.contract.update({
+          where: {
+            id: contractId,
+          },
+          data: {
+            status: "SIGNED",
+          },
+        });
+      } catch (error) {
+        console.log("transaction failed");
+        throw error; // Rethrow the error to indicate a failed transaction
+      }
+    });
 
-      // send emails
-      sendContractSignedEmail({
-        contract,
-        recipientId,
-        storageId: supabaseFilePath,
-      }),
-    ]);
+    // send emails
+    await sendContractSignedEmail({
+      contract,
+      recipientId,
+      storageId: supabaseFilePath,
+    });
+
+    // await Promise.all([
+    //   // save pdf data to db
+    //   prisma.contractDocument.create({
+    //     data: {
+    //       storageId: supabaseFilePath,
+    //       contractId,
+    //       userId,
+    //     },
+    //   }),
+
+    //   // set signed status to SIGNED
+    //   prisma.contract.update({
+    //     where: {
+    //       id: contractId,
+    //     },
+    //     data: {
+    //       status: "SIGNED",
+    //     },
+    //   }),
+
+    // ]);
   } catch (error) {
     console.log("Something happened with upload");
     console.log(error);
