@@ -9,7 +9,7 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
 }) => {
   const cl = path.join(
     process.cwd(),
-    "vercel",
+    ".vercel",
     ".cache",
     "ms-playwright",
     "chromium-1076"
