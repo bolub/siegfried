@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs";
 import { type DoppioTypes } from "@/server/modules/doppio-adapter/interface";
 import axios from "axios";
 
@@ -6,12 +7,12 @@ export const generatePdf: DoppioTypes["generatePdf"] = async ({
 }) => {
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer 43627a1b192f18e666b51c1d`,
+    Authorization: `Bearer ${env.DOPPIO_AUTH_TOKEN}`,
   };
 
   try {
     const response = await axios.post(
-      "https://api.doppio.sh/v1/render/pdf/sync",
+      env.DOPPIO_URL,
       {
         page: {
           pdf: { printBackground: true, format: "A4" },
