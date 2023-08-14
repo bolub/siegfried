@@ -22,22 +22,27 @@ const send: EmailServiceTypes["send"] = async ({
   attachments,
 }) => {
   if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
-    await resend.emails
-      .send({
-        from: "Bolu <bolu@siegfried.dev>",
-        to,
-        subject,
-        react: content,
-        attachments,
-      })
-      .then(() => {
-        console.log("sent");
-        return "email sent successfully";
-      })
-      .catch((e) => {
-        console.log(e);
-        throw new Error("Couldn't send email");
-      });
+    try {
+      await resend.emails
+        .send({
+          from: "Bolu <bolu@siegfried.dev>",
+          to,
+          subject,
+          html: render(content),
+          attachments,
+        })
+        .then(() => {
+          console.log("sent");
+          return "email sent successfully";
+        })
+        .catch((e) => {
+          console.log(e);
+          throw new Error("Couldn't send email");
+        });
+    } catch (error) {
+      console.log(error);
+      throw new Error("Something happened");
+    }
   } else {
     await transporter
       .sendMail({
