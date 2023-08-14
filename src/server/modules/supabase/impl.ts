@@ -8,7 +8,7 @@ export const supabase =
     env.SUPABASE_KEY &&
     createClient(env.SUPABASE_URL, env.SUPABASE_KEY, {
       auth: {
-        persistSession: true,
+        persistSession: false,
       },
     }));
 
