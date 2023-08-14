@@ -2,8 +2,8 @@ import { handlePost } from "@/lib/http";
 
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { env } from "@/env.mjs";
-import fs from "fs";
 import { type NextApiRequest, type NextApiResponse } from "next";
+import { z } from "zod";
 
 export const config = {
   api: {
@@ -24,17 +24,23 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   handlePost(req, res, async () => {
-    let { filePath, pdfName, userId } = req.body;
+    const UploadSchema = z.object({
+      filePath: z.string().min(1),
+      pdfName: z.string().min(1),
+      userId: z.string().min(1),
+    });
 
-    const fileData = fs.readFileSync(filePath);
+    let { filePath, pdfName, userId } = UploadSchema.parse(req.body);
 
     const path = `${userId}/${pdfName}_${Date.now()}`;
+
+    const blob = await fetch(filePath).then((r) => r.blob());
 
     try {
       const resp = await FileStorageService.upload({
         bucket: env.SUPABASE_CONTRACTS_BUCKET,
         path,
-        file: fileData,
+        file: blob,
         opts: {
           contentType: "application/pdf",
         },
