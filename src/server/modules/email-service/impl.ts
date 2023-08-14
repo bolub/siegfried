@@ -21,32 +21,11 @@ const send: EmailServiceTypes["send"] = async ({
   content,
   attachments,
 }) => {
-  if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
-    try {
-      await resend.emails
-        .send({
-          from: "Bolu <bolu@siegfried.dev>",
-          to,
-          subject,
-          html: render(content),
-          attachments,
-        })
-        .then(() => {
-          console.log("sent");
-          return "email sent successfully";
-        })
-        .catch((e) => {
-          console.log(e);
-          throw new Error("Couldn't send email");
-        });
-    } catch (error) {
-      console.log(error);
-      throw new Error("Something happened");
-    }
-  } else {
-    await transporter
-      .sendMail({
-        from: env.CONTACT_EMAIL,
+  // if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
+  try {
+    await resend.emails
+      .send({
+        from: "Bolu <bolu@siegfried.dev>",
         to,
         subject,
         html: render(content),
@@ -60,7 +39,29 @@ const send: EmailServiceTypes["send"] = async ({
         console.log(e);
         throw new Error("Couldn't send email");
       });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something happened");
   }
+  // }
+  // else {
+  //   await transporter
+  //     .sendMail({
+  //       from: env.CONTACT_EMAIL,
+  //       to,
+  //       subject,
+  //       html: render(content),
+  //       attachments,
+  //     })
+  //     .then(() => {
+  //       console.log("sent");
+  //       return "email sent successfully";
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       throw new Error("Couldn't send email");
+  //     });
+  // }
 };
 
 export const EmailService: EmailServiceTypes = {
