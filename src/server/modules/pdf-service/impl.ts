@@ -1,25 +1,21 @@
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
 import fs from "fs";
 import path from "path";
-import { chromium } from "playwright-chromium";
+import { chromium } from "playwright";
 
 export const generatePdf: PdfServiceType["generatePdf"] = async ({
   html,
   name,
 }) => {
-  const cl = path.join(
-    process.cwd(),
-    ".vercel",
-    ".cache",
-    "ms-playwright",
-    "chromium-1076"
-  );
+  // const cl = path.join(
+  //   process.cwd(),
+  //   ".vercel",
+  //   ".cache",
+  //   "ms-playwright",
+  //   "chromium-1076"
+  // );
 
-  const browser = await chromium.launch({
-    executablePath: cl,
-  });
-
-  console.log(cl);
+  const browser = await chromium.launch();
 
   const page = await browser.newPage();
 
@@ -41,7 +37,6 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
 
   return {
     pdfFilePath,
-    cl,
   };
 };
 
