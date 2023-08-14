@@ -55,41 +55,20 @@ export const sendNewContractEmailsToSigners = async ({
     contractId: contract.id,
   });
 
-  // contract.recipients.forEach(async (signer) => {
-  //   await EmailService.send({
-  //     to: signer.email,
-  //     subject: `Request to sign ${contract.name} from ${user.name}`,
-  //     content: ContractRequest({
-  //       contractName: contract.name,
-  //       contractUrl: `${env.APP_URL}${routes.contracts.view(
-  //         contract.id
-  //       )}?token=${token}&user=${signer.id}`,
-  //       user: {
-  //         name: user.name ?? "",
-  //       },
-  //     }),
-  //   });
-
-  // });
-
-  const signer = contract.recipients[0];
-
-  if (!signer) {
-    throw new Error("No signer available");
-  }
-
-  await EmailService.send({
-    to: signer.email,
-    subject: `Request to sign ${contract.name} from ${user.name}`,
-    content: ContractRequest({
-      contractName: contract.name,
-      contractUrl: `${env.APP_URL}${routes.contracts.view(
-        contract.id
-      )}?token=${token}&user=${signer.id}`,
-      user: {
-        name: user.name ?? "",
-      },
-    }),
+  contract.recipients.forEach(async (signer) => {
+    await EmailService.send({
+      to: signer.email,
+      subject: `Request to sign ${contract.name} from ${user.name}`,
+      content: ContractRequest({
+        contractName: contract.name,
+        contractUrl: `${env.APP_URL}${routes.contracts.view(
+          contract.id
+        )}?token=${token}&user=${signer.id}`,
+        user: {
+          name: user.name ?? "",
+        },
+      }),
+    });
   });
 };
 
