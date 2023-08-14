@@ -19,6 +19,23 @@ interface Data {
   data: string;
 }
 
+async function blobToBuffer(blob: Blob) {
+  try {
+    // Create a response object from the Blob
+    const response = await fetch(URL.createObjectURL(blob));
+
+    // Read the response as an ArrayBuffer
+    const arrayBuffer = await response.arrayBuffer();
+
+    // Convert the ArrayBuffer to a Buffer (if you're using Node.js)
+    const buffer = Buffer.from(arrayBuffer);
+
+    return buffer;
+  } catch (error: any) {
+    throw new Error("Error converting Blob to Buffer: " + error?.message);
+  }
+}
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -34,21 +51,22 @@ export default function handler(
 
     const path = `${userId}/${pdfName}_${Date.now()}`;
 
-    const blob = await fetch(filePath).then((r) => r.blob());
+    const blobData = await fetch(filePath).then((r) => r.blob());
+    const bufferData = await blobToBuffer(blobData);
 
     try {
       const resp = await FileStorageService.upload({
         bucket: env.SUPABASE_CONTRACTS_BUCKET,
         path,
-        file: blob,
+        file: bufferData,
         opts: {
           contentType: "application/pdf",
         },
       });
 
       return res.status(200).json({ message: "ok", data: resp.path });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log("Error uploading file: " + error?.message);
 
       return res
         .status(500)
