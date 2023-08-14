@@ -1,10 +1,7 @@
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
 import { Doppio } from "../doppio-adapter/impl";
 
-export const generatePdf: PdfServiceType["generatePdf"] = async ({
-  html,
-  name,
-}) => {
+export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
   // @ts-ignore
   const encodedHTML = new Buffer.from(html, "utf8").toString("base64");
 
@@ -19,7 +16,7 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
   }
 
   return {
-    pdfFilePath: pdfData,
+    url: pdfData,
   };
 };
 
