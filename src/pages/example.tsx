@@ -19,7 +19,11 @@ export default function Example() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ filePath: pdfFilePath }),
+        body: JSON.stringify({
+          filePath: pdfFilePath,
+          pdfName: "test",
+          userId: "007",
+        }),
       });
 
       console.log(await response.json());
