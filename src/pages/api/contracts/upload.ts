@@ -26,15 +26,15 @@ export default function handler(
   handlePost(req, res, async () => {
     let { filePath, pdfName, userId } = req.body;
 
-    const fileData = fs.readFileSync(filePath);
-
     const path = `${userId}/${pdfName}_${Date.now()}`;
+
+    const blob = await fetch(filePath).then((r) => r.blob());
 
     try {
       const resp = await FileStorageService.upload({
         bucket: env.SUPABASE_CONTRACTS_BUCKET,
         path,
-        file: fileData,
+        file: blob,
         opts: {
           contentType: "application/pdf",
         },
