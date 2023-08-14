@@ -2,7 +2,6 @@ import { handlePost } from "@/lib/http";
 
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { env } from "@/env.mjs";
-import fs from "fs";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { z } from "zod";
 
