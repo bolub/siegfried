@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npx playwright install chromium",
+    "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
     "email-dev": "email dev -p 3001",
