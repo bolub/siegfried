@@ -98,7 +98,7 @@ export const Appshell: FC<AppshellProps> = ({
         </div>
       </nav>
 
-      <div className="container mx-auto mt-16 w-full">{children}</div>
+      <div className="container mx-auto mb-28 mt-16 w-full">{children}</div>
     </>
   );
 };
