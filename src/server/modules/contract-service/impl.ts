@@ -4,9 +4,10 @@ import { type ContractServiceType } from "@/server/modules/contract-service/inte
 import { PdfService } from "@/server/modules/pdf-service/impl";
 import {
   getContract,
-  sendContractEmailsToSigners,
+  sendNewContractEmailsToSigners,
   sendContractSignedEmail,
 } from "@/server/modules/contract-service/utils";
+import axios from "axios";
 
 export const create: ContractServiceType["create"] = async (args) => {
   const { contract, user } = args;
@@ -37,7 +38,7 @@ export const create: ContractServiceType["create"] = async (args) => {
     return null;
   }
 
-  sendContractEmailsToSigners({
+  sendNewContractEmailsToSigners({
     contract: newContract,
     user: args.user,
   });
@@ -57,12 +58,11 @@ export const signContract: ContractServiceType["signContract"] = async ({
 
   const pdfName = `${contract.name} signed`;
 
-  const generatedPdfFilePath = await PdfService.generatePdf({
+  const { url: generatedPdfUrl } = await PdfService.generatePdf({
     html: contractContent,
-    name: pdfName,
   });
 
-  if (!generatedPdfFilePath) {
+  if (!generatedPdfUrl) {
     console.error(
       "Contract pdf could not be generated, please try again later"
     );
@@ -71,19 +71,16 @@ export const signContract: ContractServiceType["signContract"] = async ({
   }
 
   // send pdf over to supabase to be saved
-  const response = await fetch(`${env.NEXTAUTH_URL}/api/contracts/upload`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      filePath: generatedPdfFilePath.pdfFilePath,
+  const response = await axios.post(
+    `${env.NEXTAUTH_URL}/api/contracts/upload`,
+    {
+      filePath: generatedPdfUrl,
       pdfName,
       userId,
-    }),
-  });
+    }
+  );
 
-  const { data: supabaseFilePath } = (await response.json()) as {
+  const { data: supabaseFilePath } = response.data as {
     data: string;
   };
 
