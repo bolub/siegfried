@@ -3,6 +3,7 @@ import { type ReactElement } from "react";
 interface Attachment {
   content: Buffer | string;
   filename: string;
+  contentType?: string;
 }
 
 export interface EmailServiceTypes {
