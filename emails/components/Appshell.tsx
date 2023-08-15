@@ -39,8 +39,8 @@ export const Appshell = ({ children }: { children: ReactNode }) => {
           />
         </Head>
         <Preview>You have a new contract to sign</Preview>
-        <Body className="bg-background-100 h-screen font-sans">
-          <Section className="h-full">
+        <Body className="bg-background-100 font-sans">
+          <Section className="mt-10 h-full">
             <Container className="m-auto w-full max-w-[532px] bg-white px-10 pb-16 pt-2">
               <EmailLogo />
 
