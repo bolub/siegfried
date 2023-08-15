@@ -112,6 +112,8 @@ export const signContract: ContractServiceType["signContract"] = async ({
   }
 };
 
+// TODO: Need to create a new function to handle email sending after contract has been sent, because vercel functions times out after 10s, and we can't avoid that right now
+
 export const ContractService: ContractServiceType = {
   create,
   signContract,
