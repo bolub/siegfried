@@ -6,6 +6,13 @@ export const routes = {
     all: () => "/contracts" as const,
     new: () => "/contracts/new" as const,
     view: (id: string) => `/contracts/${id}` as const,
-    signed: (name: string) => `/contracts/signed?name=${name}` as const,
+    signed: ({
+      recipientId,
+      contractId,
+    }: {
+      recipientId: string;
+      contractId: string;
+    }) =>
+      `/contracts/signed?recipientId=${recipientId}&contractId=${contractId}` as const,
   },
 };
