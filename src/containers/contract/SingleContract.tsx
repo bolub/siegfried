@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import React, { useState } from "react";
 import { type SingleContractType } from "@/pages/contracts/[id]";
 import { useRouter } from "next/router";
-import { NoContractDataAvailable } from "@/containers/contract/components/NoContractAvailable";
+import { NoContractDataAvailable } from "@/containers/contract/components/Feedback";
 import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SignatureSigner } from "@/containers/contract/components/SignatureSigner";
@@ -37,7 +37,12 @@ export const SingleContractPage = ({
       onSuccess() {
         setHideForContractSigning(false);
 
-        router.push(routes.contracts.signed(contract.name));
+        router.push(
+          routes.contracts.signed({
+            contractId: contract.id,
+            recipientId: recipient?.id || "",
+          })
+        );
 
         toast({
           title: "Success",
@@ -62,7 +67,6 @@ export const SingleContractPage = ({
     await signContract({
       userId: contract.userId,
       contractContent: contractBody.outerHTML,
-      recipientId: recipient?.id || "",
       contractId: contract.id,
     });
   };
