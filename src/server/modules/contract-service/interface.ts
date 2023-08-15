@@ -17,7 +17,11 @@ export interface ContractServiceType {
   signContract: (args: {
     contractContent: string;
     contractId: string;
-    recipientId: string;
     userId: string;
+  }) => Promise<void>;
+
+  sendContractSignedEmail: (args: {
+    contractId: string;
+    recipientId: string;
   }) => Promise<void>;
 }

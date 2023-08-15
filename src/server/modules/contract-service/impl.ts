@@ -5,9 +5,12 @@ import { PdfService } from "@/server/modules/pdf-service/impl";
 import {
   getContract,
   sendNewContractEmailsToSigners,
-  sendContractSignedEmail,
 } from "@/server/modules/contract-service/utils";
 import axios from "axios";
+import { ContractUser } from "@/containers/contract/utils";
+import { FileStorageService } from "@/server/modules/file-storage-service/impl";
+import { EmailService } from "@/server/modules/email-service/impl";
+import ContractSigned from "@/emails/ContractSigned";
 
 export const create: ContractServiceType["create"] = async (args) => {
   const { contract, user } = args;
@@ -49,7 +52,6 @@ export const create: ContractServiceType["create"] = async (args) => {
 export const signContract: ContractServiceType["signContract"] = async ({
   contractContent,
   contractId,
-  recipientId,
   userId,
 }) => {
   const contract = await getContract({
@@ -98,13 +100,6 @@ export const signContract: ContractServiceType["signContract"] = async ({
         throw error;
       }
     });
-
-    // send emails
-    // await sendContractSignedEmail({
-    //   contract,
-    //   recipientId,
-    //   storageId: supabaseFilePath,
-    // });
   } catch (error) {
     console.log(error);
 
@@ -112,9 +107,95 @@ export const signContract: ContractServiceType["signContract"] = async ({
   }
 };
 
-// TODO: Need to create a new function to handle email sending after contract has been sent, because vercel functions times out after 10s, and we can't avoid that right now
+// We function to handle email sending after contract has been sent, because vercel functions times out after 10s, and we can't avoid that right now
+const sendContractSignedEmail: ContractServiceType["sendContractSignedEmail"] =
+  async ({ contractId, recipientId }) => {
+    const contract = await getContract({
+      contractId,
+    });
+
+    if (!contract) {
+      throw new Error("Contract does not exist");
+    }
+
+    const recipient = ContractUser({
+      recipients: contract.recipients,
+      userId: recipientId,
+    });
+
+    if (!recipient) {
+      throw new Error("Recipient does not exist");
+    }
+
+    const contractDocument = await prisma.contractDocument.findFirst({
+      where: {
+        contractId,
+      },
+      select: {
+        storageId: true,
+      },
+    });
+
+    if (!contractDocument) {
+      throw new Error("Contract document does not exist");
+    }
+
+    const file = await FileStorageService.download({
+      bucket: env.SUPABASE_CONTRACTS_BUCKET,
+      path: contractDocument.storageId,
+    });
+
+    const fileToArrayBuffer = await file.blob.arrayBuffer();
+    const attachmentBuffer = Buffer.from(fileToArrayBuffer);
+
+    try {
+      await Promise.all([
+        // send to user
+        EmailService.send({
+          to: contract.user.email || "",
+          subject: `${recipient.name} has signed the contract`,
+          content: ContractSigned({
+            contractName: contract.name,
+          }),
+          attachments: [
+            {
+              filename: contractDocument.storageId + ".pdf",
+              content: attachmentBuffer,
+            },
+          ],
+        }),
+
+        // send to recipient
+        EmailService.send({
+          to: recipient.email || "",
+          subject: `${contract.name} signed successfully`,
+          content: ContractSigned({
+            contractName: contract.name,
+          }),
+          attachments: [
+            {
+              filename: contractDocument.storageId + ".pdf",
+              content: attachmentBuffer,
+            },
+          ],
+        }),
+      ]);
+    } catch (error) {
+      throw new Error("Couldn't send email");
+    }
+
+    await prisma.contract.update({
+      where: {
+        id: contractId,
+      },
+      data: {
+        emailSent: true,
+      },
+    });
+  };
 
 export const ContractService: ContractServiceType = {
   create,
   signContract,
+  sendContractSignedEmail,
 };
