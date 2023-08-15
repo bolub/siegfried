@@ -97,35 +97,39 @@ export const sendContractSignedEmail = async ({
   const fileToArrayBuffer = await file.blob.arrayBuffer();
   const attachmentBuffer = Buffer.from(fileToArrayBuffer);
 
-  await Promise.all([
-    // send to user
-    // transporter.sendMail({
-    //   from: env.CONTACT_EMAIL,
-    //   to: contract.user.email || "",
-    //   subject: `${recipient?.name} has signed the contract`,
-    //   text: "Contract signed successfully",
-    //   attachments: [
-    //     {
-    //       filename: storageId,
-    //       content: Buffer.from(fileToArrayBuffer),
-    //       contentType: "application/pdf",
-    //     },
-    //   ],
-    // }),
+  try {
+    await Promise.all([
+      // send to user
+      // transporter.sendMail({
+      //   from: env.CONTACT_EMAIL,
+      //   to: contract.user.email || "",
+      //   subject: `${recipient?.name} has signed the contract`,
+      //   text: "Contract signed successfully",
+      //   attachments: [
+      //     {
+      //       filename: storageId,
+      //       content: Buffer.from(fileToArrayBuffer),
+      //       contentType: "application/pdf",
+      //     },
+      //   ],
+      // }),
 
-    // send to recipient
-    EmailService.send({
-      to: recipient?.email || "",
-      subject: `${contract.name} signed successfully`,
-      content: ContractSigned({
-        contractName: contract.name,
+      // send to recipient
+      EmailService.send({
+        to: recipient?.email || "",
+        subject: `${contract.name} signed successfully`,
+        content: ContractSigned({
+          contractName: contract.name,
+        }),
+        attachments: [
+          {
+            filename: storageId + ".pdf",
+            content: attachmentBuffer,
+          },
+        ],
       }),
-      attachments: [
-        {
-          filename: storageId + ".pdf",
-          content: attachmentBuffer,
-        },
-      ],
-    }),
-  ]);
+    ]);
+  } catch (error) {
+    throw new Error("Couldn't send email");
+  }
 };
