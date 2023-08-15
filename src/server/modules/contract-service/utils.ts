@@ -20,17 +20,17 @@ export const getContract = async ({ contractId }: { contractId: string }) => {
     },
     select: {
       name: true,
-      user: true,
       recipients: true,
+      user: {
+        select: {
+          email: true,
+        },
+      },
     },
   });
 
   if (!contract) {
     throw new Error("Contract does not exist");
-  }
-
-  if (!contract.user) {
-    throw new Error("User does not exist");
   }
 
   if (!contract.recipients) {

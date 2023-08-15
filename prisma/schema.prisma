@@ -91,6 +91,7 @@ model Contract {
     status             ContractStatus
     userId             String
     user               User @relation(fields: [userId], references: [id])
+    emailSent          Boolean @default(false)
 }
 
 model ContractDocument {

@@ -32,7 +32,6 @@ export const contractServiceRouter = createTRPCRouter({
       z.object({
         contractContent: z.string(),
         contractId: z.string(),
-        recipientId: z.string(),
         userId: z.string(),
       })
     )
@@ -40,8 +39,20 @@ export const contractServiceRouter = createTRPCRouter({
       return await ContractService.signContract({
         contractContent: input.contractContent,
         contractId: input.contractId,
-        recipientId: input.recipientId,
         userId: input.userId,
+      });
+    }),
+  sendContractSignedEmail: publicProcedure
+    .input(
+      z.object({
+        contractId: z.string(),
+        recipientId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      return await ContractService.sendContractSignedEmail({
+        contractId: input.contractId,
+        recipientId: input.recipientId,
       });
     }),
 });
