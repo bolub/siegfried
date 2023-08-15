@@ -100,11 +100,11 @@ export const signContract: ContractServiceType["signContract"] = async ({
     });
 
     // send emails
-    await sendContractSignedEmail({
-      contract,
-      recipientId,
-      storageId: supabaseFilePath,
-    });
+    // await sendContractSignedEmail({
+    //   contract,
+    //   recipientId,
+    //   storageId: supabaseFilePath,
+    // });
   } catch (error) {
     console.log(error);
 
