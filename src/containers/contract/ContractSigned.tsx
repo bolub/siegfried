@@ -8,10 +8,10 @@ import {
   NoContractDataAvailable,
 } from "@/containers/contract/components/Feedback";
 
-export const ContractSignedPage = ({
+export const ContractSignedPageInner = ({
   contract,
 }: {
-  contract?: SingleContractType | null;
+  contract: SingleContractType;
 }) => {
   const { query } = useRouter();
 
@@ -31,7 +31,6 @@ export const ContractSignedPage = ({
     }
   );
 
-  if (!contract) return <NoContractDataAvailable />;
   if (isLoading) return <LoadingData />;
 
   return (
@@ -51,4 +50,14 @@ export const ContractSignedPage = ({
       </main>
     </>
   );
+};
+
+export const ContractSignedPage = ({
+  contract,
+}: {
+  contract?: SingleContractType | null;
+}) => {
+  if (!contract || contract.emailSent) return <NoContractDataAvailable />;
+
+  return <ContractSignedPageInner contract={contract} />;
 };
