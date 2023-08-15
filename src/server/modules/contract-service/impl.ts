@@ -106,7 +106,6 @@ export const signContract: ContractServiceType["signContract"] = async ({
       storageId: supabaseFilePath,
     });
   } catch (error) {
-    console.log("Something happened with upload");
     console.log(error);
 
     throw new Error("Couldn't proceed with upload, sorry");
