@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { type SingleContractType } from "@/pages/contracts/[id]";
 import { useRouter } from "next/router";
 import { NoContractDataAvailable } from "@/containers/contract/components/Feedback";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/time";
 import { Button } from "@/components/ui/button";
 import { SignatureSigner } from "@/containers/contract/components/SignatureSigner";
 import { ContractUser } from "./utils";

@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/time";
 import { type Contract } from "@prisma/client";
 import { PencilLine } from "lucide-react";
 import {
