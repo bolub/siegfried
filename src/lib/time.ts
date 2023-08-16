@@ -3,22 +3,12 @@ import { format as fnsFormat, formatRelative } from "date-fns";
 const formatters = {
   // '02/11/2014'
   "Day-Month-Year-Slashed": "dd/MM/yyyy",
-  "Day-Month-Year": "dd MMM yyyy",
-  // '2014/11/02'
-  "Year-Month-Day": "yyyy/MM/dd",
-  // '02 Nov'
-  "Day-Month": "dd MMM",
-  // '2014-11-02'
-  "Year-Month-Day-Hyphenated": "yyyy-MM-dd",
-  // '2014-11'
-  "Year-Month-Hyphenated": "yyyy-MM",
-  // '20141102'
-  YearMonthDay: "yyyyMMdd",
+  "Day-Month-Year-Time": "do LLL yyyy, hh:mm a",
 } as const;
 
 export const formatDate = (
   dateToFormat: Date,
-  format: keyof typeof formatters = "Day-Month-Year-Slashed"
+  format: keyof typeof formatters = "Day-Month-Year-Time"
 ): string => {
   return fnsFormat(dateToFormat, formatters[format]);
 };
