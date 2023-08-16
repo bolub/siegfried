@@ -6,8 +6,8 @@ import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Stat } from "@/containers/dashboard-page/components/Stat";
-import { ActivityComponent } from "@/containers/dashboard-page/components/ActivityComponent";
 import { type DashboardType } from "@/pages/dashboard";
+import { ActivityList } from "./components/ActivityList";
 
 export const DashboardPage = ({
   stats,
@@ -39,22 +39,7 @@ export const DashboardPage = ({
         <h2 className="font-mono text-xl font-bold">Recent Activity</h2>
 
         <div className="mt-8 flex flex-col gap-6">
-          {recentActivities.map((activity) => {
-            const isContractCreated = activity.action === "CONTRACT_CREATED";
-            const user = isContractCreated
-              ? activity.contract.user.name
-              : activity.recipient?.name;
-
-            return (
-              <ActivityComponent
-                key={activity.id}
-                status={activity.action}
-                user={user || ""}
-                contract={activity.contract?.name || ""}
-                timestamp={activity.timestamp}
-              />
-            );
-          })}
+          <ActivityList activities={recentActivities} />
         </div>
       </div>
     </Appshell>

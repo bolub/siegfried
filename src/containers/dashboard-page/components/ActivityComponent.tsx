@@ -1,8 +1,7 @@
 import { type ActivityType } from "@prisma/client";
 import { ContentToActivity } from "@/containers/dashboard-page/utils";
-import { Clock } from "lucide-react";
-import { formatDate } from "@/lib/utils";
 import { ArrowUpRight, Check, EyeIcon } from "lucide-react";
+import { formatDateFromNow } from "@/lib/time";
 
 export const IconToActivity: Record<ActivityType, any> = {
   CONTRACT_CREATED: <ArrowUpRight />,
@@ -42,7 +41,7 @@ export const ActivityComponent = ({
       <div className="ml-2 flex items-center gap-2">
         <span className="mb-3 text-2xl font-bold">.</span>
 
-        <p>{formatDate(timestamp)}</p>
+        <p>{formatDateFromNow(timestamp)}</p>
       </div>
     </div>
   );

@@ -7,6 +7,29 @@ import Link from "next/link";
 import React from "react";
 import { ContractComponent } from "./components/ContractComponent";
 import { PageHeader } from "@/components/PageHeader";
+import { Empty } from "@/components/Empty";
+import { PencilLine } from "lucide-react";
+
+const ContractsList = ({ contracts }: { contracts: Contract[] }) => {
+  if (contracts.length === 0)
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <Empty
+          icon={<PencilLine className="h-6 w-6" />}
+          title="No Contracts"
+          description="Get started by creating a new contract"
+        />
+      </div>
+    );
+
+  return (
+    <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {contracts.map((contract) => {
+        return <ContractComponent key={contract.id} contract={contract} />;
+      })}
+    </div>
+  );
+};
 
 export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
   return (
@@ -20,11 +43,7 @@ export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
         </Button>
       </PageHeader>
 
-      <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {contracts.map((contract) => {
-          return <ContractComponent key={contract.id} contract={contract} />;
-        })}
-      </div>
+      <ContractsList contracts={contracts} />
     </Appshell>
   );
 };
