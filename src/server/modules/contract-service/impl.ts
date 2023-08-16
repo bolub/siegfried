@@ -119,28 +119,6 @@ export const signContract: ContractServiceType["signContract"] = async ({
   }
 };
 
-export const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
-  async ({ contractId, userId, recipientId }) => {
-    const existingActivity = await prisma.activity.findFirst({
-      where: {
-        action: "CONTRACT_OPENED",
-        contractId,
-        recipientId,
-      },
-    });
-
-    if (!existingActivity) return;
-
-    await prisma.activity.create({
-      data: {
-        action: "CONTRACT_OPENED",
-        contractId,
-        userId,
-        recipientId,
-      },
-    });
-  };
-
 // We function to handle email sending after contract has been sent, because vercel functions times out after 10s, and we can't avoid that right now
 const sendContractSignedEmail: ContractServiceType["sendContractSignedEmail"] =
   async ({ contractId, recipientId }) => {
@@ -224,6 +202,30 @@ const sendContractSignedEmail: ContractServiceType["sendContractSignedEmail"] =
       },
       data: {
         emailSent: true,
+      },
+    });
+
+    return "Contract sent to all parties successfully";
+  };
+
+export const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
+  async ({ contractId, userId, recipientId }) => {
+    const existingActivity = await prisma.activity.findFirst({
+      where: {
+        action: "CONTRACT_OPENED",
+        contractId,
+        recipientId,
+      },
+    });
+
+    if (Boolean(existingActivity)) return null;
+
+    return await prisma.activity.create({
+      data: {
+        action: "CONTRACT_OPENED",
+        contractId,
+        userId,
+        recipientId,
       },
     });
   };
