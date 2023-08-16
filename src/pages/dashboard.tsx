@@ -50,6 +50,9 @@ export const getServerSideProps: GetServerSideProps<DashboardType> = async (
 
   const recentActivities = await prisma.activity.findMany({
     take: 5,
+    where: {
+      userId,
+    },
     orderBy: {
       timestamp: "desc",
     },
