@@ -136,11 +136,16 @@ export const SingleContractPage = ({
   });
 
   // Mark contract as opened
-  api.contract.markContractAsOpened.useQuery({
-    userId: query.user,
-    contractId: contract.id,
-    recipientId: recipient?.id || "",
-  });
+  api.contract.markContractAsOpened.useQuery(
+    {
+      userId: contract.userId,
+      contractId: contract.id,
+      recipientId: recipient?.id || "",
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return <SingleContractPageInner contract={contract} recipient={recipient} />;
 };
