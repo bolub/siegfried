@@ -11,6 +11,7 @@ import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractSigned from "@/emails/ContractSigned";
+import { EventService } from "@/server/modules/event-service/impl";
 
 export const create: ContractServiceType["create"] = async (args) => {
   const { contract, user } = args;
@@ -36,10 +37,14 @@ export const create: ContractServiceType["create"] = async (args) => {
     },
   });
 
-  if (!contract) {
-    console.error("Contract not created successfully");
-    return null;
+  if (!newContract) {
+    throw new Error("Contract not created successfully");
   }
+
+  EventService.Emitter.emit("CONTRACT_CREATED", {
+    userId: user.id,
+    contractId: newContract.id,
+  });
 
   await sendNewContractEmailsToSigners({
     contract: newContract,
@@ -53,6 +58,7 @@ export const signContract: ContractServiceType["signContract"] = async ({
   contractContent,
   contractId,
   userId,
+  recipientId,
 }) => {
   const contract = await getContract({
     contractId,
@@ -100,12 +106,40 @@ export const signContract: ContractServiceType["signContract"] = async ({
         throw error;
       }
     });
+
+    EventService.Emitter.emit("CONTRACT_SIGNED", {
+      userId: contract.user.id,
+      contractId: contractId,
+      recipientId,
+    });
   } catch (error) {
     console.log(error);
 
     throw new Error("Couldn't proceed with upload, sorry");
   }
 };
+
+export const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
+  async ({ contractId, userId, recipientId }) => {
+    const existingActivity = await prisma.activity.findFirst({
+      where: {
+        action: "CONTRACT_OPENED",
+        contractId,
+        recipientId,
+      },
+    });
+
+    if (!existingActivity) return;
+
+    await prisma.activity.create({
+      data: {
+        action: "CONTRACT_OPENED",
+        contractId,
+        userId,
+        recipientId,
+      },
+    });
+  };
 
 // We function to handle email sending after contract has been sent, because vercel functions times out after 10s, and we can't avoid that right now
 const sendContractSignedEmail: ContractServiceType["sendContractSignedEmail"] =
@@ -198,4 +232,5 @@ export const ContractService: ContractServiceType = {
   create,
   signContract,
   sendContractSignedEmail,
+  markContractAsOpened,
 };
