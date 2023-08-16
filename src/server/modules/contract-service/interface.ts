@@ -1,5 +1,5 @@
 import { type ContractSigners } from "@/containers/contract-new/components/ContractSigners/interface";
-import { type Contract } from "@prisma/client";
+import { type Activity, type Contract } from "@prisma/client";
 
 export interface ContractServiceType {
   create: (args: {
@@ -18,10 +18,17 @@ export interface ContractServiceType {
     contractContent: string;
     contractId: string;
     userId: string;
+    recipientId: string;
   }) => Promise<void>;
 
   sendContractSignedEmail: (args: {
     contractId: string;
     recipientId: string;
-  }) => Promise<void>;
+  }) => Promise<string>;
+
+  markContractAsOpened: (args: {
+    contractId: string;
+    userId: string;
+    recipientId: string;
+  }) => Promise<Activity | null>;
 }

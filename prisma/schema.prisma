@@ -74,6 +74,7 @@ model ContractRecipient {
     email              String
     contractId         String
     contract           Contract @relation(fields: [contractId], references: [id])
+    activity           Activity[]
 }
 
 enum ContractStatus {
@@ -92,6 +93,7 @@ model Contract {
     userId             String
     user               User @relation(fields: [userId], references: [id])
     emailSent          Boolean @default(false)
+    activity           Activity[]
 }
 
 model ContractDocument {
@@ -100,4 +102,21 @@ model ContractDocument {
     contractId         String
     createdAt          DateTime      @default(now())
     userId             String
+}
+
+enum ActivityType {
+    CONTRACT_CREATED
+    CONTRACT_OPENED
+    CONTRACT_SIGNED
+}
+
+model Activity {
+    action        ActivityType
+    id            String   @id @default(cuid())
+    timestamp     DateTime @default(now())
+    userId        String
+    contractId    String
+    contract      Contract @relation(fields: [contractId], references: [id])
+    recipientId   String?
+    recipient     ContractRecipient? @relation(fields: [recipientId], references: [id])
 }

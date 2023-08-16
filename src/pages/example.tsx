@@ -9,6 +9,8 @@ export default function Example() {
   const { mutate: testGeneratePdf, mutateAsync: testGeneratePdfAsync } =
     api.example.testGeneratePdf.useMutation();
 
+  const { mutate: testEmitEvents } = api.example.testEmitEvents.useMutation();
+
   const sendPdfToUrlTest = async () => {
     const { url: pdfFilePath } = await testGeneratePdfAsync();
 
@@ -61,6 +63,15 @@ export default function Example() {
             className="w-fit"
           >
             Generate Pdf url test
+          </Button>
+
+          <Button
+            onClick={async () => {
+              testEmitEvents();
+            }}
+            className="w-fit"
+          >
+            Event Emitter test
           </Button>
         </div>
       </Appshell>

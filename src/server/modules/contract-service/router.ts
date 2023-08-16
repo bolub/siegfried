@@ -33,15 +33,21 @@ export const contractServiceRouter = createTRPCRouter({
         contractContent: z.string(),
         contractId: z.string(),
         userId: z.string(),
+        recipientId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
-      return await ContractService.signContract({
-        contractContent: input.contractContent,
-        contractId: input.contractId,
-        userId: input.userId,
-      });
-    }),
+    .mutation(
+      async ({
+        input: { contractContent, contractId, userId, recipientId },
+      }) => {
+        return await ContractService.signContract({
+          contractContent,
+          contractId,
+          userId,
+          recipientId,
+        });
+      }
+    ),
   sendContractSignedEmail: publicProcedure
     .input(
       z.object({
@@ -49,10 +55,26 @@ export const contractServiceRouter = createTRPCRouter({
         recipientId: z.string(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ input: { contractId, recipientId } }) => {
       return await ContractService.sendContractSignedEmail({
-        contractId: input.contractId,
-        recipientId: input.recipientId,
+        contractId,
+        recipientId,
+      });
+    }),
+
+  markContractAsOpened: publicProcedure
+    .input(
+      z.object({
+        contractId: z.string(),
+        userId: z.string(),
+        recipientId: z.string(),
+      })
+    )
+    .query(async ({ input: { contractId, recipientId, userId } }) => {
+      return await ContractService.markContractAsOpened({
+        contractId,
+        recipientId,
+        userId,
       });
     }),
 });
