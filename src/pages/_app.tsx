@@ -22,12 +22,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <Head>
         <link
-          href="favicon-light.png"
+          href="../favicon-light.png"
           rel="icon"
           media="(prefers-color-scheme:light)"
         />
         <link
-          href="favicon-dark.png"
+          href="../favicon-dark.png"
           rel="icon"
           media="(prefers-color-scheme:dark)"
         />
