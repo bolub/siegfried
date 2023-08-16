@@ -10,27 +10,20 @@ import { ContractUser } from "./utils";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { routes } from "@/routes";
+import { type ContractRecipient } from "@prisma/client";
 
-export const SingleContractPage = ({
+export const SingleContractPageInner = ({
   contract,
+  recipient,
 }: {
-  contract?: SingleContractType | null;
+  contract: SingleContractType;
+  recipient?: ContractRecipient;
 }) => {
   const { toast } = useToast();
   const router = useRouter();
-  const query = router.query as {
-    user: string;
-  };
 
   const [signature, setSignature] = useState("");
   const [hideForContractSigning, setHideForContractSigning] = useState(false);
-
-  if (!contract) return <NoContractDataAvailable />;
-
-  const recipient = ContractUser({
-    userId: query.user,
-    recipients: contract.recipients,
-  });
 
   const { mutateAsync: signContract, isLoading } =
     api.contract.sign.useMutation({
@@ -68,6 +61,7 @@ export const SingleContractPage = ({
       userId: contract.userId,
       contractContent: contractBody.outerHTML,
       contractId: contract.id,
+      recipientId: recipient?.id || "",
     });
   };
 
@@ -122,4 +116,31 @@ export const SingleContractPage = ({
       </footer>
     </>
   );
+};
+
+export const SingleContractPage = ({
+  contract,
+}: {
+  contract?: SingleContractType | null;
+}) => {
+  const router = useRouter();
+  const query = router.query as {
+    user: string;
+  };
+
+  if (!contract) return <NoContractDataAvailable />;
+
+  const recipient = ContractUser({
+    userId: query.user,
+    recipients: contract.recipients,
+  });
+
+  // Mark contract as opened
+  api.contract.markContractAsOpened.useQuery({
+    userId: query.user,
+    contractId: contract.id,
+    recipientId: recipient?.id || "",
+  });
+
+  return <SingleContractPageInner contract={contract} recipient={recipient} />;
 };
