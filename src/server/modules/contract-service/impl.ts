@@ -208,7 +208,7 @@ const sendContractSignedEmail: ContractServiceType["sendContractSignedEmail"] =
     return "Contract sent to all parties successfully";
   };
 
-export const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
+const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
   async ({ contractId, userId, recipientId }) => {
     const existingActivity = await prisma.activity.findFirst({
       where: {
@@ -230,9 +230,54 @@ export const markContractAsOpened: ContractServiceType["markContractAsOpened"] =
     });
   };
 
+const stats: ContractServiceType["stats"] = async ({ userId }) => {
+  const countQueries = [
+    prisma.contract.count({
+      where: {
+        userId,
+      },
+    }),
+    prisma.contract.count({
+      where: {
+        status: "SIGNED",
+        userId,
+      },
+    }),
+    prisma.contract.count({
+      where: {
+        status: "PENDING",
+        userId,
+      },
+    }),
+  ];
+
+  try {
+    const results = await Promise.all(countQueries);
+
+    if (results.length === 0) {
+      throw new Error("data not available");
+    }
+
+    const [total, signed, pending] = results;
+
+    return {
+      total: total || 0,
+      signed: signed || 0,
+      pending: pending || 0,
+    };
+  } catch (error) {
+    return {
+      total: 0,
+      signed: 0,
+      pending: 0,
+    };
+  }
+};
+
 export const ContractService: ContractServiceType = {
   create,
   signContract,
   sendContractSignedEmail,
   markContractAsOpened,
+  stats,
 };

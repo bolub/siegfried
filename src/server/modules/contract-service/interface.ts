@@ -31,4 +31,10 @@ export interface ContractServiceType {
     userId: string;
     recipientId: string;
   }) => Promise<Activity | null>;
+
+  stats: (args: { userId: string }) => Promise<{
+    total: number;
+    signed: number;
+    pending: number;
+  }>;
 }
