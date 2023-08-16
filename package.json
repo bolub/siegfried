@@ -41,6 +41,7 @@
     "base64-arraybuffer": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "jsonwebtoken": "^9.0.1",
     "lowlight": "^2.9.0",
     "lucide-react": "0.264.0",
