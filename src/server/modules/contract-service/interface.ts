@@ -18,10 +18,17 @@ export interface ContractServiceType {
     contractContent: string;
     contractId: string;
     userId: string;
+    recipientId: string;
   }) => Promise<void>;
 
   sendContractSignedEmail: (args: {
     contractId: string;
+    recipientId: string;
+  }) => Promise<void>;
+
+  markContractAsOpened: (args: {
+    contractId: string;
+    userId: string;
     recipientId: string;
   }) => Promise<void>;
 }
