@@ -23,6 +23,7 @@ export const getContract = async ({ contractId }: { contractId: string }) => {
       recipients: true,
       user: {
         select: {
+          id: true,
           email: true,
         },
       },
