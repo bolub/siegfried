@@ -6,23 +6,20 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import React from "react";
 import { ContractComponent } from "./components/ContractComponent";
+import { PageHeader } from "@/components/PageHeader";
 
 export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
   return (
     <Appshell title="Contracts">
-      {/* header */}
-      <div className="flex w-full items-center justify-between">
-        <h1 className="font-mono text-3xl font-bold">Contracts</h1>
-
+      <PageHeader title="Contracts">
         <Button size="lg" asChild>
           <Link href={routes.contracts.new()}>
             <PlusIcon className="mr-2" />
             Create contract
           </Link>
         </Button>
-      </div>
+      </PageHeader>
 
-      {/* content */}
       <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {contracts.map((contract) => {
           return <ContractComponent key={contract.id} contract={contract} />;
