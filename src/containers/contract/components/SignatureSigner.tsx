@@ -3,6 +3,7 @@ import SignatureCanvas from "react-signature-canvas";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Check, X } from "lucide-react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export const SignatureSigner = ({
   signature,
@@ -61,14 +62,12 @@ export const SignatureSigner = ({
             <Image src={signature} alt="Signature" width={200} height={200} />
           </div>
 
-          {/* {!hideForContractSigning && (
-            <div className="mt-6 flex justify-center space-x-2">
-              <Button size="sm" variant="outline" onClick={resign}>
-                <ReloadIcon className="mr-2 h-4 w-4" />
-                Try again
-              </Button>
-            </div>
-          )} */}
+          <div id="tryAgain" className="mt-6 flex justify-center space-x-2">
+            <Button size="sm" variant="outline" onClick={resign}>
+              <ReloadIcon className="mr-2 h-4 w-4" />
+              Try again
+            </Button>
+          </div>
         </>
       )}
     </div>
