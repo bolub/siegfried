@@ -2,7 +2,7 @@ import { Appshell } from "@/components/Appshell";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/routes";
 import { type Contract } from "@prisma/client";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { ContractComponent } from "./components/ContractComponent";
@@ -38,7 +38,7 @@ export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
         <Button size="lg" asChild>
           <Link href={routes.contracts.new()}>
             <PlusIcon className="mr-2" />
-            Create contract
+            New contract
           </Link>
         </Button>
       </PageHeader>

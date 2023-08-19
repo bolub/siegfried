@@ -6,7 +6,7 @@ import { NoContractDataAvailable } from "@/containers/contract/components/Feedba
 import { formatDate } from "@/lib/time";
 import { Button } from "@/components/ui/button";
 import { SignatureSigner } from "@/containers/contract/components/SignatureSigner";
-import { ContractUser } from "./utils";
+import { ContractUser } from "@/containers/contract/utils";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { routes } from "@/routes";
@@ -54,12 +54,27 @@ export const SingleContractPageInner = ({
   const handleSignContract = async () => {
     setHideForContractSigning(true);
 
-    const contractBody = document.querySelector("main");
-    if (!contractBody) return;
+    const htmlContent = document.documentElement.outerHTML;
+
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = htmlContent;
+
+    const footerElement = tempElement.querySelector("footer");
+    const tryAgainButtonElement = tempElement.querySelector("#tryAgain");
+
+    if (footerElement) {
+      // @ts-ignore
+      footerElement.parentNode.removeChild(footerElement);
+    }
+
+    if (tryAgainButtonElement) {
+      // @ts-ignore
+      tryAgainButtonElement.parentNode.removeChild(tryAgainButtonElement);
+    }
 
     await signContract({
       userId: contract.userId,
-      contractContent: contractBody.outerHTML,
+      contractContent: tempElement.outerHTML,
       contractId: contract.id,
       recipientId: recipient?.id || "",
     });
@@ -67,7 +82,7 @@ export const SingleContractPageInner = ({
 
   return (
     <>
-      <main className="mt-16 flex w-full justify-center">
+      <main className="mt-16 flex w-full justify-center pb-8">
         <div className="w-full max-w-[800px]">
           {/* header */}
           <div className="mb-20">
@@ -103,7 +118,7 @@ export const SingleContractPageInner = ({
 
       <footer
         id="submit"
-        className="mx-auto mb-32 mt-10 flex w-full max-w-[800px] border-t"
+        className="mx-auto mb-6 mt-10 flex w-full max-w-[800px] border-t"
       >
         <Button
           disabled={!signature || isLoading}
@@ -144,6 +159,7 @@ export const SingleContractPage = ({
     },
     {
       refetchOnWindowFocus: false,
+      enabled: !contract.emailSent,
     }
   );
 
