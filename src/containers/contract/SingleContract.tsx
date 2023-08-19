@@ -6,7 +6,7 @@ import { NoContractDataAvailable } from "@/containers/contract/components/Feedba
 import { formatDate } from "@/lib/time";
 import { Button } from "@/components/ui/button";
 import { SignatureSigner } from "@/containers/contract/components/SignatureSigner";
-import { ContractUser } from "./utils";
+import { ContractUser } from "@/containers/contract/utils";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { routes } from "@/routes";
@@ -60,9 +60,16 @@ export const SingleContractPageInner = ({
     tempElement.innerHTML = htmlContent;
 
     const footerElement = tempElement.querySelector("footer");
+    const tryAgainButtonElement = tempElement.querySelector("#tryAgain");
+
     if (footerElement) {
       // @ts-ignore
       footerElement.parentNode.removeChild(footerElement);
+    }
+
+    if (tryAgainButtonElement) {
+      // @ts-ignore
+      tryAgainButtonElement.parentNode.removeChild(tryAgainButtonElement);
     }
 
     await signContract({
@@ -111,7 +118,7 @@ export const SingleContractPageInner = ({
 
       <footer
         id="submit"
-        className="mx-auto mb-8 mt-10 flex w-full max-w-[800px] border-t"
+        className="mx-auto mb-6 mt-10 flex w-full max-w-[800px] border-t"
       >
         <Button
           disabled={!signature || isLoading}
