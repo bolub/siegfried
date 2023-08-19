@@ -82,4 +82,10 @@ export const contractServiceRouter = createTRPCRouter({
       userId: ctx.session.user.id,
     });
   }),
+
+  list: protectedProcedure.query(async ({ ctx }) => {
+    return await ContractService.list({
+      userId: ctx.session.user.id,
+    });
+  }),
 });
