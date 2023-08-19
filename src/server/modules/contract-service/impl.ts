@@ -266,10 +266,28 @@ const stats: ContractServiceType["stats"] = async ({ userId }) => {
   }
 };
 
+const list: ContractServiceType["list"] = async ({ userId }) => {
+  return await prisma.contract.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      name: true,
+      status: true,
+      createdAt: true,
+    },
+  });
+};
+
 export const ContractService: ContractServiceType = {
   create,
   signContract,
   sendContractSignedEmail,
   markContractAsOpened,
   stats,
+  list,
 };
