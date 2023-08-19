@@ -49,9 +49,10 @@ export const exampleRouter = createTRPCRouter({
     }),
 
   testEmitEvents: publicProcedure.mutation(() => {
-    EventService.Emitter.emit("CONTRACT_CREATED", {
-      contractId: "cllcbgdux0007v0uxhw330ixk",
-      userId: "cllcbgdux0007v0uxhw330ixk",
-    });
+    // EventService.Emitter.emit("CONTRACT_CREATED", {
+    //   contract: {
+    //   },
+    //   userId: "cllcbgdux0007v0uxhw330ixk",
+    // });
   }),
 });
