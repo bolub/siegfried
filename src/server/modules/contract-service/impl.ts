@@ -41,14 +41,14 @@ export const create: ContractServiceType["create"] = async (args) => {
     throw new Error("Contract not created successfully");
   }
 
-  EventService.Emitter.emit("CONTRACT_CREATED", {
-    userId: user.id,
-    contractId: newContract.id,
-  });
-
   await sendNewContractEmailsToSigners({
     contract: newContract,
     user: args.user,
+  });
+
+  EventService.Emitter.emit("CONTRACT_CREATED", {
+    userId: user.id,
+    contractId: newContract.id,
   });
 
   return newContract;
