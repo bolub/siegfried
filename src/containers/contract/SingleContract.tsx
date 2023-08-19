@@ -74,7 +74,7 @@ export const SingleContractPageInner = ({
 
     await signContract({
       userId: contract.userId,
-      contractContent: tempElement.outerHTML,
+      contractContent: tempElement.innerHTML,
       contractId: contract.id,
       recipientId: recipient?.id || "",
     });
