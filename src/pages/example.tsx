@@ -12,7 +12,12 @@ export default function Example() {
   const { mutate: testEmitEvents } = api.example.testEmitEvents.useMutation();
 
   const sendPdfToUrlTest = async () => {
-    const { url: pdfFilePath } = await testGeneratePdfAsync();
+    const htmlContent = document.querySelector("html");
+    if (!htmlContent) return;
+
+    const { url: pdfFilePath } = await testGeneratePdfAsync({
+      html: htmlContent.outerHTML,
+    });
 
     // upload pdf to supabase
     try {
@@ -49,7 +54,13 @@ export default function Example() {
 
           <Button
             onClick={() => {
-              testGeneratePdf();
+              const htmlContent = document.querySelector("html");
+
+              if (!htmlContent) return;
+
+              testGeneratePdf({
+                html: htmlContent.outerHTML,
+              });
             }}
             className="w-fit"
           >
