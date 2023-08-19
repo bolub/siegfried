@@ -28,6 +28,9 @@ export const getServerSideProps: GetServerSideProps<{
     where: {
       userId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       recipients: true,
     },
