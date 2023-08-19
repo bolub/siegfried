@@ -2,10 +2,7 @@ import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { type ContractServiceType } from "@/server/modules/contract-service/interface";
 import { PdfService } from "@/server/modules/pdf-service/impl";
-import {
-  getContract,
-  sendNewContractEmailsToSigners,
-} from "@/server/modules/contract-service/utils";
+import { getContract } from "@/server/modules/contract-service/utils";
 import axios from "axios";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
