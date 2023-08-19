@@ -1,7 +1,19 @@
 import { type TypedEventEmitter } from "./impl";
+import {
+  type Contract as PrismaContract,
+  type ContractRecipient,
+} from "@prisma/client";
 
 export interface SiegfriedEvents {
-  CONTRACT_CREATED: { userId: string; contractId: string }[];
+  CONTRACT_CREATED: {
+    contract: PrismaContract & {
+      recipients: ContractRecipient[];
+    };
+    user: {
+      name?: string | null;
+      id?: string;
+    };
+  }[];
   CONTRACT_OPENED: {
     userId: string;
     contractId: string;

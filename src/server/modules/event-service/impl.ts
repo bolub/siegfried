@@ -4,6 +4,7 @@ import {
   type EventServiceTypes,
 } from "@/server/modules/event-service/interface";
 import EventEmitter from "events";
+import { sendNewContractEmailsToSigners } from "@/server/modules/contract-service/utils";
 
 export class TypedEventEmitter<TEvents extends Record<string, any>> {
   private emitter = new EventEmitter();
@@ -32,13 +33,29 @@ export class TypedEventEmitter<TEvents extends Record<string, any>> {
 
 const Emitter = new TypedEventEmitter<SiegfriedEvents>();
 
-Emitter.on("CONTRACT_CREATED", async ({ contractId, userId }) => {
+// Emitter.on("CONTRACT_CREATED", async ({ contractId, userId }) => {
+//   await prisma.activity.create({
+//     data: {
+//       action: "CONTRACT_CREATED",
+//       contractId,
+//       userId,
+//     },
+//   });
+// });
+
+Emitter.on("CONTRACT_CREATED", async ({ contract, user }) => {
   await prisma.activity.create({
     data: {
       action: "CONTRACT_CREATED",
-      contractId,
-      userId,
+      contractId: contract.id,
+      userId: user?.id || "",
     },
+  });
+
+  // TODO: this times out, why?
+  await sendNewContractEmailsToSigners({
+    contract,
+    user,
   });
 });
 
