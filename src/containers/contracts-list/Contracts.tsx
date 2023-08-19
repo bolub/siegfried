@@ -1,17 +1,34 @@
 import { Appshell } from "@/components/Appshell";
 import { Button } from "@/components/ui/button";
 import { routes } from "@/routes";
-import { type Contract } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { ContractComponent } from "./components/ContractComponent";
+import {
+  ContractComponent,
+  ContractComponentShimmer,
+} from "@/containers/contracts-list/components/ContractComponent";
 import { PageHeader } from "@/components/PageHeader";
 import { Empty } from "@/components/Empty";
 import { PencilLine } from "lucide-react";
+import { api } from "@/utils/api";
 
-const ContractsList = ({ contracts }: { contracts: Contract[] }) => {
-  if (contracts.length === 0)
+const ContractsList = () => {
+  const { data: contracts, isLoading } = api.contract.list.useQuery();
+
+  if (isLoading)
+    return (
+      <>
+        <ContractComponentShimmer />
+        <ContractComponentShimmer />
+        <ContractComponentShimmer />
+        <ContractComponentShimmer />
+        <ContractComponentShimmer />
+        <ContractComponentShimmer />
+      </>
+    );
+
+  if (contracts?.length === 0)
     return (
       <div className="flex h-[60vh] items-center justify-center">
         <Empty
@@ -23,15 +40,15 @@ const ContractsList = ({ contracts }: { contracts: Contract[] }) => {
     );
 
   return (
-    <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {contracts.map((contract) => {
+    <>
+      {contracts?.map((contract) => {
         return <ContractComponent key={contract.id} contract={contract} />;
       })}
-    </div>
+    </>
   );
 };
 
-export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
+export const ContractsPage = () => {
   return (
     <Appshell title="Contracts">
       <PageHeader title="Contracts">
@@ -43,7 +60,9 @@ export const ContractsPage = ({ contracts }: { contracts: Contract[] }) => {
         </Button>
       </PageHeader>
 
-      <ContractsList contracts={contracts} />
+      <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <ContractsList />
+      </div>
     </Appshell>
   );
 };
