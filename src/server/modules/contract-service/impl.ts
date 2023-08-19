@@ -41,6 +41,7 @@ export const create: ContractServiceType["create"] = async (args) => {
     throw new Error("Contract not created successfully");
   }
 
+  // TODO: this times out, why?
   await sendNewContractEmailsToSigners({
     contract: newContract,
     user: args.user,
