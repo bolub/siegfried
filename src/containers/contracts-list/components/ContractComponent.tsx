@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/time";
-import { type Contract } from "@prisma/client";
 import { PencilLine } from "lucide-react";
 import {
   Tooltip,
@@ -8,8 +7,42 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { type ContractForList } from "@/server/modules/contract-service/interface";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export const ContractComponent = ({ contract }: { contract: Contract }) => {
+export const ContractComponentShimmer = () => {
+  return (
+    <div className="border-[rgba(0, 0, 0, 0.08)] w-full rounded-lg border bg-white">
+      {/* top */}
+      <div className="mt-6 flex items-center space-x-[20px] px-8">
+        <Skeleton className="h-[50px] w-[50px] bg-gray-300" />
+
+        <Skeleton className="h-5 w-32 bg-gray-300" />
+      </div>
+
+      {/* bottom */}
+      <div className="mt-8 flex flex-col space-y-[20px] px-8 pb-9 text-sm">
+        <div className="flex w-full items-center justify-between">
+          <Skeleton className="h-5 w-16 bg-gray-300" />
+
+          <Skeleton className="h-6 w-16 rounded-full bg-gray-300" />
+        </div>
+
+        <div className="flex w-full items-center justify-between">
+          <Skeleton className="h-5 w-16 bg-gray-300" />
+
+          <Skeleton className="h-5 w-32 bg-gray-300" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ContractComponent = ({
+  contract,
+}: {
+  contract: ContractForList;
+}) => {
   return (
     <div className="border-[rgba(0, 0, 0, 0.08)] w-full rounded-lg border bg-white">
       {/* top */}
