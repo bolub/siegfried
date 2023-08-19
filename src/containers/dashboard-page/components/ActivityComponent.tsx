@@ -2,11 +2,28 @@ import { type ActivityType } from "@prisma/client";
 import { ContentToActivity } from "@/containers/dashboard-page/utils";
 import { ArrowUpRight, Check, EyeIcon } from "lucide-react";
 import { formatDateFromNow } from "@/lib/time";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const IconToActivity: Record<ActivityType, any> = {
   CONTRACT_CREATED: <ArrowUpRight />,
   CONTRACT_OPENED: <EyeIcon />,
   CONTRACT_SIGNED: <Check />,
+};
+
+export const ActivityShimmer = () => {
+  return (
+    <>
+      <div className="flex w-full flex-wrap items-center">
+        {/* circle */}
+        <Skeleton className="h-[50px] w-[50px] rounded-full bg-gray-300" />
+
+        {/* long rectangle */}
+        <div className="ml-4">
+          <Skeleton className="h-4 w-[250px] bg-gray-300" />
+        </div>
+      </div>
+    </>
+  );
 };
 
 const CirclePlusIcon = ({ status }: { status: ActivityType }) => {

@@ -5,17 +5,10 @@ import { routes } from "@/routes";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Stat } from "@/containers/dashboard-page/components/Stat";
-import { type DashboardType } from "@/pages/dashboard";
+import { Stats } from "@/containers/dashboard-page/components/Stats";
 import { ActivityList } from "./components/ActivityList";
 
-export const DashboardPage = ({
-  stats,
-  recentActivities,
-}: {
-  stats: DashboardType["stats"];
-  recentActivities: DashboardType["recentActivities"];
-}) => {
+export const DashboardPage = () => {
   return (
     <Appshell title="Dashboard">
       <PageHeader title="Dashboard">
@@ -29,9 +22,7 @@ export const DashboardPage = ({
 
       {/* Stats */}
       <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <Stat label="All contracts" value={stats.total} />
-        <Stat label="Signed contracts" value={stats.signed} />
-        <Stat label="Pending contracts" value={stats.pending} />
+        <Stats />
       </div>
 
       {/* Activity */}
@@ -39,7 +30,7 @@ export const DashboardPage = ({
         <h2 className="font-mono text-xl font-bold">Recent Activity</h2>
 
         <div className="mt-8 flex flex-col gap-6">
-          <ActivityList activities={recentActivities} />
+          <ActivityList />
         </div>
       </div>
     </Appshell>

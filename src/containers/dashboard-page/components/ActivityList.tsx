@@ -1,14 +1,24 @@
 import { Empty } from "@/components/Empty";
-import { ActivityComponent } from "@/containers/dashboard-page/components/ActivityComponent";
-import { type DashboardType } from "@/pages/dashboard";
+import {
+  ActivityComponent,
+  ActivityShimmer,
+} from "@/containers/dashboard-page/components/ActivityComponent";
+import { api } from "@/utils/api";
 import { FileBarChart2 } from "lucide-react";
 
-export const ActivityList = ({
-  activities,
-}: {
-  activities: DashboardType["recentActivities"];
-}) => {
-  if (activities.length === 0)
+export const ActivityList = () => {
+  const { data: activities, isLoading } = api.activity.recent.useQuery();
+
+  if (isLoading)
+    return (
+      <>
+        <ActivityShimmer />
+        <ActivityShimmer />
+        <ActivityShimmer />
+      </>
+    );
+
+  if (activities?.length === 0)
     return (
       <div className="flex h-[30vh] items-center justify-center">
         <Empty
@@ -21,8 +31,9 @@ export const ActivityList = ({
 
   return (
     <>
-      {activities.map((activity) => {
+      {activities?.map((activity) => {
         const isContractCreated = activity.action === "CONTRACT_CREATED";
+
         const user = isContractCreated
           ? activity.contract.user.name
           : activity.recipient?.name;
