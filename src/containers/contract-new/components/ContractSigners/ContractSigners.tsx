@@ -81,7 +81,7 @@ export const ContractSigners = ({
   createContractLoading: boolean;
 }) => {
   return (
-    <div className="fixed right-0 top-0 mt-22 h-full w-full max-w-[424px] bg-white">
+    <div className="right-0 top-0 mt-22 h-full w-full max-w-[424px] bg-white md:fixed">
       <div className="flex h-full flex-col">
         <div className="h-[80vh] overflow-y-auto p-8">
           <div className="flex items-center">

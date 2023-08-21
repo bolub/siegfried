@@ -57,7 +57,7 @@ export const TipTapEditor = ({
 
   return (
     <>
-      <div className="ml-16 w-full max-w-[748px]">
+      <div className="w-full md:ml-16 md:max-w-[748px]">
         <div className="border bg-white p-8">
           {editor && (
             <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>

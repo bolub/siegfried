@@ -12,7 +12,7 @@ export const DashboardPage = () => {
   return (
     <Appshell title="Dashboard">
       <PageHeader title="Dashboard">
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="hidden md:flex">
           <Link href={routes.contracts.new()}>
             <PlusIcon className="mr-2" />
             New contract

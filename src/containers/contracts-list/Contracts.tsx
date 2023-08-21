@@ -52,12 +52,23 @@ export const ContractsPage = () => {
   return (
     <Appshell title="Contracts">
       <PageHeader title="Contracts">
-        <Button size="lg" asChild>
-          <Link href={routes.contracts.new()}>
-            <PlusIcon className="mr-2" />
-            New contract
-          </Link>
-        </Button>
+        <div className="hidden md:block">
+          <Button size="lg" asChild>
+            <Link href={routes.contracts.new()}>
+              <PlusIcon />
+
+              <span className="ml-2">New contract</span>
+            </Link>
+          </Button>
+        </div>
+
+        <div className="md:hidden">
+          <Button size="icon" asChild>
+            <Link href={routes.contracts.new()}>
+              <PlusIcon />
+            </Link>
+          </Button>
+        </div>
       </PageHeader>
 
       <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
