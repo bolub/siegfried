@@ -33,10 +33,12 @@ export const ActivityList = () => {
     <>
       {activities?.map((activity) => {
         const isContractCreated = activity.action === "CONTRACT_CREATED";
+        const isContractUpdated = activity.action === "CONTRACT_UPDATED";
 
-        const user = isContractCreated
-          ? activity.contract.user.name
-          : activity.recipient?.name;
+        const user =
+          isContractCreated || isContractUpdated
+            ? activity.contract.user.name
+            : activity.recipient?.name;
 
         return (
           <ActivityComponent
