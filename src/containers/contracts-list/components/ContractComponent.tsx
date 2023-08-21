@@ -50,7 +50,7 @@ export const ContractComponent = ({
       href={
         contract.status === "PENDING"
           ? routes.contracts.edit(contract.id)
-          : routes.contracts.all()
+          : routes.contracts.view(contract.id)
       }
     >
       <div className="border-[rgba(0, 0, 0, 0.08)] w-full rounded-lg border bg-white">

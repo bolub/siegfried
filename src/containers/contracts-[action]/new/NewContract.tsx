@@ -55,7 +55,7 @@ export const NewContractPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor register={register} />
       <ContractEditor control={control} />
-      <ContractSigners register={register} isLoading={createContractLoading}>
+      <ContractSigners register={register}>
         <ContractSignersFooter
           isLoading={createContractLoading}
           action="Send Contract"

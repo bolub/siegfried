@@ -14,7 +14,13 @@ import {
 import tailwindTheme from "./tailwind.config";
 import { EmailLogo } from "./EmailLogo";
 
-export const Appshell = ({ children }: { children: ReactNode }) => {
+export const Appshell = ({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) => {
   return (
     <Tailwind
       config={{
@@ -38,7 +44,7 @@ export const Appshell = ({ children }: { children: ReactNode }) => {
             rel="stylesheet"
           />
         </Head>
-        <Preview>You have a new contract to sign</Preview>
+        <Preview>{title}</Preview>
         <Body className="bg-background-100 py-10 font-sans">
           <Section className="my-10 h-full">
             <Container className="m-auto w-full max-w-[532px] bg-white px-10 pb-16 pt-2">

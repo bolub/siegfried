@@ -8,7 +8,7 @@ export const ContractSigned = ({
   contractName: string;
 }) => {
   return (
-    <Appshell>
+    <Appshell title="Contract signed successfully">
       <Text className="text-xl font-bold">Hello,</Text>
 
       <Text className="mt-5 text-base">

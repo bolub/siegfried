@@ -7,9 +7,11 @@ import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 export const ContractEditor = ({
   control,
   contract,
+  disabled,
 }: {
   control: ContractFormControlType;
   contract?: SingleContractType | null;
+  disabled?: boolean;
 }) => {
   return (
     <div className="container mx-auto mb-10 mt-32">
@@ -21,6 +23,7 @@ export const ContractEditor = ({
             description={field.value}
             onChange={field.onChange}
             error={fieldState?.error}
+            disabled={disabled}
           />
         )}
         defaultValue={contract?.content}

@@ -23,10 +23,12 @@ export const TipTapEditor = ({
   description,
   onChange,
   error,
+  disabled,
 }: {
   description: string;
   onChange: (...event: unknown[]) => void;
   error?: FieldError;
+  disabled?: boolean;
 }) => {
   const editor = useEditor({
     extensions: [
@@ -53,6 +55,7 @@ export const TipTapEditor = ({
     onUpdate({ editor }) {
       onChange(editor.getHTML());
     },
+    editable: !disabled,
   });
 
   return (
@@ -160,7 +163,7 @@ export const TipTapEditor = ({
           )}
 
           <div>
-            <EditorContent editor={editor} />
+            <EditorContent disabled={disabled} editor={editor} />
           </div>
         </div>
 

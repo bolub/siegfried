@@ -16,7 +16,7 @@ export const ContractRequest = ({
   contractUrl: string;
 }) => {
   return (
-    <Appshell>
+    <Appshell title="You have a new contract to sign">
       <Text className="text-xl font-bold">Hello,</Text>
 
       <Text className="mt-5 text-base">

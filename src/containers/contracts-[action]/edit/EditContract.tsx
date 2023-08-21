@@ -64,12 +64,7 @@ export const EditContractPage = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor contract={contract} register={register} />
       <ContractEditor contract={contract} control={control} />
-      <ContractSigners
-        contract={contract}
-        register={register}
-        isLoading={updateContractLoading}
-        disabled
-      >
+      <ContractSigners contract={contract} register={register} disabled>
         <ContractSignersFooter
           isLoading={updateContractLoading}
           action="Update Contract"
