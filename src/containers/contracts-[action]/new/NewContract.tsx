@@ -1,11 +1,11 @@
 import React from "react";
-import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
-import { ContractEditor } from "@/containers/contract-new/components/ContractEditor/ContractEditor";
-import { ContractSigners } from "@/containers/contract-new/components/ContractSigners/ContractSigners";
-import { ContractSignersFooter } from "@/containers/contract-new/components/ContractSigners/ContractSignersFooter";
+import { ContractTitleEditor } from "@/containers/contracts-[action]/components/ContractTitleEditor";
+import { ContractEditor } from "@/containers/contracts-[action]/components/ContractEditor/ContractEditor";
+import { ContractSigners } from "@/containers/contracts-[action]/components/ContractSigners/ContractSigners";
+import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSigners/ContractSignersFooter";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
-import { type ContractFormData } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormData } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";

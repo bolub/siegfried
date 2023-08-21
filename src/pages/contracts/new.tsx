@@ -1,4 +1,4 @@
-import { NewContractPage } from "@/containers/contract-new/NewContract";
+import { NewContractPage } from "@/containers/contracts-[action]/new/NewContract";
 
 import { routes } from "@/routes";
 import { getServerAuthSession } from "@/server/auth";

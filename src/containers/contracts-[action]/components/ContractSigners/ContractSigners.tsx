@@ -1,5 +1,5 @@
 import { PlusIcon, Users2Icon } from "lucide-react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { SignerInputs } from "./SignerInputs";
 import { type ReactNode, useState } from "react";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";

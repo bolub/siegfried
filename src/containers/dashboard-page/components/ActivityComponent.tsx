@@ -1,6 +1,6 @@
 import { type ActivityType } from "@prisma/client";
 import { ContentToActivity } from "@/containers/dashboard-page/utils";
-import { ArrowUpRight, Check, EyeIcon } from "lucide-react";
+import { ArrowUpRight, Check, EyeIcon, RefreshCcw } from "lucide-react";
 import { formatDateFromNow } from "@/lib/time";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -8,6 +8,7 @@ export const IconToActivity: Record<ActivityType, any> = {
   CONTRACT_CREATED: <ArrowUpRight className="h-4 w-4 md:h-6 md:w-6" />,
   CONTRACT_OPENED: <EyeIcon className="h-4 w-4 md:h-6 md:w-6" />,
   CONTRACT_SIGNED: <Check className="h-4 w-4 md:h-6 md:w-6" />,
+  CONTRACT_UPDATED: <RefreshCcw className="h-4 w-4 md:h-6 md:w-6" />,
 };
 
 const CirclePlusIcon = ({ status }: { status: ActivityType }) => {

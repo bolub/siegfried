@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { type ContractRecipient } from "@prisma/client";
 
 export const SignerInputs = ({

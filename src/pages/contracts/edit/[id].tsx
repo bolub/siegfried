@@ -1,4 +1,3 @@
-import { SingleContractPage } from "@/containers/contract/SingleContract";
 import React from "react";
 import {
   type GetServerSidePropsContext,
@@ -9,7 +8,7 @@ import { prisma } from "@/server/db";
 import { type ContractRecipient, type Contract } from "@prisma/client";
 import { getServerAuthSession } from "@/server/auth";
 import { routes } from "@/routes";
-import { EditContractPage } from "@/containers/contracts-edit/EditContract";
+import { EditContractPage } from "@/containers/contracts-[action]/edit/EditContract";
 
 export type SingleContractType = Contract & {
   recipients: ContractRecipient[];

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import Link from "next/link";
 import { routes } from "@/routes";
-import { SingleContractType } from "@/pages/contracts/edit/[id]";
+import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (

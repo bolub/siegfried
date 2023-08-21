@@ -1,5 +1,5 @@
 import React from "react";
-import { type ContractFormControlType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormControlType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { TipTapEditor } from "./TipTapEditor";
 import { Controller } from "react-hook-form";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";
