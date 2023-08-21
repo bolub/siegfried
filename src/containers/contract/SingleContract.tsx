@@ -72,12 +72,14 @@ export const SingleContractPageInner = ({
       tryAgainButtonElement.parentNode.removeChild(tryAgainButtonElement);
     }
 
-    await signContract({
-      userId: contract.userId,
-      contractContent: tempElement.innerHTML,
-      contractId: contract.id,
-      recipientId: recipient?.id || "",
-    });
+    console.log(tempElement.innerHTML);
+
+    // await signContract({
+    //   userId: contract.userId,
+    //   contractContent: tempElement.outerHTML,
+    //   contractId: contract.id,
+    //   recipientId: recipient?.id || "",
+    // });
   };
 
   return (
