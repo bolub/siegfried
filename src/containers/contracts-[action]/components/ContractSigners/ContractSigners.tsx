@@ -1,35 +1,17 @@
 import { PlusIcon, Users2Icon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { SignerInputs } from "./SignerInputs";
-import { useState } from "react";
-
-export const ContractSignersFooter = ({
-  createContractLoading,
-}: {
-  createContractLoading: boolean;
-}) => {
-  return (
-    <div className="mb-22 mt-auto w-full border-t p-6">
-      <Button type="button" variant="secondary" className="w-full" size="lg">
-        Preview
-      </Button>
-      <Button
-        type="submit"
-        className="mt-3 w-full"
-        size="lg"
-        isLoading={createContractLoading}
-      >
-        Send Contract
-      </Button>
-    </div>
-  );
-};
+import { type ReactNode, useState } from "react";
+import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 
 export const ContractSignersInner = ({
   register,
+  contract,
+  disabled,
 }: {
   register: ContractFormRegisterType;
+  contract?: SingleContractType | null;
+  disabled?: boolean;
 }) => {
   const [indexes, setIndexes] = useState<number[]>([0]);
   const [counter, setCounter] = useState(0);
@@ -47,6 +29,7 @@ export const ContractSignersInner = ({
         return (
           <SignerInputs
             key={`signers[${index + 1}]`}
+            defaultValue={contract?.recipients[index]}
             index={index}
             register={register}
             isMultipleSignersAdded={indexes.length > 1}
@@ -56,6 +39,7 @@ export const ContractSignersInner = ({
               ]);
               setCounter((prevCounter) => prevCounter - 1);
             }}
+            disabled={disabled}
           />
         );
       })}
@@ -75,10 +59,15 @@ export const ContractSignersInner = ({
 
 export const ContractSigners = ({
   register,
-  createContractLoading,
+  contract,
+  disabled,
+  children,
 }: {
   register: ContractFormRegisterType;
-  createContractLoading: boolean;
+  isLoading: boolean;
+  contract?: SingleContractType | null;
+  disabled?: boolean;
+  children: ReactNode;
 }) => {
   return (
     <div className="right-0 top-0 mt-22 h-full w-full max-w-[424px] bg-white md:fixed">
@@ -89,10 +78,14 @@ export const ContractSigners = ({
             <h2 className="text-sm font-bold">Signers (Max of 1)</h2>
           </div>
 
-          <ContractSignersInner register={register} />
+          <ContractSignersInner
+            register={register}
+            contract={contract}
+            disabled={disabled}
+          />
         </div>
 
-        <ContractSignersFooter createContractLoading={createContractLoading} />
+        {children}
       </div>
     </div>
   );

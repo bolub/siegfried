@@ -4,7 +4,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { ContractSignerSchema } from "@/containers/contract-new/components/ContractSigners/interface";
+import { ContractSignerSchema } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { ContractService } from "@/server/modules/contract-service/impl";
 
 export const contractServiceRouter = createTRPCRouter({
@@ -88,4 +88,23 @@ export const contractServiceRouter = createTRPCRouter({
       userId: ctx.session.user.id,
     });
   }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        contractName: z.string(),
+        contractContent: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ContractService.update({
+        contract: {
+          ...input,
+        },
+        user: {
+          name: ctx.session?.user.name,
+          id: ctx.session?.user.id,
+        },
+      });
+    }),
 });

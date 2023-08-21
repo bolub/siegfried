@@ -1,4 +1,4 @@
-import { type ContractSigners } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractSigners } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import { type Activity, type Contract } from "@prisma/client";
 
 export type ContractForList = Pick<
@@ -43,4 +43,15 @@ export interface ContractServiceType {
     pending: number;
   }>;
   list: (args: { userId: string }) => Promise<ContractForList[]>;
+  update: (args: {
+    contract: {
+      id: string;
+      contractName: string;
+      contractContent: string;
+    };
+    user: {
+      name?: string | null;
+      id?: string;
+    };
+  }) => Promise<Contract | null>;
 }

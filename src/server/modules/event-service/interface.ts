@@ -24,6 +24,15 @@ export interface SiegfriedEvents {
     contractId: string;
     recipientId: string;
   }[];
+  CONTRACT_UPDATED: {
+    contract: PrismaContract & {
+      recipients: ContractRecipient[];
+    };
+    user: {
+      name?: string | null;
+      id?: string;
+    };
+  }[];
 }
 
 export interface EventServiceTypes {

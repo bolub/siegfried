@@ -12,6 +12,7 @@ import { TokenService } from "@/server/modules/token-service/impl";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import ContractSigned from "@/emails/ContractSigned";
+import ContractUpdated from "@/emails/ContractUpdated";
 
 export const getContract = async ({ contractId }: { contractId: string }) => {
   const contract = await prisma.contract.findUnique({
@@ -68,6 +69,35 @@ export const sendNewContractEmailsToSigners = async ({
         user: {
           name: user.name ?? "",
         },
+      }),
+    });
+  });
+};
+
+export const sendContractUpdatedEmail = async ({
+  contract,
+  user,
+}: {
+  contract: PrismaContract & {
+    recipients: ContractRecipient[];
+  };
+  user: {
+    name?: string | null;
+  };
+}) => {
+  const token = TokenService.generateToken({
+    contractId: contract.id,
+  });
+
+  contract.recipients.forEach(async (signer) => {
+    await EmailService.send({
+      to: signer.email,
+      subject: `${contract.name} from ${user.name} has new updates`,
+      content: ContractUpdated({
+        contractName: contract.name,
+        contractUrl: `${env.APP_URL}${routes.contracts.view(
+          contract.id
+        )}?token=${token}&user=${signer.id}`,
       }),
     });
   });

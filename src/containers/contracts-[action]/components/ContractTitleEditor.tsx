@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, FileTextIcon } from "@radix-ui/react-icons";
 import React, { type ReactNode } from "react";
-import { type ContractFormRegisterType } from "@/containers/contract-new/components/ContractSigners/interface";
+import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSigners/interface";
 import Link from "next/link";
 import { routes } from "@/routes";
+import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -17,8 +18,10 @@ const TopBarContainer = ({ children }: { children: ReactNode }) => {
 
 export const ContractTitleEditor = ({
   register,
+  contract,
 }: {
   register: ContractFormRegisterType;
+  contract?: SingleContractType | null;
 }) => {
   return (
     <TopBarContainer>
@@ -42,7 +45,7 @@ export const ContractTitleEditor = ({
             className="w-full max-w-2xl rounded-none font-mono text-base font-bold focus-visible:outline-none"
             {...register("contractName", {
               required: true,
-              value: "Untitled Contract",
+              value: contract?.name,
             })}
           />
         </div>
