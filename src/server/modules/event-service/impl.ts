@@ -4,7 +4,10 @@ import {
   type EventServiceTypes,
 } from "@/server/modules/event-service/interface";
 import EventEmitter from "events";
-import { sendNewContractEmailsToSigners } from "@/server/modules/contract-service/utils";
+import {
+  sendContractUpdatedEmail,
+  sendNewContractEmailsToSigners,
+} from "@/server/modules/contract-service/utils";
 
 export class TypedEventEmitter<TEvents extends Record<string, any>> {
   private emitter = new EventEmitter();
@@ -67,6 +70,21 @@ Emitter.on("CONTRACT_SIGNED", async ({ contractId, userId, recipientId }) => {
       userId,
       recipientId,
     },
+  });
+});
+
+Emitter.on("CONTRACT_UPDATED", async ({ contract, user }) => {
+  await prisma.activity.create({
+    data: {
+      action: "CONTRACT_UPDATED",
+      contractId: contract.id,
+      userId: user?.id || "",
+    },
+  });
+
+  await sendContractUpdatedEmail({
+    contract,
+    user,
   });
 });
 
