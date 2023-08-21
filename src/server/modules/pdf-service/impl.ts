@@ -1,5 +1,5 @@
 import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
-import { Doppio } from "../doppio-adapter/impl";
+import { Doppio } from "@/server/modules/doppio-adapter/impl";
 
 export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
   // @ts-ignore
