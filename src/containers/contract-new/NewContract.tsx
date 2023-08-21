@@ -2,6 +2,7 @@ import React from "react";
 import { ContractTitleEditor } from "@/containers/contract-new/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contract-new/components/ContractEditor/ContractEditor";
 import { ContractSigners } from "@/containers/contract-new/components/ContractSigners/ContractSigners";
+import { ContractSignersFooter } from "@/containers/contract-new/components/ContractSigners/ContractSignersFooter";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
 import { type ContractFormData } from "@/containers/contract-new/components/ContractSigners/interface";
@@ -54,10 +55,12 @@ export const NewContractPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor register={register} />
       <ContractEditor control={control} />
-      <ContractSigners
-        register={register}
-        createContractLoading={createContractLoading}
-      />
+      <ContractSigners register={register} isLoading={createContractLoading}>
+        <ContractSignersFooter
+          isLoading={createContractLoading}
+          action="Send Contract"
+        />
+      </ContractSigners>
     </form>
   );
 };
