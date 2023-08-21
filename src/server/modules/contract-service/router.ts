@@ -88,4 +88,23 @@ export const contractServiceRouter = createTRPCRouter({
       userId: ctx.session.user.id,
     });
   }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        contractName: z.string(),
+        contractContent: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ContractService.update({
+        contract: {
+          ...input,
+        },
+        user: {
+          name: ctx.session?.user.name,
+          id: ctx.session?.user.id,
+        },
+      });
+    }),
 });

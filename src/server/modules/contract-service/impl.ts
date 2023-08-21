@@ -284,6 +284,38 @@ const list: ContractServiceType["list"] = async ({ userId }) => {
   });
 };
 
+export const update: ContractServiceType["update"] = async (args) => {
+  const { contract, user } = args;
+
+  if (!user.id) {
+    throw new Error("User does not exist");
+  }
+
+  const updatedContract = await prisma.contract.update({
+    where: {
+      id: contract.id,
+    },
+    data: {
+      name: contract.contractName,
+      content: contract.contractContent,
+    },
+    include: {
+      recipients: true,
+    },
+  });
+
+  if (!updatedContract) {
+    throw new Error("Contract not updated successfully");
+  }
+
+  EventService.Emitter.emit("CONTRACT_UPDATED", {
+    user,
+    contract: updatedContract,
+  });
+
+  return updatedContract;
+};
+
 export const ContractService: ContractServiceType = {
   create,
   signContract,
@@ -291,4 +323,5 @@ export const ContractService: ContractServiceType = {
   markContractAsOpened,
   stats,
   list,
+  update,
 };
