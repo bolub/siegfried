@@ -19,9 +19,11 @@ const TopBarContainer = ({ children }: { children: ReactNode }) => {
 export const ContractTitleEditor = ({
   register,
   contract,
+  disabled,
 }: {
   register: ContractFormRegisterType;
   contract?: SingleContractType | null;
+  disabled?: boolean;
 }) => {
   return (
     <TopBarContainer>
@@ -45,8 +47,9 @@ export const ContractTitleEditor = ({
             className="w-full max-w-2xl rounded-none font-mono text-base font-bold focus-visible:outline-none"
             {...register("contractName", {
               required: true,
-              value: contract?.name,
+              value: contract?.name ?? "Untitled Contract",
             })}
+            disabled={disabled}
           />
         </div>
       </div>
