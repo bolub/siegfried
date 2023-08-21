@@ -10,7 +10,7 @@ export const ContractUpdated = ({
   contractUrl: string;
 }) => {
   return (
-    <Appshell>
+    <Appshell title="Contract was updated">
       <Text className="text-xl font-bold">Hello,</Text>
 
       <Text className="mt-5 text-base">
