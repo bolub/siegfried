@@ -108,6 +108,7 @@ enum ActivityType {
     CONTRACT_CREATED
     CONTRACT_OPENED
     CONTRACT_SIGNED
+    CONTRACT_UPDATED
 }
 
 model Activity {
