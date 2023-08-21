@@ -4,10 +4,9 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { PdfService } from "@/server/modules/pdf-service/impl";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractRequest from "@/emails/ContractRequest";
-import { EventService } from "../event-service/impl";
+import { PdfServiceTest } from "../pdf-service-test/impl";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -43,7 +42,7 @@ export const exampleRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      return await PdfService.generatePdf({
+      return await PdfServiceTest.generatePdf({
         html: input.html,
       });
     }),

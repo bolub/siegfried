@@ -52,6 +52,7 @@
     "next-superjson-plugin": "^0.5.9",
     "nodemailer": "^6.9.4",
     "playwright-chromium": "^1.37.0",
+    "puppeteer": "^21.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-email": "^1.9.4",

@@ -32,7 +32,7 @@ export const env = createEnv({
     EMAIL_USER_PASSWORD: NonEmptySting,
     DOPPIO_AUTH_TOKEN: NonEmptySting,
     DOPPIO_URL: NonEmptySting,
-    APP_URL: NonEmptySting,
+    APP_URL: z.string().optional(),
   },
 
   client: {
