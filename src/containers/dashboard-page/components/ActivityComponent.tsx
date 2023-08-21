@@ -5,9 +5,17 @@ import { formatDateFromNow } from "@/lib/time";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const IconToActivity: Record<ActivityType, any> = {
-  CONTRACT_CREATED: <ArrowUpRight />,
-  CONTRACT_OPENED: <EyeIcon />,
-  CONTRACT_SIGNED: <Check />,
+  CONTRACT_CREATED: <ArrowUpRight className="h-4 w-4 md:h-6 md:w-6" />,
+  CONTRACT_OPENED: <EyeIcon className="h-4 w-4 md:h-6 md:w-6" />,
+  CONTRACT_SIGNED: <Check className="h-4 w-4 md:h-6 md:w-6" />,
+};
+
+const CirclePlusIcon = ({ status }: { status: ActivityType }) => {
+  return (
+    <div className="border-rgba(0, 0, 0, 0.08) flex h-[32px] w-[32px] items-center justify-center rounded-full border bg-white md:h-[50px] md:w-[50px]">
+      <span>{IconToActivity[status]}</span>
+    </div>
+  );
 };
 
 export const ActivityShimmer = () => {
@@ -15,7 +23,7 @@ export const ActivityShimmer = () => {
     <>
       <div className="flex w-full flex-wrap items-center">
         {/* circle */}
-        <Skeleton className="h-[50px] w-[50px] rounded-full bg-gray-300" />
+        <Skeleton className="h-[32px] w-[32px] rounded-full bg-gray-300 md:h-[50px] md:w-[50px]" />
 
         {/* long rectangle */}
         <div className="ml-4">
@@ -23,14 +31,6 @@ export const ActivityShimmer = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const CirclePlusIcon = ({ status }: { status: ActivityType }) => {
-  return (
-    <div className="border-rgba(0, 0, 0, 0.08) flex h-[50px] w-[50px] items-center justify-center rounded-full border bg-white">
-      <span className="h-6 w-6">{IconToActivity[status]}</span>
-    </div>
   );
 };
 
@@ -46,11 +46,11 @@ export const ActivityComponent = ({
   timestamp: Date;
 }) => {
   return (
-    <div className="flex flex-wrap items-center">
+    <div className="flex w-full flex-wrap items-center">
       <CirclePlusIcon status={status} />
 
-      <div className="ml-4">
-        <p>
+      <div className="ml-2 md:ml-4">
+        <p className="">
           {user} {ContentToActivity[status]} <b>{contract}</b>
         </p>
       </div>
@@ -58,7 +58,7 @@ export const ActivityComponent = ({
       <div className="ml-2 flex items-center gap-2">
         <span className="mb-3 text-2xl font-bold">.</span>
 
-        <p>{formatDateFromNow(timestamp)}</p>
+        <p className="">{formatDateFromNow(timestamp)}</p>
       </div>
     </div>
   );

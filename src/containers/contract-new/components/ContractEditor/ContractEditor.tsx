@@ -9,7 +9,7 @@ export const ContractEditor = ({
   control: ContractFormControlType;
 }) => {
   return (
-    <div className="container mx-auto my-10">
+    <div className="container mx-auto mb-10 mt-32">
       <Controller
         name="contractContent"
         control={control}

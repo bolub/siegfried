@@ -7,7 +7,7 @@ import { routes } from "@/routes";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="h-22 border-b bg-white">
+    <div className="fixed right-0 top-0 z-50 h-22 w-full border-b bg-white">
       <div className="container mx-auto flex h-full items-center">
         {children}
       </div>

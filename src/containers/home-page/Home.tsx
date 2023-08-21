@@ -18,7 +18,7 @@ export const HomePage = () => {
 
       <header className="container mx-auto w-full">
         <div className="max-w-xl">
-          <h1 className="font-mono text-[56px] font-bold leading-[60px]">
+          <h1 className="font-mono text-4xl font-bold md:text-[56px] md:leading-[60px]">
             Create and sign documents easily
           </h1>
           <p className="mt-10 text-lg">
