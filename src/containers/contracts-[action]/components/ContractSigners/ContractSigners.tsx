@@ -64,7 +64,6 @@ export const ContractSigners = ({
   children,
 }: {
   register: ContractFormRegisterType;
-  isLoading: boolean;
   contract?: SingleContractType | null;
   disabled?: boolean;
   children: ReactNode;
