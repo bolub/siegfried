@@ -5,7 +5,7 @@ export const ContractSignersFooter = ({
   action,
   disabled,
 }: {
-  isLoading: boolean;
+  isLoading?: boolean;
   disabled?: boolean;
   action: string;
 }) => {
