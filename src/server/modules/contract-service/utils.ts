@@ -63,7 +63,7 @@ export const sendNewContractEmailsToSigners = async ({
       subject: `Request to sign ${contract.name} from ${user.name}`,
       content: ContractRequest({
         contractName: contract.name,
-        contractUrl: `${env.APP_URL}${routes.contracts.view(
+        contractUrl: `${env.APP_URL}${routes.contracts.publicView(
           contract.id
         )}?token=${token}&user=${signer.id}`,
         user: {
@@ -95,7 +95,7 @@ export const sendContractUpdatedEmail = async ({
       subject: `${contract.name} from ${user.name} has new updates`,
       content: ContractUpdated({
         contractName: contract.name,
-        contractUrl: `${env.APP_URL}${routes.contracts.view(
+        contractUrl: `${env.APP_URL}${routes.contracts.publicView(
           contract.id
         )}?token=${token}&user=${signer.id}`,
       }),
