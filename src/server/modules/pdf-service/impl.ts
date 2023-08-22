@@ -1,23 +1,31 @@
-import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
-import { Doppio } from "@/server/modules/doppio-adapter/impl";
+import { z } from "zod";
+import { type PdfServiceType } from "./interface";
+import axios from "axios";
+import { env } from "@/env.mjs";
 
-export const generatePdf: PdfServiceType["generatePdf"] = async ({ html }) => {
-  // @ts-ignore
-  const encodedHTML = new Buffer.from(html, "utf8").toString("base64");
+const ResponseSchema = z.object({
+  data: z.string(),
+});
 
-  if (!encodedHTML) {
-    throw new Error("Small issue with your html");
+export const generatePdf: PdfServiceType["generatePdf"] = async ({
+  html,
+  user,
+  pdfName,
+}) => {
+  try {
+    const response = await axios.post(env.PDF_SERVICE_URL, {
+      html,
+      pdfName,
+      userId: user.id,
+    });
+
+    return {
+      pdfPath: ResponseSchema.parse(response.data).data,
+    };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Couldn't generate pdf");
   }
-
-  const { pdfData } = await Doppio.generatePdf({ encodedHTML });
-
-  if (!pdfData) {
-    throw new Error("Pdf could not be generated, please try again later");
-  }
-
-  return {
-    url: pdfData,
-  };
 };
 
 export const PdfService: PdfServiceType = {

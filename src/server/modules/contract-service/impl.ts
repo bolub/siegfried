@@ -1,14 +1,13 @@
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { type ContractServiceType } from "@/server/modules/contract-service/interface";
-import { PdfService } from "@/server/modules/pdf-service/impl";
 import { getContract } from "@/server/modules/contract-service/utils";
-import axios from "axios";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractSigned from "@/emails/ContractSigned";
 import { EventService } from "@/server/modules/event-service/impl";
+import { PdfService } from "@/server/modules/pdf-service/impl";
 
 export const create: ContractServiceType["create"] = async (args) => {
   const { contract, user } = args;
@@ -56,24 +55,17 @@ export const signContract: ContractServiceType["signContract"] = async ({
     contractId,
   });
 
-  const pdfName = `${contract.name} signed`;
-
-  // Generate signed pdf
-  const { url: generatedPdfUrl } = await PdfService.generatePdf({
-    html: contractContent,
-  });
+  const pdfName = `${contract.name}-signed`;
 
   // Send pdf over to supabase to be saved
   try {
-    const response = await axios.post(`${env.APP_URL}/api/contracts/upload`, {
-      filePath: generatedPdfUrl,
+    const { pdfPath: supabaseFilePath } = await PdfService.generatePdf({
+      html: contractContent,
       pdfName,
-      userId,
+      user: {
+        id: userId,
+      },
     });
-
-    const { data: supabaseFilePath } = response.data as {
-      data: string;
-    };
 
     await prisma.$transaction(async (tx) => {
       try {
