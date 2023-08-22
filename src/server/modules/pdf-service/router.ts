@@ -9,9 +9,12 @@ export const pdfServiceRouter = createTRPCRouter({
         html: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       return await PdfService.generatePdf({
         html: input.html,
+        user: {
+          id: ctx.session?.user.id || "",
+        },
       });
     }),
 });
