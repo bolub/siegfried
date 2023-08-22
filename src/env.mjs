@@ -30,8 +30,6 @@ export const env = createEnv({
     EMAIL_PORT: NonEmptySting.transform((v) => parseInt(v)),
     EMAIL_USER_NAME: NonEmptySting,
     EMAIL_USER_PASSWORD: NonEmptySting,
-    DOPPIO_AUTH_TOKEN: NonEmptySting,
-    DOPPIO_URL: NonEmptySting,
     APP_URL: z.string().optional(),
   },
 
@@ -56,8 +54,6 @@ export const env = createEnv({
     EMAIL_PORT: process.env.EMAIL_PORT,
     EMAIL_USER_NAME: process.env.EMAIL_USER_NAME,
     EMAIL_USER_PASSWORD: process.env.EMAIL_USER_PASSWORD,
-    DOPPIO_AUTH_TOKEN: process.env.DOPPIO_AUTH_TOKEN,
-    DOPPIO_URL: process.env.DOPPIO_URL,
     APP_URL: process.env.APP_URL,
   },
   /**
