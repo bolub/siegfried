@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { type PdfServiceType } from "./interface";
 import axios from "axios";
+import { env } from "@/env.mjs";
 
 const ResponseSchema = z.object({
   data: z.string(),
@@ -12,14 +13,11 @@ export const generatePdf: PdfServiceType["generatePdf"] = async ({
   pdfName,
 }) => {
   try {
-    const response = await axios.post(
-      `https://siegfried-pdf-generation.netlify.app/api/generate`,
-      {
-        html,
-        pdfName,
-        userId: user.id,
-      }
-    );
+    const response = await axios.post(env.PDF_SERVICE_URL, {
+      html,
+      pdfName,
+      userId: user.id,
+    });
 
     return {
       pdfPath: ResponseSchema.parse(response.data).data,
