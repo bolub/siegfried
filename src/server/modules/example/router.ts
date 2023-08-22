@@ -6,7 +6,7 @@ import {
 } from "@/server/api/trpc";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractRequest from "@/emails/ContractRequest";
-import { PdfServiceTest } from "../pdf-service-test/impl";
+import { PdfService } from "../pdf-service/impl";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -41,9 +41,13 @@ export const exampleRouter = createTRPCRouter({
         html: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
-      return await PdfServiceTest.generatePdf({
+    .mutation(async ({ input, ctx }) => {
+      return await PdfService.generatePdf({
         html: input.html,
+        pdfName: "Signed pdf",
+        user: {
+          id: ctx.session?.user.id || "",
+        },
       });
     }),
 
