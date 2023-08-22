@@ -12,5 +12,5 @@ export interface EmailServiceTypes {
     subject: string;
     content: ReactElement;
     attachments?: Attachment[];
-  }) => Promise<void>;
+  }) => Promise<string>;
 }

@@ -21,40 +21,38 @@ const send: EmailServiceTypes["send"] = async ({
   content,
   attachments,
 }) => {
+  console.log(env.NODE_ENV);
+
   if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
-    await resend.emails
-      .send({
+    try {
+      await resend.emails.send({
         from: "Bolu <bolu@siegfried.dev>",
         to,
         subject,
         html: render(content),
         attachments,
-      })
-      .then(() => {
-        console.log("sent");
-        return "email sent successfully";
-      })
-      .catch((e) => {
-        console.log(e);
-        throw new Error("Couldn't send email");
       });
+
+      return "email sent successfully";
+    } catch (error) {
+      console.log(error);
+      throw new Error("Couldn't send email");
+    }
   } else {
-    await transporter
-      .sendMail({
+    try {
+      await transporter.sendMail({
         from: env.CONTACT_EMAIL,
         to,
         subject,
         html: render(content),
         attachments,
-      })
-      .then(() => {
-        console.log("sent");
-        return "email sent successfully";
-      })
-      .catch((e) => {
-        console.log(e);
-        throw new Error("Couldn't send email");
       });
+
+      return "email sent successfully";
+    } catch (error) {
+      console.log(error);
+      throw new Error("Couldn't send email");
+    }
   }
 };
 
