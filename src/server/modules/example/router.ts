@@ -6,7 +6,7 @@ import {
 } from "@/server/api/trpc";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractRequest from "@/emails/ContractRequest";
-import { PdfService } from "../pdf-service/impl";
+import { PdfService } from "@/server/modules/pdf-service/impl";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
