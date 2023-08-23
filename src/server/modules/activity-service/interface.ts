@@ -16,4 +16,11 @@ export interface ActivityServiceType {
       id: string;
     };
   }) => Promise<CustomActivity[]>;
+
+  byContract: (args: {
+    user: {
+      id: string;
+    };
+    contractId: string;
+  }) => Promise<CustomActivity[]>;
 }

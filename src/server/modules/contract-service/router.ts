@@ -4,7 +4,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { ContractSignerSchema } from "@/containers/contracts-[action]/components/ContractSigners/interface";
+import { ContractSignerSchema } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
 import { ContractService } from "@/server/modules/contract-service/impl";
 
 export const contractServiceRouter = createTRPCRouter({
