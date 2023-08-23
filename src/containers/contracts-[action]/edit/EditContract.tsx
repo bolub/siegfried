@@ -1,17 +1,17 @@
 import React from "react";
 import { ContractTitleEditor } from "@/containers/contracts-[action]/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contracts-[action]/components/ContractEditor/ContractEditor";
-import { ContractSigners } from "@/containers/contracts-[action]/components/ContractSigners/ContractSigners";
+import { ContractSignersAndActivity } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/ContractSignersAndActivity";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
-import { type ContractFormData } from "@/containers/contracts-[action]/components/ContractSigners/interface";
+import { type ContractFormData } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/router";
 import { routes } from "@/routes";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";
-import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSigners/ContractSignersFooter";
+import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/components/ContractSignersFooter";
 
 export const EditContractPage = ({
   contract,
@@ -64,13 +64,17 @@ export const EditContractPage = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor contract={contract} register={register} />
       <ContractEditor contract={contract} control={control} />
-      <ContractSigners contract={contract} register={register} disabled>
+      <ContractSignersAndActivity
+        contract={contract}
+        register={register}
+        disabled
+      >
         <ContractSignersFooter
           isLoading={updateContractLoading}
           action="Update Contract"
           disabled={contract?.status === "SIGNED"}
         />
-      </ContractSigners>
+      </ContractSignersAndActivity>
     </form>
   );
 };
