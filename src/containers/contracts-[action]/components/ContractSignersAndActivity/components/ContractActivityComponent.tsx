@@ -24,11 +24,11 @@ export const ContractActivityShimmer = () => {
     <>
       <div className="flex w-full flex-wrap items-center">
         {/* circle */}
-        <Skeleton className="h-[32px] w-[32px] rounded-full bg-gray-300 md:h-[50px] md:w-[50px]" />
+        <Skeleton className="h-[38px] w-[38px] rounded-full bg-gray-300" />
 
         {/* long rectangle */}
         <div className="ml-4">
-          <Skeleton className="h-4 w-[250px] bg-gray-300" />
+          <Skeleton className="h-2 w-[150px] bg-gray-300" />
         </div>
       </div>
     </>
