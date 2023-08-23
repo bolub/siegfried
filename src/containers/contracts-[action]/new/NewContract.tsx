@@ -11,6 +11,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/router";
 import { routes } from "@/routes";
+import {
+  ContractContentShell,
+  ContractMainWrapper,
+  ContractSignersActivityShell,
+} from "@/containers/contracts-[action]/components/ContractShells";
 export const NewContractPage = () => {
   const { toast } = useToast();
   const router = useRouter();
@@ -53,13 +58,21 @@ export const NewContractPage = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor register={register} />
-      <ContractEditor control={control} />
-      <ContractSignersAndActivity hideActivity register={register}>
-        <ContractSignersFooter
-          isLoading={createContractLoading}
-          action="Send Contract"
-        />
-      </ContractSignersAndActivity>
+
+      <ContractMainWrapper>
+        <ContractContentShell>
+          <ContractEditor control={control} />
+        </ContractContentShell>
+
+        <ContractSignersActivityShell>
+          <ContractSignersAndActivity hideActivity register={register}>
+            <ContractSignersFooter
+              isLoading={createContractLoading}
+              action="Send Contract"
+            />
+          </ContractSignersAndActivity>
+        </ContractSignersActivityShell>
+      </ContractMainWrapper>
     </form>
   );
 };

@@ -12,6 +12,11 @@ import { useRouter } from "next/router";
 import { routes } from "@/routes";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/components/ContractSignersFooter";
+import {
+  ContractContentShell,
+  ContractMainWrapper,
+  ContractSignersActivityShell,
+} from "@/containers/contracts-[action]/components/ContractShells";
 
 export const EditContractPage = ({
   contract,
@@ -63,18 +68,26 @@ export const EditContractPage = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor contract={contract} register={register} />
-      <ContractEditor contract={contract} control={control} />
-      <ContractSignersAndActivity
-        contract={contract}
-        register={register}
-        disabled
-      >
-        <ContractSignersFooter
-          isLoading={updateContractLoading}
-          action="Update Contract"
-          disabled={contract?.status === "SIGNED"}
-        />
-      </ContractSignersAndActivity>
+
+      <ContractMainWrapper>
+        <ContractContentShell>
+          <ContractEditor contract={contract} control={control} />
+        </ContractContentShell>
+
+        <ContractSignersActivityShell>
+          <ContractSignersAndActivity
+            contract={contract}
+            register={register}
+            disabled
+          >
+            <ContractSignersFooter
+              isLoading={updateContractLoading}
+              action="Update Contract"
+              disabled={contract?.status === "SIGNED"}
+            />
+          </ContractSignersAndActivity>
+        </ContractSignersActivityShell>
+      </ContractMainWrapper>
     </form>
   );
 };
