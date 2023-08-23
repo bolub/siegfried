@@ -24,7 +24,7 @@ export const ContractSigners = ({
   };
 
   return (
-    <div className="overflow-y-auto p-8 md:h-[35vh]">
+    <>
       <div className="flex items-center">
         <Users2Icon className="mr-2 h-5 w-5" />
         <h2 className="text-sm font-bold">Signers (Max of 1)</h2>
@@ -58,6 +58,6 @@ export const ContractSigners = ({
           Add new signer
         </button>
       )}
-    </div>
+    </>
   );
 };

@@ -10,7 +10,7 @@ export const ContractSignersFooter = ({
   action: string;
 }) => {
   return (
-    <div className="mb-22 mt-auto w-full border-t p-6">
+    <div className="mt-auto w-full border-t p-6">
       <Button type="button" variant="secondary" className="w-full" size="lg">
         Preview
       </Button>

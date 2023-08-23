@@ -17,18 +17,20 @@ export const ContractSignersAndActivity = ({
   hideActivity?: boolean;
 }) => {
   return (
-    <div className="right-0 top-0 mt-22 w-full max-w-[424px] bg-white md:fixed">
-      <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col">
+      <div className="overflow-y-auto p-8 md:h-[35vh]">
         <ContractSigners
           register={register}
           contract={contract}
           disabled={disabled}
         />
-
-        <ContractActivityList />
-
-        <div className="mt-auto">{children}</div>
       </div>
+
+      <div className="w-full overflow-y-auto border-t p-8 md:h-[38vh]">
+        <ContractActivityList />
+      </div>
+
+      <div className="mt-auto">{children}</div>
     </div>
   );
 };

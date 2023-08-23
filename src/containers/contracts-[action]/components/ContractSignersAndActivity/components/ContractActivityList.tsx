@@ -55,15 +55,14 @@ export const ContractActivityListInner = () => {
 
 export const ContractActivityList = () => {
   return (
-    <div className="w-full overflow-y-auto border-t p-8 md:h-[40vh]">
+    <>
       <div className="flex items-center">
-        {/* <FileBarChart2 className="mr-2 h-5 w-5" /> */}
         <h2 className="text-sm font-bold">Activity</h2>
       </div>
 
       <div className="mt-5 flex w-full flex-col space-y-6">
         <ContractActivityListInner />
       </div>
-    </div>
+    </>
   );
 };
