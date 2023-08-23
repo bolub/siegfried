@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { routes } from "@/routes";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { Stats } from "@/containers/dashboard-page/components/Stats";
-import { ActivityList } from "./components/ActivityList";
+import { ActivityList } from "@/containers/dashboard-page/components/ActivityList";
 
 export const DashboardPage = () => {
   return (

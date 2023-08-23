@@ -1,4 +1,4 @@
-import { type TypedEventEmitter } from "./impl";
+import { type TypedEventEmitter } from "@/server/modules/event-service/impl";
 import {
   type Contract as PrismaContract,
   type ContractRecipient,

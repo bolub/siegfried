@@ -4,7 +4,7 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "no-relative-import-paths", "todo-plz"],
   extends: ["next/core-web-vitals"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
@@ -15,6 +15,17 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      { allowSameFolder: false },
+    ],
+    "todo-plz/ticket-ref": [
+      "error",
+      {
+        commentPattern: "TODO \\[(ISSUE )?[#0-9]+\\]:.+",
+        description: "Example: // TODO [300]: Do something awesome",
+      },
+    ],
   },
 };
 

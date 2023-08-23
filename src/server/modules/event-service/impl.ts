@@ -55,7 +55,6 @@ Emitter.on("CONTRACT_CREATED", async ({ contract, user }) => {
     },
   });
 
-  // TODO: this times out, why?
   await sendNewContractEmailsToSigners({
     contract,
     user,
