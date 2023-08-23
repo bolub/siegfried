@@ -1,5 +1,5 @@
 import { prisma } from "@/server/db";
-import { type ActivityServiceType } from "./interface";
+import { type ActivityServiceType } from "@/server/modules/activity-service/interface";
 
 const recent: ActivityServiceType["recent"] = async ({ user }) => {
   return await prisma.activity.findMany({

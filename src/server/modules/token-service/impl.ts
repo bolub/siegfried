@@ -1,5 +1,5 @@
 import { env } from "@/env.mjs";
-import { type TokenServiceType } from "./interface";
+import { type TokenServiceType } from "@/server/modules/token-service/interface";
 import jwt from "jsonwebtoken";
 
 const generateToken: TokenServiceType["generateToken"] = (data) => {

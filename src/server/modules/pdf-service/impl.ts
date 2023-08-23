@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type PdfServiceType } from "./interface";
+import { type PdfServiceType } from "@/server/modules/pdf-service/interface";
 import axios from "axios";
 import { env } from "@/env.mjs";
 
