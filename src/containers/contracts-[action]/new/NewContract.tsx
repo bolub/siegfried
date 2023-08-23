@@ -1,17 +1,16 @@
 import React from "react";
 import { ContractTitleEditor } from "@/containers/contracts-[action]/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contracts-[action]/components/ContractEditor/ContractEditor";
-import { ContractSigners } from "@/containers/contracts-[action]/components/ContractSigners/ContractSigners";
-import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSigners/ContractSignersFooter";
+import { ContractSignersAndActivity } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/ContractSignersAndActivity";
+import { ContractSignersFooter } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/components/ContractSignersFooter";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useLeavePageConfirm } from "@/hooks/useLeavePageConfirm";
-import { type ContractFormData } from "@/containers/contracts-[action]/components/ContractSigners/interface";
+import { type ContractFormData } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/router";
 import { routes } from "@/routes";
-
 export const NewContractPage = () => {
   const { toast } = useToast();
   const router = useRouter();
@@ -55,12 +54,12 @@ export const NewContractPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor register={register} />
       <ContractEditor control={control} />
-      <ContractSigners register={register}>
+      <ContractSignersAndActivity hideActivity register={register}>
         <ContractSignersFooter
           isLoading={createContractLoading}
           action="Send Contract"
         />
-      </ContractSigners>
+      </ContractSignersAndActivity>
     </form>
   );
 };
