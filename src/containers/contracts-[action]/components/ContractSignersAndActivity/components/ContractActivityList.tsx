@@ -23,7 +23,9 @@ export const ContractActivityListInner = () => {
   if (isNewContract || activities?.length === 0)
     return (
       <div className="flex h-[20vh] items-center justify-center">
-        <p className="text-sm">No activity yet</p>
+        <p className="max-w-[200px] text-center text-sm">
+          Activity will be available when you send the contract
+        </p>
       </div>
     );
 
