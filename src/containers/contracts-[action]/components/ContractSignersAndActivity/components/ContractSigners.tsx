@@ -27,7 +27,7 @@ export const ContractSigners = ({
     <>
       <div className="flex items-center">
         <Users2Icon className="mr-2 h-5 w-5" />
-        <h2 className="text-sm font-bold">Signers (Max of 1)</h2>
+        <h2 className="font-mono text-sm font-bold">Signers (Max of 1)</h2>
       </div>
 
       {indexes.map((index) => {

@@ -66,7 +66,7 @@ export const ContractActivityList = () => {
   return (
     <>
       <div className="flex items-center">
-        <h2 className="text-sm font-bold">Activity</h2>
+        <h2 className="font-mono text-sm font-bold">Activity</h2>
       </div>
 
       <div className="mt-5 flex w-full flex-col space-y-6">
