@@ -1,7 +1,10 @@
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import React from "react";
-import { ContractActivityComponent } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/components/ContractActivityComponent";
+import {
+  ContractActivityComponent,
+  ContractActivityShimmer,
+} from "@/containers/contracts-[action]/components/ContractSignersAndActivity/components/ContractActivityComponent";
 
 export const ContractActivityListInner = () => {
   const router = useRouter();
@@ -18,7 +21,14 @@ export const ContractActivityListInner = () => {
   );
 
   if (!isNewContract && isLoading)
-    return <p className="text-sm">Fetching data...</p>;
+    return (
+      <>
+        <ContractActivityShimmer />
+        <ContractActivityShimmer />
+        <ContractActivityShimmer />
+        <ContractActivityShimmer />
+      </>
+    );
 
   if (isNewContract || activities?.length === 0)
     return (
