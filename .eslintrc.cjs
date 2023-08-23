@@ -16,7 +16,7 @@ const config = {
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "no-relative-import-paths/no-relative-import-paths": [
-      "warn",
+      "error",
       { allowSameFolder: false },
     ],
     "todo-plz/ticket-ref": [
