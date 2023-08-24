@@ -17,7 +17,9 @@ export const ViewContractPage = ({
 }: {
   contract?: SingleContractType | null;
 }) => {
-  const { register, control } = useForm<ContractFormData>();
+  const { register, control, getValues, watch } = useForm<ContractFormData>();
+
+  const content = getValues("contractName");
 
   return (
     <form>
@@ -37,6 +39,10 @@ export const ViewContractPage = ({
             <ContractSignersFooter
               action="Update Contract"
               disabled={contract?.status === "SIGNED"}
+              contract={{
+                name: watch("contractName") || contract?.name,
+                content: watch("contractContent") || contract?.content,
+              }}
             />
           </ContractSignersAndActivity>
         </ContractSignersActivityShell>
