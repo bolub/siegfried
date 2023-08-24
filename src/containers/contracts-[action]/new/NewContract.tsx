@@ -53,7 +53,8 @@ export const NewContractPage = () => {
     createContract(data);
   };
 
-  const { handleSubmit, register, control } = useForm<ContractFormData>();
+  const { handleSubmit, register, control, watch } =
+    useForm<ContractFormData>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,6 +70,10 @@ export const NewContractPage = () => {
             <ContractSignersFooter
               isLoading={createContractLoading}
               action="Send Contract"
+              contract={{
+                name: watch("contractName"),
+                content: watch("contractContent"),
+              }}
             />
           </ContractSignersAndActivity>
         </ContractSignersActivityShell>

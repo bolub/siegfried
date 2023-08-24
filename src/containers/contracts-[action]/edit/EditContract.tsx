@@ -63,7 +63,8 @@ export const EditContractPage = ({
     });
   };
 
-  const { handleSubmit, register, control } = useForm<ContractFormData>();
+  const { handleSubmit, register, control, watch } =
+    useForm<ContractFormData>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -84,6 +85,10 @@ export const EditContractPage = ({
               isLoading={updateContractLoading}
               action="Update Contract"
               disabled={contract?.status === "SIGNED"}
+              contract={{
+                name: watch("contractName") || contract?.name,
+                content: watch("contractContent") || contract?.content,
+              }}
             />
           </ContractSignersAndActivity>
         </ContractSignersActivityShell>
