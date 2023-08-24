@@ -47,19 +47,21 @@ export const ActivityComponent = ({
   timestamp: Date;
 }) => {
   return (
-    <div className="flex w-full flex-wrap items-center">
-      <CirclePlusIcon status={status} />
+    <div className="flex w-full flex-col items-center md:flex-row">
+      <div className="flex md:items-center">
+        <CirclePlusIcon status={status} />
 
-      <div className="ml-2 md:ml-4">
-        <p className="">
-          {user} {ContentToActivity[status]} <b>{contract}</b>
-        </p>
-      </div>
+        <div className="ml-2 flex flex-col gap-2 md:ml-4 md:flex-row md:items-center">
+          <p>
+            {user} {ContentToActivity[status]} <b>{contract}</b>
+          </p>
 
-      <div className="ml-2 flex items-center gap-2">
-        <span className="mb-3 text-2xl font-bold">.</span>
+          <div className="flex items-center gap-2">
+            <span className="mb-3 hidden text-2xl font-bold md:block">.</span>
 
-        <p className="">{formatDateFromNow(timestamp)}</p>
+            <p>{formatDateFromNow(timestamp)}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

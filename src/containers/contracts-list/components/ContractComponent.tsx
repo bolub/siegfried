@@ -63,7 +63,7 @@ export const ContractComponent = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 className="truncate text-lg font-semibold">
+                <h3 className="truncate font-semibold md:text-lg">
                   {contract.name}
                 </h3>
               </TooltipTrigger>

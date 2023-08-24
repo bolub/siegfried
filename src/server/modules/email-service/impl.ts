@@ -21,12 +21,10 @@ const send: EmailServiceTypes["send"] = async ({
   content,
   attachments,
 }) => {
-  console.log(env.NODE_ENV);
-
   if (env.NODE_ENV === "production" || env.NODE_ENV === "preview") {
     try {
       await resend.emails.send({
-        from: "Bolu <bolu@siegfried.dev>",
+        from: "Siegfried <bolu@siegfried.dev>",
         to,
         subject,
         html: render(content),

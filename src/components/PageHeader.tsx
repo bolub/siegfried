@@ -9,7 +9,7 @@ export const PageHeader = ({
 }) => {
   return (
     <div className="flex w-full items-center justify-between">
-      <h1 className="font-mono text-3xl font-bold">{title}</h1>
+      <h1 className="font-mono text-xl font-bold md:text-3xl">{title}</h1>
 
       {children}
     </div>
