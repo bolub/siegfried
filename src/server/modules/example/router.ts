@@ -44,9 +44,9 @@ export const exampleRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       return await PdfService.generatePdf({
         html: input.html,
-        pdfName: "Signed pdf",
+        pdfName: "Test Signed pdf",
         user: {
-          id: ctx.session?.user.id || "",
+          id: "Test",
         },
       });
     }),
