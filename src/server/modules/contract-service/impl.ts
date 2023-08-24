@@ -283,6 +283,19 @@ export const update: ContractServiceType["update"] = async (args) => {
     throw new Error("User does not exist");
   }
 
+  const contractData = await prisma.contract.findUnique({
+    where: {
+      id: contract.id,
+    },
+    select: {
+      status: true,
+    },
+  });
+
+  if (contractData?.status === "SIGNED") {
+    throw new Error("Contract has already been signed");
+  }
+
   const updatedContract = await prisma.contract.update({
     where: {
       id: contract.id,
