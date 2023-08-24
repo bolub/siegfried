@@ -87,7 +87,7 @@ export const SingleContractPageInner = ({
           {/* header */}
           <div className="mb-20">
             <div className="flex w-full flex-col text-center">
-              <Logo />
+              <Logo type="text" />
 
               <h1 className="mt-9 font-mono font-bold">{contract.name}</h1>
             </div>
