@@ -1,9 +1,14 @@
-import { Text } from "@react-email/components";
+import { Img } from "@react-email/img";
 
 export const EmailLogo = () => {
   return (
-    <Text className="text-primary-100 font-mono text-base font-bold uppercase leading-[72px]">
-      Siegfried
-    </Text>
+    <>
+      <Img
+        src="https://www.siegfried.dev/logo-black.png"
+        alt="Siegfried"
+        width="88"
+        className="mb-12 mt-12"
+      />
+    </>
   );
 };
