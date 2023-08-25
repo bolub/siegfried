@@ -19,7 +19,13 @@ const Preview = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="secondary" className="w-full" size="lg">
+        <Button
+          disabled={!contract.content}
+          type="button"
+          variant="secondary"
+          className="w-full"
+          size="lg"
+        >
           Preview
         </Button>
       </DialogTrigger>
