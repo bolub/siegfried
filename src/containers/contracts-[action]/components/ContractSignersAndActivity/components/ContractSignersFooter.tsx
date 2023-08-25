@@ -86,6 +86,8 @@ export const ContractSignersFooter = ({
     status?: ContractStatus;
   };
 }) => {
+  const showSaveButton = !contract.status || contract.status === "DRAFT";
+
   return (
     <>
       <div className="mt-auto w-full border-t p-6">
@@ -105,7 +107,7 @@ export const ContractSignersFooter = ({
             {action}
           </Button>
 
-          {contract.status === "DRAFT" && (
+          {showSaveButton && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
