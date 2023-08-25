@@ -1,7 +1,4 @@
-import {
-  type ContractSigner,
-  type ContractSigners,
-} from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
+import { type ContractSigner } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
 import { type Activity, type Contract } from "@prisma/client";
 
 export type ContractForList = Pick<
