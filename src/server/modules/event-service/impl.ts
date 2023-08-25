@@ -36,16 +36,6 @@ export class TypedEventEmitter<TEvents extends Record<string, any>> {
 
 const Emitter = new TypedEventEmitter<SiegfriedEvents>();
 
-// Emitter.on("CONTRACT_CREATED", async ({ contractId, userId }) => {
-//   await prisma.activity.create({
-//     data: {
-//       action: "CONTRACT_CREATED",
-//       contractId,
-//       userId,
-//     },
-//   });
-// });
-
 Emitter.on("CONTRACT_CREATED", async ({ contract, user }) => {
   await prisma.activity.create({
     data: {
