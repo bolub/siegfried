@@ -22,8 +22,8 @@ export const HomePage = () => {
             Create and sign documents easily
           </h1>
           <p className="mt-10 text-lg">
-            Easily craft customized contracts and seamlessly dispatch them to
-            recipients for swift and secure electronic signatures.
+            Easily create personalized contracts and send them for quick and
+            secure electronic signatures.
           </p>
 
           <Button asChild size="lg" className="mt-14">
