@@ -26,11 +26,11 @@ export const SignerInputs = ({
 
   return (
     <>
-      {/* first:border-b */}
-      <div className="py-7">
+      <div className="">
         <div className="grid w-full gap-2">
           <Label htmlFor={signerNameLabel}>Signer Name</Label>
           <Input
+            autoFocus
             type="text"
             id={signerNameLabel}
             placeholder="Enter signer name"
