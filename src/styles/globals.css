@@ -75,6 +75,7 @@
   body {
     font-family: "__DM_Sans_88fdc4";
     background-color: #f9fafb;
+    scroll-behavior: smooth;
   }
 }
 

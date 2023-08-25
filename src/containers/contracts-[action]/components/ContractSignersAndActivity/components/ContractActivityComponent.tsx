@@ -45,10 +45,10 @@ export const ContractActivityComponent = ({
   timestamp: Date;
 }) => {
   return (
-    <div className="flex w-full items-center">
+    <div className="flex w-full">
       <CirclePlusIcon status={status} />
 
-      <div className="ml-2 text-sm">
+      <div className="ml-3 text-sm">
         <p className="">
           Contract {ContentToActivity[status]} by <b>{user}</b>
         </p>

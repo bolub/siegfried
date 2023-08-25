@@ -28,7 +28,7 @@ const Preview = ({
           <DialogDescription>
             <div className="mb-20">
               <div className="flex w-full flex-col text-center">
-                <Logo type="text" />
+                <Logo className="mx-auto" />
 
                 <h1 className="mt-9 font-mono font-bold">{contract.name}</h1>
               </div>
