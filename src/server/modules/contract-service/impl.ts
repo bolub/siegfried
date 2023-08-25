@@ -1,13 +1,50 @@
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { type ContractServiceType } from "@/server/modules/contract-service/interface";
-import { getContract } from "@/server/modules/contract-service/utils";
+import {
+  createContract,
+  getContract,
+  updateContract,
+} from "@/server/modules/contract-service/utils";
 import { ContractUser } from "@/containers/contract/utils";
 import { FileStorageService } from "@/server/modules/file-storage-service/impl";
 import { EmailService } from "@/server/modules/email-service/impl";
 import ContractSigned from "@/emails/ContractSigned";
 import { EventService } from "@/server/modules/event-service/impl";
 import { PdfService } from "@/server/modules/pdf-service/impl";
+
+export const save: ContractServiceType["save"] = async (args) => {
+  const { contract, user } = args;
+
+  if (!user.id) {
+    throw new Error("User does not exist");
+  }
+
+  if (Boolean(contract.id)) {
+    try {
+      const updatedContract = await updateContract({
+        contract,
+        status: "DRAFT",
+      });
+
+      return updatedContract;
+    } catch (error) {
+      throw error;
+    }
+  } else {
+    try {
+      return await createContract({
+        contract,
+        status: "DRAFT",
+        user: {
+          id: user.id,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+};
 
 export const create: ContractServiceType["create"] = async (args) => {
   const { contract, user } = args;
@@ -16,25 +53,25 @@ export const create: ContractServiceType["create"] = async (args) => {
     throw new Error("User does not exist");
   }
 
-  const newContract = await prisma.contract.create({
-    data: {
-      name: contract.contractName,
-      content: contract.contractContent,
+  let newContract;
+
+  if (Boolean(contract.id)) {
+    newContract = await updateContract({
+      contract,
       status: "PENDING",
-      recipients: {
-        createMany: {
-          data: [...contract.signers],
-        },
+    });
+  } else {
+    newContract = await createContract({
+      contract,
+      status: "PENDING",
+      user: {
+        id: user.id,
       },
-      userId: user.id,
-    },
-    include: {
-      recipients: true,
-    },
-  });
+    });
+  }
 
   if (!newContract) {
-    throw new Error("Contract not created successfully");
+    throw new Error("Contract not created");
   }
 
   EventService.Emitter.emit("CONTRACT_CREATED", {
@@ -329,4 +366,5 @@ export const ContractService: ContractServiceType = {
   stats,
   list,
   update,
+  save,
 };
