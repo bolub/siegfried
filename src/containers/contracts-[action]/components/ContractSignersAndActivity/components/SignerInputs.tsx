@@ -23,6 +23,7 @@ export const SignerInputs = ({
 }) => {
   const signerNameLabel = `signers.${index}.name` as const;
   const signerEmailLabel = `signers.${index}.email` as const;
+  const signerIdLabel = `signers.${index}.id` as const;
 
   return (
     <>
@@ -35,8 +36,8 @@ export const SignerInputs = ({
           placeholder="Enter recipient name"
           {...register(signerNameLabel, {
             required: true,
-            value: defaultValue?.name,
           })}
+          defaultValue={defaultValue?.name}
           disabled={disabled}
         />
       </div>
@@ -49,11 +50,21 @@ export const SignerInputs = ({
           placeholder="Enter recipient email"
           {...register(signerEmailLabel, {
             required: true,
-            value: defaultValue?.email,
           })}
+          defaultValue={defaultValue?.email}
           disabled={disabled}
         />
       </div>
+
+      <Input
+        className="hidden"
+        id={signerIdLabel}
+        placeholder="Enter recipient email"
+        {...register(signerIdLabel, {
+          value: defaultValue?.id,
+        })}
+        disabled={disabled}
+      />
 
       {isMultipleSignersAdded && (
         <Button
