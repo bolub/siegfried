@@ -19,4 +19,8 @@ export const seoConfig = {
       },
     ],
   },
+  twitter: {
+    handle: "@BoluwatifeAbio1",
+    site: "@BoluwatifeAbio1",
+  },
 } as NextSeoProps;
