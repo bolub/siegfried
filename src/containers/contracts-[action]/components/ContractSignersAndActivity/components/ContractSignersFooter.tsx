@@ -112,7 +112,8 @@ export const ContractSignersFooter = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
-                    className="absolute right-0 top-[12px] z-20 flex h-[44px] w-10 items-center justify-center rounded-r-lg border-l text-white"
+                    disabled={disabled || isLoading}
+                    className="absolute right-0 top-[12px] z-20 flex h-[44px] w-10 items-center justify-center rounded-r-lg border-l text-white disabled:pointer-events-none disabled:opacity-50"
                     onClick={() => {
                       setButtonAction && setButtonAction("update");
                     }}
