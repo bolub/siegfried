@@ -44,10 +44,10 @@ const PreviewButton = ({
           Preview
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[800px]">
+      <DialogContent className="max-h-[85vh] max-w-[800px] overflow-y-auto">
         <DialogHeader>
           <DialogDescription>
-            <div className="mb-20">
+            <div className="mb-20 mt-10">
               <div className="flex w-full flex-col text-center">
                 <Logo className="mx-auto" />
 
