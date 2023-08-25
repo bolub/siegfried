@@ -28,11 +28,11 @@ export const SignerInputs = ({
     <>
       {/* first:border-b */}
       <div className="grid w-full gap-2">
-        <Label htmlFor={signerNameLabel}>Signer Name</Label>
+        <Label htmlFor={signerNameLabel}>Recipient Name</Label>
         <Input
           type="text"
           id={signerNameLabel}
-          placeholder="Enter signer name"
+          placeholder="Enter recipient name"
           {...register(signerNameLabel, {
             required: true,
             value: defaultValue?.name,
@@ -42,11 +42,11 @@ export const SignerInputs = ({
       </div>
 
       <div className="mt-6 grid w-full gap-2">
-        <Label htmlFor={signerEmailLabel}>Signer Email</Label>
+        <Label htmlFor={signerEmailLabel}>Recipient Email</Label>
         <Input
           type="email"
           id={signerEmailLabel}
-          placeholder="Enter signer email"
+          placeholder="Enter recipient email"
           {...register(signerEmailLabel, {
             required: true,
             value: defaultValue?.email,
