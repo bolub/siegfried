@@ -86,6 +86,7 @@ export const EditContractPage = ({
               action="Update Contract"
               disabled={contract?.status === "SIGNED"}
               contract={{
+                status: contract?.status,
                 name: watch("contractName") || contract?.name,
                 content: watch("contractContent") || contract?.content,
               }}

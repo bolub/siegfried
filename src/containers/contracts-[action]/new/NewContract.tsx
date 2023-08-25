@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ContractTitleEditor } from "@/containers/contracts-[action]/components/ContractTitleEditor";
 import { ContractEditor } from "@/containers/contracts-[action]/components/ContractEditor/ContractEditor";
 import { ContractSignersAndActivity } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/ContractSignersAndActivity";
@@ -16,14 +16,23 @@ import {
   ContractMainWrapper,
   ContractSignersActivityShell,
 } from "@/containers/contracts-[action]/components/ContractShells";
-export const NewContractPage = () => {
+import { type SingleContractType } from "@/pages/contracts/edit/[id]";
+
+export const NewContractPage = ({
+  contract,
+}: {
+  contract?: SingleContractType | null;
+}) => {
   const { toast } = useToast();
   const router = useRouter();
+  const [buttonAction, setButtonAction] = useState<"create" | "update">(
+    "create"
+  );
 
   const {
     mutate: createContract,
     isLoading: createContractLoading,
-    isSuccess: hideConfirmationWhenContractIsCreatedSuccessfully,
+    isSuccess: isContractCreatedSuccessfully,
   } = api.contract.create.useMutation({
     onSuccess() {
       toast({
@@ -43,14 +52,47 @@ export const NewContractPage = () => {
     },
   });
 
+  const {
+    mutate: saveContractAsDraft,
+    isLoading: saveContractAsDraftLoading,
+    isSuccess: isContractSavedSuccessfully,
+  } = api.contract.save.useMutation({
+    onSuccess() {
+      toast({
+        title: "Success",
+        description: "Contract saved successfully",
+      });
+
+      void router.push(routes.contracts.all());
+    },
+    onError() {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    },
+  });
+
   useLeavePageConfirm({
     message:
       "Are you sure you want to leave this page? you still have unsaved changes",
-    isConfirm: !hideConfirmationWhenContractIsCreatedSuccessfully,
+    isConfirm: !isContractCreatedSuccessfully && !isContractSavedSuccessfully,
   });
 
   const onSubmit: SubmitHandler<ContractFormData> = (data) => {
-    createContract(data);
+    if (buttonAction === "create") {
+      createContract({
+        id: contract?.id,
+        ...data,
+      });
+    } else {
+      saveContractAsDraft({
+        id: contract?.id,
+        ...data,
+      });
+    }
   };
 
   const { handleSubmit, register, control, watch } =
@@ -58,21 +100,27 @@ export const NewContractPage = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ContractTitleEditor register={register} />
+      <ContractTitleEditor contract={contract} register={register} />
 
       <ContractMainWrapper>
         <ContractContentShell>
-          <ContractEditor control={control} />
+          <ContractEditor contract={contract} control={control} />
         </ContractContentShell>
 
         <ContractSignersActivityShell>
-          <ContractSignersAndActivity hideActivity register={register}>
+          <ContractSignersAndActivity
+            contract={contract}
+            hideActivity
+            register={register}
+          >
             <ContractSignersFooter
-              isLoading={createContractLoading}
+              setButtonAction={setButtonAction}
+              isLoading={createContractLoading || saveContractAsDraftLoading}
               action="Send Contract"
               contract={{
-                name: watch("contractName"),
-                content: watch("contractContent"),
+                name: watch("contractName") || contract?.name,
+                content: watch("contractContent") || contract?.content,
+                status: contract?.status,
               }}
             />
           </ContractSignersAndActivity>

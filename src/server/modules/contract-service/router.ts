@@ -11,6 +11,7 @@ export const contractServiceRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
+        id: z.string().optional(),
         contractName: z.string(),
         contractContent: z.string(),
         signers: z.array(ContractSignerSchema),
@@ -100,6 +101,33 @@ export const contractServiceRouter = createTRPCRouter({
       return await ContractService.update({
         contract: {
           ...input,
+        },
+        user: {
+          name: ctx.session?.user.name,
+          id: ctx.session?.user.id,
+        },
+      });
+    }),
+  save: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+        contractName: z.string(),
+        contractContent: z.string(),
+        signers: z.array(
+          ContractSignerSchema.extend({
+            id: z.string().optional(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ContractService.save({
+        contract: {
+          contractName: input.contractName,
+          contractContent: input.contractContent,
+          id: input.id,
+          signers: input.signers,
         },
         user: {
           name: ctx.session?.user.name,

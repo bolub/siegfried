@@ -1,10 +1,17 @@
 import { NewContractPage } from "@/containers/contracts-[action]/new/NewContract";
-
 import { routes } from "@/routes";
 import { getServerAuthSession } from "@/server/auth";
-import { type GetServerSidePropsContext } from "next";
+import { prisma } from "@/server/db";
+import {
+  type InferGetServerSidePropsType,
+  type GetServerSidePropsContext,
+  type GetServerSideProps,
+} from "next";
+import { type SingleContractType } from "@/pages/contracts/edit/[id]";
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{
+  contract?: SingleContractType | null;
+}> = async (ctx: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(ctx);
   const userId = session?.user?.id;
 
@@ -17,11 +24,35 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  const contractId = ctx.query.id as string;
+
+  if (contractId) {
+    const contract = await prisma.contract.findUnique({
+      where: {
+        id: contractId,
+      },
+      include: {
+        recipients: true,
+        user: true,
+      },
+    });
+
+    return {
+      props: {
+        contract,
+      },
+    };
+  }
+
   return {
     props: {},
   };
 };
 
-export default function NewContract() {
-  return <NewContractPage />;
-}
+const NewContract = ({
+  contract,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  return <NewContractPage contract={contract} />;
+};
+
+export default NewContract;

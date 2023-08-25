@@ -78,6 +78,7 @@ model ContractRecipient {
 }
 
 enum ContractStatus {
+    DRAFT
     PENDING
     SIGNED
 }

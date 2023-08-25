@@ -11,6 +11,15 @@ import { type ContractForList } from "@/server/modules/contract-service/interfac
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { routes } from "@/routes";
+import { type ContractStatus } from "@prisma/client";
+
+const contractViewPath = (id: string, status: ContractStatus): string => {
+  if (status === "SIGNED") return routes.contracts.view(id);
+  if (status === "PENDING") return routes.contracts.edit(id);
+  if (status === "DRAFT") return routes.contracts.new(id);
+
+  return "";
+};
 
 export const ContractComponentShimmer = () => {
   return (
@@ -46,13 +55,7 @@ export const ContractComponent = ({
   contract: ContractForList;
 }) => {
   return (
-    <Link
-      href={
-        contract.status === "PENDING"
-          ? routes.contracts.edit(contract.id)
-          : routes.contracts.view(contract.id)
-      }
-    >
+    <Link href={contractViewPath(contract.id, contract.status)}>
       <div className="border-[rgba(0, 0, 0, 0.08)] w-full rounded-lg border bg-white">
         {/* top */}
         <div className="mt-6 flex items-center space-x-[20px] px-8">
@@ -77,7 +80,7 @@ export const ContractComponent = ({
           <div className="flex w-full items-center justify-between">
             <span className="font-medium text-[#667085]">Status</span>
             <Badge
-              variant={contract.status === "PENDING" ? "secondary" : "success"}
+              variant={contract.status === "SIGNED" ? "success" : "secondary"}
               className="text-sm"
             >
               {contract.status}
