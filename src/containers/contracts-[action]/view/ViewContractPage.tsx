@@ -21,7 +21,12 @@ export const ViewContractPage = ({
 
   return (
     <form>
-      <ContractTitleEditor contract={contract} register={register} disabled />
+      <ContractTitleEditor
+        contract={contract}
+        title={watch("contractName") || contract?.name}
+        register={register}
+        disabled
+      />
 
       <ContractMainWrapper>
         <ContractContentShell>

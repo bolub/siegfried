@@ -5,6 +5,7 @@ import { type ContractFormRegisterType } from "@/containers/contracts-[action]/c
 import Link from "next/link";
 import { routes } from "@/routes";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";
+import { Badge } from "@/components/ui/badge";
 
 const TopBarContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -20,14 +21,16 @@ export const ContractTitleEditor = ({
   register,
   contract,
   disabled,
+  title = "",
 }: {
   register: ContractFormRegisterType;
   contract?: SingleContractType | null;
   disabled?: boolean;
+  title?: string;
 }) => {
   return (
     <TopBarContainer>
-      <div className="flex w-full items-center">
+      <div className="flex w-full">
         <Button
           type="button"
           size="icon"
@@ -44,13 +47,24 @@ export const ContractTitleEditor = ({
           <FileTextIcon className="mr-2 h-6 w-6 stroke-2" />
           <input
             placeholder="New Contract"
-            className="w-full max-w-2xl rounded-none font-mono text-base font-bold focus-visible:outline-none"
+            className="rounded-none font-mono text-base font-bold focus-visible:outline-none"
             {...register("contractName", {
               required: true,
             })}
             defaultValue={contract?.name || "Untitled contract"}
             disabled={disabled}
+            style={{
+              width: title ? `${title.length + 1}ch` : "auto",
+            }}
           />
+          {contract?.status && (
+            <Badge
+              variant={contract?.status === "SIGNED" ? "success" : "secondary"}
+              className="text-sm"
+            >
+              {contract?.status}
+            </Badge>
+          )}
         </div>
       </div>
     </TopBarContainer>

@@ -68,7 +68,11 @@ export const EditContractPage = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ContractTitleEditor contract={contract} register={register} />
+      <ContractTitleEditor
+        contract={contract}
+        title={watch("contractName") || contract?.name}
+        register={register}
+      />
 
       <ContractMainWrapper>
         <ContractContentShell>
