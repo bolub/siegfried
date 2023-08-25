@@ -7,6 +7,9 @@ export const seoConfig = {
   description:
     "Easily create personalized contracts and send them for quick and secure electronic signatures.",
   openGraph: {
+    title: "Siegfried",
+    description:
+      "Easily create personalized contracts and send them for quick and secure electronic signatures.",
     url: "https://siegfried.dev",
     images: [
       {
