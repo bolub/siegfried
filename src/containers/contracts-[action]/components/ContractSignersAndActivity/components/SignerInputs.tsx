@@ -26,48 +26,46 @@ export const SignerInputs = ({
 
   return (
     <>
-      <div className="">
-        <div className="grid w-full gap-2">
-          <Label htmlFor={signerNameLabel}>Signer Name</Label>
-          <Input
-            autoFocus
-            type="text"
-            id={signerNameLabel}
-            placeholder="Enter signer name"
-            {...register(signerNameLabel, {
-              required: true,
-              value: defaultValue?.name,
-            })}
-            disabled={disabled}
-          />
-        </div>
-
-        <div className="mt-6 grid w-full gap-2">
-          <Label htmlFor={signerEmailLabel}>Signer Email</Label>
-          <Input
-            type="email"
-            id={signerEmailLabel}
-            placeholder="Enter signer email"
-            {...register(signerEmailLabel, {
-              required: true,
-              value: defaultValue?.email,
-            })}
-            disabled={disabled}
-          />
-        </div>
-
-        {isMultipleSignersAdded && (
-          <Button
-            type="button"
-            onClick={onRemove}
-            className="mt-4 bg-red-100 text-sm text-red-500"
-            variant="secondary"
-            size="sm"
-          >
-            Remove
-          </Button>
-        )}
+      <div className="grid w-full gap-2">
+        <Label htmlFor={signerNameLabel}>Signer Name</Label>
+        <Input
+          autoFocus
+          type="text"
+          id={signerNameLabel}
+          placeholder="Enter signer name"
+          {...register(signerNameLabel, {
+            required: true,
+            value: defaultValue?.name,
+          })}
+          disabled={disabled}
+        />
       </div>
+
+      <div className="mt-6 grid w-full gap-2">
+        <Label htmlFor={signerEmailLabel}>Signer Email</Label>
+        <Input
+          type="email"
+          id={signerEmailLabel}
+          placeholder="Enter signer email"
+          {...register(signerEmailLabel, {
+            required: true,
+            value: defaultValue?.email,
+          })}
+          disabled={disabled}
+        />
+      </div>
+
+      {isMultipleSignersAdded && (
+        <Button
+          type="button"
+          onClick={onRemove}
+          className="mt-4 bg-red-100 text-sm text-red-500"
+          variant="secondary"
+          size="sm"
+        >
+          Remove
+        </Button>
+      )}
     </>
   );
 };
