@@ -30,29 +30,31 @@ export const ContractSigners = ({
         <h2 className="font-mono text-sm font-bold">Signers (Max of 1)</h2>
       </div>
 
-      {indexes.map((index) => {
-        return (
-          <SignerInputs
-            key={`signers[${index + 1}]`}
-            defaultValue={contract?.recipients[index]}
-            index={index}
-            register={register}
-            isMultipleSignersAdded={indexes.length > 1}
-            onRemove={() => {
-              setIndexes((prevIndexes) => [
-                ...prevIndexes.filter((item) => item !== index),
-              ]);
-              setCounter((prevCounter) => prevCounter - 1);
-            }}
-            disabled={disabled}
-          />
-        );
-      })}
+      <div className="mt-6 flex flex-col space-y-8">
+        {indexes.map((index) => {
+          return (
+            <SignerInputs
+              key={`signers[${index + 1}]`}
+              defaultValue={contract?.recipients[index]}
+              index={index}
+              register={register}
+              isMultipleSignersAdded={indexes.length > 1}
+              onRemove={() => {
+                setIndexes((prevIndexes) => [
+                  ...prevIndexes.filter((item) => item !== index),
+                ]);
+                setCounter((prevCounter) => prevCounter - 1);
+              }}
+              disabled={disabled}
+            />
+          );
+        })}
+      </div>
 
       {indexes.length < 1 && (
         <button
           onClick={addNewSigner}
-          className="flex items-center gap-[6px] text-sm font-bold text-[#667085]"
+          className="mt-5 flex items-center gap-[6px] text-sm font-bold text-[#667085]"
         >
           <PlusIcon className="h-5 w-5 stroke-2" />
           Add new signer
