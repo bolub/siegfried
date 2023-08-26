@@ -12,31 +12,6 @@ export default function Example() {
 
   const { mutate: testEmitEvents } = api.example.testEmitEvents.useMutation();
 
-  const sendPdfToUrlTest = async () => {
-    // const htmlContent = document.querySelector("html");
-    // if (!htmlContent) return;
-    // const { url: pdfFilePath } = await testGeneratePdfAsync({
-    //   html: htmlContent.outerHTML,
-    // });
-    // // upload pdf to supabase
-    // try {
-    //   const response = await fetch("/api/contracts/upload", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       filePath: pdfFilePath,
-    //       pdfName: "test",
-    //       userId: "007",
-    //     }),
-    //   });
-    //   console.log(await response.json());
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
-
   return (
     <>
       <Appshell title="Example">
@@ -63,15 +38,6 @@ export default function Example() {
             className="w-fit"
           >
             Generate Pdf test
-          </Button>
-
-          <Button
-            onClick={async () => {
-              await sendPdfToUrlTest();
-            }}
-            className="w-fit"
-          >
-            Generate Pdf url test
           </Button>
 
           <Button
