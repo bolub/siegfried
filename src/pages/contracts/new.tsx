@@ -8,6 +8,7 @@ import {
   type GetServerSideProps,
 } from "next";
 import { type SingleContractType } from "@/pages/contracts/edit/[id]";
+import { decodeHTML } from "@/server/modules/contract-service/utils";
 
 export const getServerSideProps: GetServerSideProps<{
   contract?: SingleContractType | null;
@@ -36,6 +37,11 @@ export const getServerSideProps: GetServerSideProps<{
         user: true,
       },
     });
+
+    const decodedContent = decodeHTML(contract?.content || "");
+    if (contract) {
+      contract.content = decodedContent;
+    }
 
     return {
       props: {

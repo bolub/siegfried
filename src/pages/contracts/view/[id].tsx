@@ -9,6 +9,7 @@ import { type ContractRecipient, type Contract } from "@prisma/client";
 import { getServerAuthSession } from "@/server/auth";
 import { routes } from "@/routes";
 import { ViewContractPage } from "@/containers/contracts-[action]/view/ViewContractPage";
+import { decodeHTML } from "@/server/modules/contract-service/utils";
 
 export type SingleContractType = Contract & {
   recipients: ContractRecipient[];
@@ -39,6 +40,11 @@ export const getServerSideProps: GetServerSideProps<{
       user: true,
     },
   });
+
+  const decodedContent = decodeHTML(contract?.content || "");
+  if (contract) {
+    contract.content = decodedContent;
+  }
 
   return {
     props: {
