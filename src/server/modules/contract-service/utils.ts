@@ -166,6 +166,21 @@ export const sendContractSignedEmail = async ({
   }
 };
 
+export const encodeHTML = (html: string) => {
+  return Buffer.from(html, "utf8").toString("base64");
+};
+
+export const decodeHTML = (encodedHTML: string) => {
+  // Check if the input string is base64 encoded
+  const isEncoded = /^[A-Za-z0-9+/=]+\s*$/.test(encodedHTML);
+
+  if (isEncoded) {
+    return Buffer.from(encodedHTML, "base64").toString("utf-8");
+  } else {
+    return encodedHTML;
+  }
+};
+
 export const updateContract = async ({
   contract,
   status = "PENDING",
@@ -185,7 +200,7 @@ export const updateContract = async ({
     data: {
       status,
       name: contract.contractName,
-      content: contract.contractContent,
+      content: encodeHTML(contract.contractContent),
       recipients: {
         upsert: contract.signers.map((recipient) => ({
           where: { id: recipient.id },
@@ -223,7 +238,7 @@ export const createContract = async ({
   return await prisma.contract.create({
     data: {
       name: contract.contractName,
-      content: contract.contractContent,
+      content: encodeHTML(contract.contractContent),
       status,
       recipients: {
         createMany: {
