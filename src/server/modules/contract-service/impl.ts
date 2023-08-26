@@ -302,7 +302,7 @@ const list: ContractServiceType["list"] = async ({ userId }) => {
       userId,
     },
     orderBy: {
-      createdAt: "desc",
+      updatedAt: "desc",
     },
     select: {
       id: true,
