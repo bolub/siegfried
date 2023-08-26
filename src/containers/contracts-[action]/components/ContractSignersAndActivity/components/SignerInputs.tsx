@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { type ContractFormRegisterType } from "@/containers/contracts-[action]/components/ContractSignersAndActivity/interface";
-import { type ContractRecipient } from "@prisma/client";
+import { type ContractStatus, type ContractRecipient } from "@prisma/client";
 
 export const SignerInputs = ({
   index,
@@ -13,6 +13,7 @@ export const SignerInputs = ({
   isMultipleSignersAdded,
   defaultValue,
   disabled,
+  contractStatus,
 }: {
   index: number;
   onRemove: () => void;
@@ -20,10 +21,13 @@ export const SignerInputs = ({
   isMultipleSignersAdded: boolean;
   defaultValue?: ContractRecipient;
   disabled?: boolean;
+  contractStatus?: ContractStatus;
 }) => {
   const signerNameLabel = `signers.${index}.name` as const;
   const signerEmailLabel = `signers.${index}.email` as const;
   const signerIdLabel = `signers.${index}.id` as const;
+
+  const isDraft = contractStatus === "DRAFT";
 
   return (
     <>
@@ -36,6 +40,7 @@ export const SignerInputs = ({
           placeholder="Enter recipient name"
           {...register(signerNameLabel, {
             required: true,
+            value: !isDraft ? defaultValue?.name : undefined,
           })}
           defaultValue={defaultValue?.name}
           disabled={disabled}
@@ -50,6 +55,7 @@ export const SignerInputs = ({
           placeholder="Enter recipient email"
           {...register(signerEmailLabel, {
             required: true,
+            value: !isDraft ? defaultValue?.email : undefined,
           })}
           defaultValue={defaultValue?.email}
           disabled={disabled}

@@ -46,6 +46,7 @@ export const ContractSigners = ({
                 setCounter((prevCounter) => prevCounter - 1);
               }}
               disabled={disabled}
+              contractStatus={contract?.status}
             />
           );
         })}

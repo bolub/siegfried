@@ -56,6 +56,7 @@ export const EditContractPage = ({
   });
 
   const onSubmit: SubmitHandler<ContractFormData> = (data) => {
+    console.log(data);
     updateContract({
       id: contract?.id || "",
       contractName: data.contractName,
@@ -65,6 +66,8 @@ export const EditContractPage = ({
 
   const { handleSubmit, register, control, watch } =
     useForm<ContractFormData>();
+
+  console.log(watch("signers"));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
