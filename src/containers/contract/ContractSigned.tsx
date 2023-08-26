@@ -36,7 +36,7 @@ export const ContractSignedPageInner = ({
   return (
     <>
       <main className="container flex h-screen w-full max-w-2xl">
-        <div className="m-auto w-full flex-col text-center">
+        <div className="m-auto flex w-full flex-col text-center">
           <Logo className="mx-auto" />
 
           <h1 className="mt-24 font-mono text-3xl font-bold leading-[50px]">
