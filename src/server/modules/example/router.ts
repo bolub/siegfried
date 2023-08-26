@@ -41,7 +41,7 @@ export const exampleRouter = createTRPCRouter({
         html: z.string(),
       })
     )
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       return await PdfService.generatePdf({
         html: input.html,
         pdfName: "Test Signed pdf",
