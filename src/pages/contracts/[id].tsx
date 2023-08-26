@@ -8,6 +8,7 @@ import {
 import { prisma } from "@/server/db";
 import { type ContractRecipient, type Contract } from "@prisma/client";
 import { TokenService } from "@/server/modules/token-service/impl";
+import { decodeHTML } from "@/server/modules/contract-service/utils";
 
 export type SingleContractType = Contract & {
   recipients: ContractRecipient[];
@@ -47,6 +48,11 @@ export const getServerSideProps: GetServerSideProps<{
       user: true,
     },
   });
+
+  const decodedContent = decodeHTML(contract?.content || "");
+  if (contract) {
+    contract.content = decodedContent;
+  }
 
   if (contract?.status === "SIGNED") {
     return {
