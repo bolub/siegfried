@@ -21,8 +21,8 @@ export const LoginPage = () => {
       }}
     >
       <div className="container m-auto flex w-full max-w-[360px] flex-col justify-center text-center">
-        <Link href={routes.home()}>
-          <Logo className="mx-auto" />
+        <Link className="mx-auto" href={routes.home()}>
+          <Logo />
         </Link>
 
         <h1 className="mt-14 text-center text-[28px] font-bold">Welcome</h1>
