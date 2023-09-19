@@ -67,8 +67,6 @@ export const EditContractPage = ({
   const { handleSubmit, register, control, watch } =
     useForm<ContractFormData>();
 
-  console.log(watch("signers"));
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContractTitleEditor
