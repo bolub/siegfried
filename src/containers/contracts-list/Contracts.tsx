@@ -18,19 +18,19 @@ const ContractsList = () => {
 
   if (isLoading)
     return (
-      <>
+      <div className=" grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <ContractComponentShimmer />
         <ContractComponentShimmer />
         <ContractComponentShimmer />
         <ContractComponentShimmer />
         <ContractComponentShimmer />
         <ContractComponentShimmer />
-      </>
+      </div>
     );
 
   if (contracts?.length === 0)
     return (
-      <div className="flex h-[60vh] items-center justify-center">
+      <div className="flex h-[60vh]  items-center justify-center">
         <Empty
           icon={<PencilLine className="h-6 w-6" />}
           title="No Contracts"
@@ -40,11 +40,11 @@ const ContractsList = () => {
     );
 
   return (
-    <>
+    <div className=" grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {contracts?.map((contract) => {
         return <ContractComponent key={contract.id} contract={contract} />;
       })}
-    </>
+    </div>
   );
 };
 
@@ -71,7 +71,7 @@ export const ContractsPage = () => {
         </div>
       </PageHeader>
 
-      <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10">
         <ContractsList />
       </div>
     </Appshell>
