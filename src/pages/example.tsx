@@ -22,7 +22,7 @@ export default function Example() {
             }}
             className="w-fit"
           >
-            Send test email
+            Send testing email
           </Button>
 
           <Button
