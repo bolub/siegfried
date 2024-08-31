@@ -10,6 +10,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { routes } from "@/routes";
 import { EditContractPage } from "@/containers/contracts-[action]/edit/EditContract";
 import { decodeHTML } from "@/server/modules/contract-service/utils";
+import { trpcHelpers } from "@/server/api/root";
 
 export type SingleContractType = Contract & {
   recipients: ContractRecipient[];
@@ -46,9 +47,14 @@ export const getServerSideProps: GetServerSideProps<{
     contract.content = decodedContent;
   }
 
+  trpcHelpers.activity.byContract.prefetch({
+    contractId: id,
+  });
+
   return {
     props: {
       contract,
+      trpcState: trpcHelpers.dehydrate(),
     },
   };
 };

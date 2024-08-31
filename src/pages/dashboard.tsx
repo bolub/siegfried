@@ -1,5 +1,6 @@
 import { DashboardPage } from "@/containers/dashboard-page/DashboardPage";
 import { routes } from "@/routes";
+import { trpcHelpers } from "@/server/api/root";
 import { getServerAuthSession } from "@/server/auth";
 import { type GetServerSidePropsContext } from "next";
 
@@ -16,8 +17,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
+  await trpcHelpers.contract.stats.prefetch();
+  await trpcHelpers.activity.recent.prefetch();
+
   return {
-    props: {},
+    props: {
+      trpcState: trpcHelpers.dehydrate(),
+    },
   };
 };
 
