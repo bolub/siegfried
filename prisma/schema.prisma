@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 // Necessary for Next auth
@@ -38,9 +39,9 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String     @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?    @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
@@ -62,19 +63,19 @@ enum SignatureType {
 }
 
 model Signature {
-    id                 String    @id @default(cuid())
-    content            String
-    contractUserId     String
-    type               SignatureType
+    id             String        @id @default(cuid())
+    content        String
+    contractUserId String
+    type           SignatureType
 }
 
 model ContractRecipient {
-    id                 String    @id @default(cuid())
-    name               String
-    email              String
-    contractId         String
-    contract           Contract @relation(fields: [contractId], references: [id])
-    activity           Activity[]
+    id         String     @id @default(cuid())
+    name       String
+    email      String
+    contractId String
+    contract   Contract   @relation(fields: [contractId], references: [id])
+    activity   Activity[]
 }
 
 enum ContractStatus {
@@ -84,25 +85,25 @@ enum ContractStatus {
 }
 
 model Contract {
-    id                 String    @id @default(cuid())
-    name               String
-    content            String
-    createdAt          DateTime @default(now())
-    updatedAt          DateTime @updatedAt
-    recipients         ContractRecipient[]
-    status             ContractStatus
-    userId             String
-    user               User @relation(fields: [userId], references: [id])
-    emailSent          Boolean @default(false)
-    activity           Activity[]
+    id         String              @id @default(cuid())
+    name       String
+    content    String
+    createdAt  DateTime            @default(now())
+    updatedAt  DateTime            @updatedAt
+    recipients ContractRecipient[]
+    status     ContractStatus
+    userId     String
+    user       User                @relation(fields: [userId], references: [id])
+    emailSent  Boolean             @default(false)
+    activity   Activity[]
 }
 
 model ContractDocument {
-    id                 String    @id @default(cuid())
-    storageId          String
-    contractId         String
-    createdAt          DateTime      @default(now())
-    userId             String
+    id         String   @id @default(cuid())
+    storageId  String
+    contractId String
+    createdAt  DateTime @default(now())
+    userId     String
 }
 
 enum ActivityType {
@@ -113,12 +114,12 @@ enum ActivityType {
 }
 
 model Activity {
-    action        ActivityType
-    id            String   @id @default(cuid())
-    timestamp     DateTime @default(now())
-    userId        String
-    contractId    String
-    contract      Contract @relation(fields: [contractId], references: [id])
-    recipientId   String?
-    recipient     ContractRecipient? @relation(fields: [recipientId], references: [id])
+    action      ActivityType
+    id          String             @id @default(cuid())
+    timestamp   DateTime           @default(now())
+    userId      String
+    contractId  String
+    contract    Contract           @relation(fields: [contractId], references: [id])
+    recipientId String?
+    recipient   ContractRecipient? @relation(fields: [recipientId], references: [id])
 }
